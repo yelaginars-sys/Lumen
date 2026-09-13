@@ -1,5 +1,6 @@
 package ru.pulse.cosmetic.render;
 
+import java.util.Map;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,6 +17,27 @@ public class CosmeticRenderer {
    private final RenderStack stack = new RenderStack();
    private static final float RAD_TO_DEG = 180.0F / (float)Math.PI;
    public static float HAT_Y_OFFSET = 0.45F;
+   private static final Map<String, Float> EXTRA_Y_BY_NAME = Map.ofEntries(
+      Map.entry("Bear Hat", 0.3F),
+      Map.entry("Frog Hat", 0.3F),
+      Map.entry("Chicken Hat", 0.3F)
+   );
+
+   private static float extraY(CosmeticModel model) {
+      if (model == null) {
+         return 0.0F;
+      }
+
+      String name = model.getName();
+      if (name == null) {
+         return 0.0F;
+      }
+
+      String key = name.startsWith("pulse_") ? name.substring("pulse_".length()) : name;
+      key = key.replace('_', ' ').trim();
+      Float extra = EXTRA_Y_BY_NAME.get(key);
+      return extra == null ? 0.0F : extra;
+   }
 
    public static CosmeticRenderer getInstance() {
       if (instance == null) {
@@ -31,7 +53,7 @@ public class CosmeticRenderer {
          this.stack.push();
          float var8 = this.transformToPosition(var1, var6);
          this.stack.rotateZDegrees(180.0F);
-         this.stack.translate(var1.getX(), var1.getY() + var8, var1.getZ());
+         this.stack.translate(var1.getX(), var1.getY() + var8 + extraY(var1), var1.getZ());
          this.stack.rotateYDegrees(var1.getYaw());
          this.stack.rotateXDegrees(var1.getPitch());
          this.stack.rotateZDegrees(var1.getRoll());
@@ -47,7 +69,7 @@ public class CosmeticRenderer {
          this.stack.push();
          float yOffset = this.transformToPosition(cosmetic, playerModel);
          this.stack.rotateZDegrees(180.0F);
-         this.stack.translate(cosmetic.getX(), cosmetic.getY() + yOffset, cosmetic.getZ());
+         this.stack.translate(cosmetic.getX(), cosmetic.getY() + yOffset + extraY(cosmetic), cosmetic.getZ());
          this.stack.rotateYDegrees(cosmetic.getYaw());
          this.stack.rotateXDegrees(cosmetic.getPitch());
          this.stack.rotateZDegrees(cosmetic.getRoll());
