@@ -97,21 +97,23 @@ public class Interface extends Module {
    private static final String TEXT = "ПКМ - по элементу для открытия настроек";
    public ModeSetting style = new ModeSetting("Фон", "LiquidGlass", "LiquidGlass", "Minimalism");
    public final ModeSetting appearEffect = new ModeSetting("Эффект", "Обычный", "Обычный", "Глитч", "Соединение", "Раскрытие");
-   private final ListSetting waterMarkShown = new ListSetting(
-      "Элементы",
-      new BooleanSetting("Watermark", true), new BooleanSetting("Watermark+", true),
-      new BooleanSetting("Hot Keys", true),
-      new BooleanSetting("Server Binds", true),
-      new BooleanSetting("Potions", true),
-      new BooleanSetting("Target Hud", true),
-      new BooleanSetting("Armor Hud", true),
-      new BooleanSetting("Cooldowns", true),
-      new BooleanSetting("Inventory HUD", true),
-      new BooleanSetting("Hotbar HUD", true),
-      new BooleanSetting("ScoreBoard HUD", true),
-       new BooleanSetting("calculator", false),
-       new BooleanSetting("Bots", true)
-   );
+    private final ListSetting waterMarkShown = new ListSetting(
+       "Элементы",
+       new BooleanSetting("Ватермарка", true),
+       new BooleanSetting("Горячие клавиши", true),
+       new BooleanSetting("Серверные бинды", true),
+       new BooleanSetting("Зелья", true),
+       new BooleanSetting("Таргет худ", true),
+       new BooleanSetting("Watermark+", true),
+       new BooleanSetting("Броня", true),
+       new BooleanSetting("Кулдауны", true),
+       new BooleanSetting("Inventory HUD", true),
+       new BooleanSetting("Hotbar HUD", true),
+       new BooleanSetting("ScoreBoard HUD", true),
+       new BooleanSetting("DinamicIsland", true),
+       new BooleanSetting("Калькулятор", false),
+       new BooleanSetting("Боты", true)
+    );
    private final BooleanSetting targetHudHoverEnabled = new BooleanSetting("Показывать при наведении", true);
    private final ListSetting listSetting = new ListSetting("Таргет худ", this.targetHudHoverEnabled);
    private final FloatSetting floatSetting = new FloatSetting("Размер таргет худа", 1.0F, 0.5F, 2.0F, 0.05F);
