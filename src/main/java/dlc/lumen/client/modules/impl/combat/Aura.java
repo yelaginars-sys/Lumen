@@ -1081,7 +1081,9 @@ public class Aura extends Module {
       }
 
       EntityHitResult var1 = this.computeEntityHitResult();
-      if (this.checkState5() || var1 != null && var1.getEntity() == this.target2) {
+      if (this.checkState5()
+         || var1 != null && var1.getEntity() == this.target2
+         || this.rotationType.is("ReallyWorld") && this.checkState11()) {
          if (this.rotationType.is("Data") && !this.checkState5() && !this.checkCondition14(var1)) {
             return false;
          }

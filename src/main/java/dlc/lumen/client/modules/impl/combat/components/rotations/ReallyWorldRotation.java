@@ -39,20 +39,19 @@ public class ReallyWorldRotation extends RotationsSystem implements QClient {
       float var8 = MathHelper.wrapDegrees(var6 - var3);
       float var9 = var7 - var4;
       float var10 = (float)Math.hypot(Math.abs(var8), Math.abs(var9));
-      float var11 = var10 > 0.0F ? Math.abs(var8) / var10 * 180.0F : 180.0F;
-      float var12 = var10 > 0.0F ? Math.abs(var9) / var10 * 180.0F : 180.0F;
-      float var13 = 1.0F + this.random.nextFloat() * 0.2F;
-      float var14 = (float)(-6.0 * Math.cos((double)System.currentTimeMillis() / 90.0));
-      float var15 = (float)(6.0 * Math.sin((double)System.currentTimeMillis() / 90.0));
-      float var16 = MathHelper.clamp(Math.signum(var8) * var13, -var11, var11);
-      float var17 = MathHelper.clamp(Math.signum(var9) * var13, -var12, var12);
-      float var18 = var3 + var16 + var14;
-      float var19 = MathHelper.clamp(var4 + var17 + var15, -89.0F, 89.0F);
-      if (this.counter % 50 == 0) {
-         var19 = MathHelper.clamp(var4 + (-89.0F - var4) * 0.55F, -89.0F, 89.0F);
+      float var11 = MathHelper.clamp(var10 * 0.5F, 1.0F, 40.0F);
+      float var12 = var10 > 0.0F ? var8 / var10 * var11 : 0.0F;
+      float var13 = var10 > 0.0F ? var9 / var10 * var11 : 0.0F;
+      boolean var14 = var10 > 15.0F;
+      float var15 = var14 ? (float)(-6.0 * Math.cos((double)System.currentTimeMillis() / 90.0)) : 0.0F;
+      float var16 = var14 ? (float)(6.0 * Math.sin((double)System.currentTimeMillis() / 90.0)) : 0.0F;
+      float var17 = MathHelper.wrapDegrees(var3 + var12 + var15);
+      float var18 = MathHelper.clamp(var4 + var13 + var16, -89.0F, 89.0F);
+      if (this.counter % 50 == 0 && !var14) {
+         var18 = MathHelper.clamp(var4 + (-89.0F - var4) * 0.55F, -89.0F, 89.0F);
       }
 
-      RotationStorage.update(new Rotation(MathHelper.wrapDegrees(var18), var19), 360.0F, 360.0F, 360.0F, 360.0F, 1, 1, false);
+      RotationStorage.update(new Rotation(var17, var18), 360.0F, 360.0F, 360.0F, 360.0F, 1, 1, false);
    }
 
    private Vec3d computeVec3d(LivingEntity target) {
