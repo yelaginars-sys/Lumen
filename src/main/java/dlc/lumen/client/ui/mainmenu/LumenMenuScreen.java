@@ -431,7 +431,7 @@ public class LumenMenuScreen extends Screen implements QClient {
             "Протяни, чтобы выйти",
             var23 + var8 / 2.0F,
             var13 + 2.0F + var7 / 2.0F - 3.0F,
-            helper21(EXIT_RED, (int)((150.0F - 90.0F * this.volume2) * r))
+            helper21(-1, (int)((150.0F - 90.0F * this.volume2) * r))
          );
       }
 
