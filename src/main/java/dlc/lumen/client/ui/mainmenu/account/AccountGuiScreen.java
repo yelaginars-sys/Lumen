@@ -215,7 +215,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       Font var18 = helper21("icon", 16);
       int var19 = account.favorite() ? ColorUtils.rgba(255, 160, 102, 255) : helper20(-1, 95);
       helper22(var18, matrices, "D", x2 + width - 15.0F, y2 + 5.5F, var19);
-      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, ColorUtils.rgba(255, 101, 104, 230));
+      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, helper20(-1, 160));
    }
 
    private void helper5(MatrixStack matrices, float x2, float y2, float width, float height) {
@@ -245,9 +245,9 @@ public final class AccountGuiScreen extends Screen implements QClient {
       RenderUtils.drawRoundedRectOutline(matrices, x2, y2, width, height, 5.0F, 5.0F, 5.0F, 5.0F, 1.0F, helper20(-1, var8 ? 190 : 80));
    }
 
-   private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
+    private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
       boolean var10 = HoveringUtils.isHovered(mouseX, mouseY, x2, y2, width, height);
-      int var11 = danger ? ColorUtils.rgba(255, 101, 104, 255) : -1;
+      int var11 = -1;
       int var12 = helper20(ColorUtils.darken(var11, var10 ? 0.24F : 0.15F), var10 ? 205 : 150);
       RenderUtils.drawRoundedRect(matrices, x2, y2, width, height, 6.0F, var12);
       this.helper8(matrices, x2, y2, width, height, var10 ? 1.0F : 0.0F);

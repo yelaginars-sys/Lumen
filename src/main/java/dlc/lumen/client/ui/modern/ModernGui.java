@@ -29,7 +29,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.Window;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Vector4f;
@@ -39,9 +38,8 @@ public class ModernGui extends Screen implements QClient {
    public static final float H = 318.0F;
    public static final float SIDE_W = 116.0F;
    public static final float HEADER_H = 32.0F;
-   public static final float PAD = 9.0F;
-   private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
-   private static boolean flag;
+    public static final float PAD = 9.0F;
+    private static boolean flag;
    private static Module.ModuleCategory moduleCategory = Module.ModuleCategory.COMBAT;
    private static ModernGui.Page page2 = ModernGui.Page.MODULES;
    private static String text2 = "";
@@ -266,11 +264,10 @@ public class ModernGui extends Screen implements QClient {
       this.rect(this.x + 116.0F - 0.5F, this.y + 6.0F, 0.5F, 306.0F, 0.0F, ModernTheme.LINE());
       float var2 = this.x + 8.0F;
       float var3 = 100.0F;
-      float var4 = 30.0F;
-      float var5 = var4 * 1.02F;
-      float var6 = var2 + (var3 - var5) / 2.0F;
       float var7 = this.y + 31.0F;
-      this.helper7(var6, var7, var4, this.a(ModernTheme.accent()));
+      Font varBrand = this.font(14);
+      String varBrandText = "Lumen";
+      this.text(varBrand, varBrandText, var2 + (var3 - varBrand.getWidth(varBrandText)) / 2.0F, this.textY(var7 - 15.0F, 30.0F, varBrand), ModernTheme.accent());
       float var8 = this.y + 56.0F;
       boolean var9 = this.focus == FOCUS_SEARCH;
       this.rect(var2, var8, var3, 19.0F, 6.5F, ModernTheme.FIELD());
@@ -572,11 +569,7 @@ public class ModernGui extends Screen implements QClient {
       this.m.pop();
    }
 
-   private void helper7(float x, float centerY, float h, int color) {
-      RenderUtils.drawImage(this.m, TEXTURE_ID, x, centerY - h / 2.0F, h, h, color);
-   }
-
-   public void toggle(float tx, float ty, boolean on, Object key) {
+    public void toggle(float tx, float ty, boolean on, Object key) {
       float var5 = ModernAnim.value("tgl:" + key, on ? 1.0F : 0.0F, 16.0F);
       this.rect(tx, ty, 20.0F, 10.0F, 4.0F, ColorUtils.interpolate(ModernTheme.TOGGLE_OFF(), ModernTheme.accent(), var5));
       float var6 = tx + 1.0F + 10.0F * var5;
