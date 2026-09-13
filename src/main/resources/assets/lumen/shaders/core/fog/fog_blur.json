@@ -1,0 +1,19 @@
+{
+  "vertex": "lumen:core/kawase_down/kawase_down",
+  "fragment": "lumen:core/fog/fog_blur",
+  "samplers": [
+    { "name": "Sampler0" },
+    { "name": "Sampler1" },
+    { "name": "Sampler2" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "fogStart", "type": "float", "count": 1, "values": [16.0] },
+    { "name": "fogEnd", "type": "float", "count": 1, "values": [96.0] },
+    { "name": "blurStrength", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "near", "type": "float", "count": 1, "values": [0.05] },
+    { "name": "far", "type": "float", "count": 1, "values": [1000.0] },
+    { "name": "fogColor", "type": "float", "count": 3, "values": [1.0, 1.0, 1.0] }
+  ]
+}

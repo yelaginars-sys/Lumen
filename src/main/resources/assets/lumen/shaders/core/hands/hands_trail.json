@@ -1,0 +1,18 @@
+{
+  "vertex": "lumen:core/kawase_down/kawase_down",
+  "fragment": "lumen:core/hands/hands_trail",
+  "samplers": [
+    { "name": "Sampler0" },
+    { "name": "Sampler1" },
+    { "name": "Sampler2" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "uDt", "type": "float", "count": 1, "values": [0.016] },
+    { "name": "uRise", "type": "float", "count": 1, "values": [0.1] },
+    { "name": "uFade", "type": "float", "count": 1, "values": [3.0] },
+    { "name": "uDissolve", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uTime", "type": "float", "count": 1, "values": [0.0] }
+  ]
+}

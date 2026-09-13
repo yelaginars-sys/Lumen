@@ -1,0 +1,19 @@
+{
+  "vertex": "lumen:core/shaderesp/esp_glow",
+  "fragment": "lumen:core/shaderesp/esp_combine",
+  "samplers": [
+    { "name": "maskTexture" },
+    { "name": "glowTexture" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "mainColor", "type": "float", "count": 4, "values": [0.0, 0.0, 0.0, 1.0] },
+    { "name": "friendColor", "type": "float", "count": 4, "values": [0.0, 1.0, 0.0, 0.0] },
+    { "name": "params1", "type": "float", "count": 4, "values": [0.0, 0.0, 2.0, 0.0] },
+    { "name": "params2", "type": "float", "count": 4, "values": [1.6, 1.1, 0.45, 0.6] },
+    { "name": "params3", "type": "float", "count": 4, "values": [1.8, 0.45, 1.0, 1.0] },
+    { "name": "params4", "type": "float", "count": 4, "values": [0.0, 0.0, 0.04, 0.8] },
+    { "name": "params5", "type": "float", "count": 4, "values": [0.0, 0.0, 1.0, 1.0] }
+  ]
+}

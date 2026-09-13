@@ -1,0 +1,15 @@
+{
+  "vertex": "lumen:core/kawase_down/kawase_down",
+  "fragment": "lumen:core/hands/hands_trail_composite",
+  "samplers": [
+    { "name": "Sampler0" },
+    { "name": "Sampler1" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "uAlpha", "type": "float", "count": 1, "values": [0.95] },
+    { "name": "uColor", "type": "float", "count": 3, "values": [0.54, 0.60, 1.0] },
+    { "name": "uTexel", "type": "float", "count": 2, "values": [0.00052, 0.00092] }
+  ]
+}

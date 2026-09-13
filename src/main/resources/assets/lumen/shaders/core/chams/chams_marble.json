@@ -1,0 +1,14 @@
+{
+  "vertex": "lumen:core/chams/chams_marble",
+  "fragment": "lumen:core/chams/chams_marble",
+  "samplers": [],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "CameraPos", "type": "float", "count": 3, "values": [0.0, 0.0, 0.0] },
+    { "name": "time", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "speed", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "patternScale", "type": "float", "count": 1, "values": [1.1] },
+    { "name": "fillAlpha", "type": "float", "count": 1, "values": [0.85] }
+  ]
+}

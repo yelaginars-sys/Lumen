@@ -1,0 +1,12 @@
+{
+  "vertex": "lumen:core/viraljump/viraljump",
+  "fragment": "lumen:core/viraljump/viraljump_space",
+  "samplers": [],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "uTime", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "uPulse", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uDensity", "type": "float", "count": 1, "values": [1.0] }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "vertex": "lumen:core/hands/hands_fire",
+  "fragment": "lumen:core/hands/hands_fire",
+  "samplers": [
+    { "name": "DiffuseSampler", "type": "int" }
+  ],
+  "uniforms": [
+    { "name": "time", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "speed", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "scale", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "intensity", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "pulse", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "direction", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "waveOffset1", "type": "float", "count": 1, "values": [0.5] },
+    { "name": "waveOffset2", "type": "float", "count": 1, "values": [0.5] },
+    { "name": "waveOffset3", "type": "float", "count": 1, "values": [0.5] },
+    { "name": "noise1", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "noise2", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "color1", "type": "float", "count": 3, "values": [1.0, 0.5, 0.0] },
+    { "name": "color2", "type": "float", "count": 3, "values": [1.0, 0.8, 0.0] }
+  ]
+}

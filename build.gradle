@@ -1,0 +1,147 @@
+plugins {
+    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+configurations {
+    downloadableRuntime {
+        canBeConsumed = false
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    compileOnly files('libs/lumen-shaded-dependencies.jar')
+    compileOnly fileTree(dir: 'runtime-resources/META-INF/jars', include: ['*.jar'])
+
+    // Downloaded once into Gradle's cache before the first development launch.
+    downloadableRuntime('com.alphacephei:vosk:0.3.45') { transitive = false }
+    downloadableRuntime('com.microsoft.onnxruntime:onnxruntime:1.18.0') { transitive = false }
+    downloadableRuntime('net.java.dev.jna:jna:5.15.0') { transitive = false }
+}
+
+def downloadableRuntimeSha256 = [
+    'vosk-0.3.45.jar'       : '9e38e96e4448a41d889bb254b2f8424945554945c6e77e1cd97a3d8633fac2ba',
+    'onnxruntime-1.18.0.jar': '2733ead3dd8d07757c3f4c611e41e87d8dbd50130d6ff6f77a63407b25f93d30',
+    'jna-5.15.0.jar'        : 'a564158d28ab5127fc6a958028ed54279fe0999662c46425b6a3b09a2a52094d'
+]
+
+tasks.register('verifyDownloadableRuntime') {
+    inputs.files(configurations.downloadableRuntime)
+
+    doLast {
+        configurations.downloadableRuntime.files.each { file ->
+            def expected = downloadableRuntimeSha256[file.name]
+            if (expected == null) {
+                throw new GradleException("No SHA-256 is registered for ${file.name}")
+            }
+
+            def digest = java.security.MessageDigest.getInstance('SHA-256')
+            file.eachByte(1024 * 1024) { buffer, bytesRead ->
+                digest.update(buffer, 0, bytesRead)
+            }
+            def actual = digest.digest().encodeHex().toString()
+            if (actual != expected) {
+                throw new GradleException("SHA-256 mismatch for ${file.name}: ${actual}")
+            }
+        }
+    }
+}
+
+loom {
+    accessWidenerPath = file('src/main/resources/lumen.accesswidener')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+// Project-specific payloads live outside src/. Large public native libraries
+// are resolved from Maven Central and copied into the development resources
+// and regular mod JAR on demand.
+tasks.named('processResources', ProcessResources) {
+    dependsOn tasks.named('verifyDownloadableRuntime')
+
+    from('runtime-resources') {
+        exclude '**/*.pdb'
+        exclude 'ai/onnxruntime/native/**'
+        exclude 'com/sun/jna/**'
+        exclude 'darwin/**'
+        exclude 'linux-x86-64/**'
+        exclude 'win32-x86-64/.keep-me'
+        exclude 'win32-x86-64/empty'
+        exclude 'win32-x86-64/libgcc_s_seh-1.dll'
+        exclude 'win32-x86-64/libstdc++-6.dll'
+        exclude 'win32-x86-64/libvosk.dll'
+        exclude 'win32-x86-64/libwinpthread-1.dll'
+    }
+    from({ configurations.downloadableRuntime.collect { zipTree(it) } }) {
+        include 'ai/onnxruntime/native/win-x64/onnxruntime.dll'
+        include 'ai/onnxruntime/native/win-x64/onnxruntime4j_jni.dll'
+        include 'com/sun/jna/*/jnidispatch.dll'
+        include 'com/sun/jna/*/libjnidispatch.*'
+        include 'darwin/**'
+        include 'linux-x86-64/**'
+        include 'win32-x86-64/**'
+        exclude '**/*.pdb'
+    }
+    exclude '**/*.pdb'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
+
+// A sources JAR should contain the project sources and assets, not packaged
+// third-party runtimes. Those files are still included in the regular mod JAR.
+tasks.named('sourcesJar', Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude(
+        '**/*.pdb',
+        'ai/onnxruntime/native/**',
+        'assets/minecraft/**',
+        'assets/zenith/**',
+        'com/sun/jna/**',
+        'darwin/**',
+        'linux-x86-64/**',
+        'win32-x86-64/**',
+        'mediaplayerinfo/**',
+        'natives.zip.xz',
+        'figura_avatars.zip',
+        'META-INF/jars/**',
+        'META-INF/maven/**',
+        'javazoom/**',
+        'junit/**',
+        'kotlin/**',
+        'resources/**'
+    )
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        zipTree(file('libs/lumen-shaded-dependencies.jar'))
+    }
+}

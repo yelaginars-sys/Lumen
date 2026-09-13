@@ -1,0 +1,16 @@
+{
+  "vertex": "lumen:core/trails/trails_ghost",
+  "fragment": "lumen:core/trails/trails_ghost",
+  "samplers": [
+    { "name": "Sampler0" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ScreenSize", "type": "float", "count": 2, "values": [1920.0, 1080.0] },
+    { "name": "time", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "dissolveAmount", "type": "float", "count": 1, "values": [0.4] },
+    { "name": "dissolveScale", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "glassAlpha", "type": "float", "count": 1, "values": [0.85] }
+  ]
+}

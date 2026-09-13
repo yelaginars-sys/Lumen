@@ -1,0 +1,71 @@
+package dlc.lumen.api.events.implement;
+
+import dlc.lumen.api.events.Event;
+import lombok.Generated;
+
+public class EventMoveInput extends Event {
+   private float forward;
+   private float strafe;
+   private boolean jump;
+   private boolean sneak;
+   private boolean sprint;
+
+   @Generated
+   public float getForward() {
+      return this.forward;
+   }
+
+   @Generated
+   public float getStrafe() {
+      return this.strafe;
+   }
+
+   @Generated
+   public boolean isJump() {
+      return this.jump;
+   }
+
+   @Generated
+   public boolean isSneak() {
+      return this.sneak;
+   }
+
+   @Generated
+   public boolean isSprint() {
+      return this.sprint;
+   }
+
+   @Generated
+   public void setForward(float forward) {
+      this.forward = forward;
+   }
+
+   @Generated
+   public void setStrafe(float strafe) {
+      this.strafe = strafe;
+   }
+
+   @Generated
+   public void setJump(boolean jump) {
+      this.jump = jump;
+   }
+
+   @Generated
+   public void setSneak(boolean sneak) {
+      this.sneak = sneak;
+   }
+
+   @Generated
+   public void setSprint(boolean sprint) {
+      this.sprint = sprint;
+   }
+
+   @Generated
+   public EventMoveInput(float forward, float strafe, boolean jump, boolean sneak, boolean sprint) {
+      this.forward = forward;
+      this.strafe = strafe;
+      this.jump = jump;
+      this.sneak = sneak;
+      this.sprint = sprint;
+   }
+}

@@ -1,0 +1,18 @@
+{
+  "vertex": "lumen:core/chams/chams_glass",
+  "fragment": "lumen:core/chams/chams_glass",
+  "samplers": [
+    { "name": "Sampler0" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ScreenSize", "type": "float", "count": 2, "values": [1920.0, 1080.0] },
+    { "name": "time", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "distortStrength", "type": "float", "count": 1, "values": [0.7] },
+    { "name": "roughness", "type": "float", "count": 1, "values": [0.45] },
+    { "name": "reflectStrength", "type": "float", "count": 1, "values": [0.8] },
+    { "name": "glassAlpha", "type": "float", "count": 1, "values": [0.85] },
+    { "name": "fresnelStrength", "type": "float", "count": 1, "values": [0.8] }
+  ]
+}

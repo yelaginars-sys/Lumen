@@ -1,0 +1,12 @@
+{
+  "vertex": "lumen:core/hands/hands_fire_composite",
+  "fragment": "lumen:core/hands/hands_fire_composite",
+  "samplers": [
+    { "name": "DiffuseSampler", "type": "int" },
+    { "name": "MaskSampler", "type": "int" }
+  ],
+  "uniforms": [
+    { "name": "intensity", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "time", "type": "float", "count": 1, "values": [0.0] }
+  ]
+}

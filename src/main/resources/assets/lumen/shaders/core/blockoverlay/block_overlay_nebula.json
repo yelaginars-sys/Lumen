@@ -1,0 +1,25 @@
+{
+  "vertex": "lumen:core/kawase_down/kawase_down",
+  "fragment": "lumen:core/blockoverlay/block_overlay_nebula",
+  "samplers": [
+    { "name": "Sampler0" }
+  ],
+  "uniforms": [
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "uInvViewProj", "type": "matrix4x4", "count": 16, "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0] },
+    { "name": "uCamW", "type": "float", "count": 3, "values": [0.5, 2.0, 0.5] },
+    { "name": "uBoxSize", "type": "float", "count": 3, "values": [1.0, 1.0, 1.0] },
+    { "name": "uMargin", "type": "float", "count": 1, "values": [0.35] },
+    { "name": "uColor", "type": "float", "count": 3, "values": [0.54, 0.60, 1.0] },
+    { "name": "uColor2", "type": "float", "count": 3, "values": [0.54, 0.60, 1.0] },
+    { "name": "uTime", "type": "float", "count": 1, "values": [0.0] },
+    { "name": "uSpeed", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uDensity", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uStars", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uGlow", "type": "float", "count": 1, "values": [1.0] },
+    { "name": "uOutline", "type": "float", "count": 1, "values": [1.1] },
+    { "name": "uFill", "type": "float", "count": 1, "values": [0.6] },
+    { "name": "uAlpha", "type": "float", "count": 1, "values": [1.0] }
+  ]
+}

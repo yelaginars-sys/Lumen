@@ -1,0 +1,10 @@
+accessWidener v2 named
+
+accessible class net/minecraft/client/render/item/HeldItemRenderer$HandRenderType
+accessible method net/minecraft/client/render/item/HeldItemRenderer getHandRenderType (Lnet/minecraft/client/network/ClientPlayerEntity;)Lnet/minecraft/client/render/item/HeldItemRenderer$HandRenderType;
+accessible field net/minecraft/client/render/item/HeldItemRenderer$HandRenderType renderMainHand Z
+accessible field net/minecraft/client/render/item/HeldItemRenderer$HandRenderType renderOffHand Z
+
+# AutoZamok ломает шалкер сам: START/STOP_DESTROY_BLOCK с клиентским прогрессом,
+# минуя кулдаун ванильного updateBlockBreakingProgress.
+accessible method net/minecraft/client/network/ClientPlayerInteractionManager sendSequencedPacket (Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/client/network/SequencedPacketCreator;)V
