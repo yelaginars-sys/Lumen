@@ -62,16 +62,12 @@ public class LumenMenuScreen extends Screen implements QClient {
    private final AnimationUtils animationUtils3 = new AnimationUtils(0.0F, 8.0F, Easings.CUBIC_OUT);
    private final AnimationUtils animationUtils4 = new AnimationUtils(0.0F, 12.0F, Easings.CUBIC_OUT);
    private final AnimationUtils animationUtils5 = new AnimationUtils(0.0F, 12.0F, Easings.CUBIC_OUT);
-   private final Map<String, AnimationUtils> strings = new HashMap<>();
    private float volume;
    private long timestamp = Util.getMeasuringTimeMs();
-   private boolean flag;
-   private final StringBuilder stringBuilder = new StringBuilder();
    private float volume2;
    private boolean flag2;
    private boolean flag3;
    private final float[] volume3 = new float[4];
-   private final float[] volume4 = new float[4];
    private final float[] volume5 = new float[4];
    private final float[] volume6 = new float[4];
    private final float[] volume7 = new float[4];
@@ -79,18 +75,7 @@ public class LumenMenuScreen extends Screen implements QClient {
    private final float[][] value = new float[][]{new float[4], new float[4], new float[4]};
    private final float[] volume8 = new float[4];
    private final float[] volume9 = new float[4];
-   private final List<float[]> floats = new ArrayList<>();
-   private final List<String> strings2 = new ArrayList<>();
-   private static final int INDEX = 3;
-   private int index = 0;
-   private final float[] volume10 = new float[4];
-   private final float[] volume11 = new float[4];
-   private String text2 = null;
    private static boolean flag4 = false;
-
-   private static float helper(int rows) {
-      return 40.0F + rows * 22.0F;
-   }
 
    public LumenMenuScreen() {
       super(Text.empty());
@@ -141,12 +126,9 @@ public class LumenMenuScreen extends Screen implements QClient {
       float var14 = helper17(var5, 0.34F, 0.52F);
       this.helper4(context, mouseX, mouseY, var11, var12, var8);
       this.helper3(context, var10, var9);
-      ArrayList var15 = new ArrayList<>(AccountGuiScreen.MANAGER);
-      int var16 = Math.min(var15.size(), 3);
-      float var17 = 32.0F + helper(var16) + 12.0F + 18.0F + 12.0F + 22.0F;
-      float var18 = MathHelper.clamp(this.height * 0.5F - var17 / 2.0F + this.height * 0.035F, this.height * 0.16F, this.height - var17 - 8.0F);
-      this.helper8(context, mouseX, mouseY, var13, var18 + (1.0F - var13) * 20.0F, var15, var16, var8);
-      float var19 = var18 + 26.0F + 6.0F + helper(var16) + 12.0F;
+      float var18 = MathHelper.clamp(this.height * 0.5F - 48.0F + this.height * 0.035F, this.height * 0.16F, this.height - 96.0F);
+      this.helper8(context, mouseX, mouseY, var13, var18 + (1.0F - var13) * 20.0F, var8);
+      float var19 = var18 + 68.0F;
       this.helper9(context, mouseX, mouseY, var14, var19 + (1.0F - var14) * 20.0F, var8);
       super.render(context, mouseX, mouseY, delta);
    }
@@ -199,8 +181,8 @@ public class LumenMenuScreen extends Screen implements QClient {
    }
 
    private void helper4(DrawContext context, int mouseX, int mouseY, float aLeft, float aRight, float dt) {
-      float var7 = 184.0F;
-      float var8 = 124.0F;
+      float var7 = 150.0F;
+      float var8 = 100.0F;
       float var9 = this.height / 2.0F - var8 / 2.0F;
       float var10 = Math.max(12.0F, this.width * 0.5F - 300.0F);
       float var11 = Math.min(this.width - 12.0F - var7, this.width * 0.5F + 300.0F - var7);
@@ -238,15 +220,15 @@ public class LumenMenuScreen extends Screen implements QClient {
          );
       }
 
-      Font var18 = helper19("suisse", 17);
-      Font var19 = helper19("sf_regular", 11);
+      Font var18 = helper19("suisse", 15);
+      Font var19 = helper19("sf_regular", 10);
       float var20 = var16[0] + var16[2] / 2.0F;
       if (var18 != null) {
-         var18.drawCenteredString(var17, title, var20, var16[1] + var16[3] - 34.0F, helper21(-1, (int)(255.0F * r)));
+         var18.drawCenteredString(var17, title, var20, var16[1] + var16[3] - 28.0F, helper21(-1, (int)(255.0F * r)));
       }
 
       if (var19 != null) {
-         var19.drawCenteredString(var17, sub, var20, var16[1] + var16[3] - 16.0F, helper21(helper20(), (int)(220.0F * r)));
+         var19.drawCenteredString(var17, sub, var20, var16[1] + var16[3] - 13.0F, helper21(helper20(), (int)(220.0F * r)));
       }
    }
 
@@ -325,165 +307,68 @@ public class LumenMenuScreen extends Screen implements QClient {
       RenderSystem.disableBlend();
    }
 
-   private float helper8(DrawContext context, int mouseX, int mouseY, float r, float top, List<Account> accounts, int rows, float dt) {
-      float var9 = 200.0F;
-      float var10 = 26.0F;
+   private float helper8(DrawContext context, int mouseX, int mouseY, float r, float top, float dt) {
+      float var9 = 170.0F;
+      float var10 = 32.0F;
       float var11 = this.width / 2.0F;
       float var12 = var11 - var9 / 2.0F;
       float var13 = top;
       this.updateState(context, var12, var13, var9, var10);
-      if (!GlobalProfileAvatar.drawRounded(context, var12 + 6.0F, var13 + 4.0F, 18.0F, 18.0F, 9.0F, helper21(-1, (int)(255.0F * r)))) {
-         Font var14 = helper19("icon", 12);
+      if (!GlobalProfileAvatar.drawRounded(context, var12 + 7.0F, var13 + 5.0F, 22.0F, 22.0F, 11.0F, helper21(-1, (int)(255.0F * r)))) {
+         Font var14 = helper19("icon", 14);
          if (var14 != null) {
-            var14.draw(context.getMatrices(), "e", var12 + 10.0F, var13 + 4.0F + var10 / 2.0F - 5.0F, helper21(helper20(), (int)(255.0F * r)));
+            var14.draw(context.getMatrices(), "e", var12 + 12.0F, var13 + 8.0F, helper21(helper20(), (int)(255.0F * r)));
          }
       }
 
-      Font var47 = helper19("suisse", 13);
+      Font var47 = helper19("sf_regular", 10);
       if (var47 != null) {
-         var47.draw(
+         var47.drawCenteredString(
+            context.getMatrices(), "Выбранный аккаунт", var12 + var9 / 2.0F, var13 + 3.0F, helper21(-1, (int)(150.0F * r))
+         );
+      }
+
+      Font var48 = helper19("suisse", 14);
+      if (var48 != null) {
+         var48.drawCenteredString(
             context.getMatrices(),
-            this.helper24(var47, this.helper15(), var9 - 38.0F),
-            var12 + 30.0F,
-            var13 + 2.0F + var10 / 2.0F - 4.5F,
+            this.helper24(var48, this.helper15(), var9 - 40.0F),
+            var12 + var9 / 2.0F,
+            var13 + 15.0F,
             helper21(-1, (int)(255.0F * r))
          );
       }
 
       float var15 = var13 + var10 + 6.0F;
-      float var16 = helper(rows);
+      float var16 = 18.0F;
+      helper22(this.volume3, var12, var15, var9, var16);
+      boolean var17 = helper23(mouseX, mouseY, this.volume3) && !this.flag3;
+      this.animationUtils5.update(var17 ? 1.0F : 0.0F);
+      float var18 = this.animationUtils5.getValue();
+      float var19 = 1.5F * var18;
       this.updateState(context, var12, var15, var9, var16);
-      Font var17 = helper19("sf_regular", 11);
-      float var18 = var12 + 8.0F;
-      float var19 = var15 + 8.0F;
-      float var20 = var9 - 16.0F - 36.0F;
-      float var21 = 20.0F;
-      helper22(this.volume3, var18, var19, var20, var21);
-      RenderUtils.drawBlur(context.getMatrices(), var18, var19, var20, var21, 5.0F, helper21(helper20(), 70));
-      if (var17 != null) {
-         String var22 = this.stringBuilder.length() == 0 && !this.flag
-            ? "Введите ник…"
-            : this.stringBuilder + (this.flag ? "|" : "");
-         int var23 = this.stringBuilder.length() == 0 && !this.flag ? ColorUtils.rgba(255, 255, 255, 90) : -1;
-         var17.draw(context.getMatrices(), this.helper24(var17, var22, var20 - 8.0F), var18 + 5.0F, var19 + 2.0F + var21 / 2.0F - 3.5F, var23);
-      }
-
-      float var48 = 32.0F;
-      float var49 = var12 + var9 - 8.0F - var48;
-      helper22(this.volume4, var49, var19, var48, var21);
-      boolean var24 = helper23(mouseX, mouseY, this.volume4);
-      this.animationUtils5.update(var24 ? 1.0F : 0.0F);
-      float var25 = this.animationUtils5.getValue();
-      float var26 = 1.5F * var25;
       RenderUtils.drawBlur(
          context.getMatrices(),
-         var49 - var26,
-         var19 - var26,
-         var48 + var26 * 2.0F,
-         var21 + var26 * 2.0F,
+         var12 - var19,
+         var15 - var19,
+         var9 + var19 * 2.0F,
+         var16 + var19 * 2.0F,
          5.0F,
-         helper21(helper20(), (int)(200.0F + 45.0F * var25))
+         helper21(helper20(), (int)(200.0F + 45.0F * var18))
       );
-      if (var17 != null) {
-         var17.drawCenteredString(context.getMatrices(), "+", var49 + var48 / 2.0F, var19 + 2.0F + var21 / 2.0F - 3.5F, -1);
-      }
-
-      int var27 = accounts.size();
-      int var28 = Math.max(0, var27 - rows);
-      this.index = MathHelper.clamp(this.index, 0, var28);
-      float var29 = var19 + var21 + 6.0F;
-      helper22(this.volume10, var12 + 8.0F, var29, var9 - 16.0F, rows * 22.0F - 2.0F);
-      this.floats.clear();
-      this.strings2.clear();
-      this.text2 = null;
-      helper22(this.volume11, 0.0F, 0.0F, 0.0F, 0.0F);
-      float var30 = var29;
-
-      for (int var31 = 0; var31 < rows; var31++) {
-         int var32 = this.index + var31;
-         if (var32 >= var27) {
-            break;
-         }
-
-         Account var33 = (Account)accounts.get(var32);
-         float var34 = var9 - 16.0F - (var27 > rows ? 6.0F : 0.0F);
-         float[] var35 = new float[]{var12 + 8.0F, var30, var34, 20.0F};
-         boolean var36 = helper23(mouseX, mouseY, var35);
-         boolean var37 = var33.name().equalsIgnoreCase(this.helper14());
-         AnimationUtils var38 = this.strings.computeIfAbsent(var33.name(), n -> new AnimationUtils(0.0F, 10.0F, Easings.CUBIC_OUT));
-         var38.update(var36 ? 1.0F : 0.0F);
-         float var39 = var38.getValue();
-         int var40 = var37 ? 200 : (int)(60.0F + 70.0F * var39);
-         RenderUtils.drawBlur(context.getMatrices(), var35[0], var35[1], var35[2], var35[3], 5.0F, helper21(helper20(), var40));
-         float var41 = Math.max(var37 ? 1.0F : 0.0F, var39);
-         if (var41 > 0.001F) {
-            float var42 = (var35[3] - 6.0F) * var41;
-            RenderUtils.drawRoundedRect(
-               context.getMatrices(),
-               var35[0] + 1.5F,
-               var35[1] + (var35[3] - var42) / 2.0F,
-               2.0F,
-               var42,
-               1.0F,
-               helper21(helper20(), (int)(235.0F * (var37 ? 1.0F : var41)))
-            );
-         }
-
-         float var59 = var35[1] + 2.0F + var35[3] / 2.0F - 3.5F;
-         float var43 = var35[0] + 7.0F + 3.0F * var39;
-         float var44 = var35[2] - 12.0F - (var36 ? 16.0F : 0.0F);
-         if (var17 != null) {
-            var17.draw(
-               context.getMatrices(),
-               this.helper24(var17, var33.name(), var44),
-               var43,
-               var59,
-               var37 ? helper20() : helper21(-1, (int)(200.0F + 40.0F * var39))
-            );
-         }
-
-         if (var36) {
-            this.text2 = var33.name();
-            float var45 = var35[0] + var35[2] - 13.0F;
-            helper22(this.volume11, var45 - 6.0F, var35[1], 15.0F, var35[3]);
-            boolean var46 = helper23(mouseX, mouseY, this.volume11);
-            if (var17 != null) {
-               var17.draw(context.getMatrices(), "x", var45, var59, ColorUtils.rgba(255, var46 ? 90 : 130, var46 ? 90 : 130, var46 ? 255 : 210));
-            }
-         }
-
-         this.floats.add(var35);
-         this.strings2.add(var33.name());
-         var30 += 22.0F;
-      }
-
-      if (!this.strings.isEmpty()) {
-         HashSet var50 = new HashSet();
-
-         for (Account var54 : accounts) {
-            var50.add(var54.name());
-         }
-
-         this.strings.keySet().retainAll(var50);
-      }
-
-      if (var27 > rows) {
-         float var51 = var12 + var9 - 8.0F - 3.0F;
-         float var53 = var29;
-         float var55 = rows * 22.0F - 2.0F;
-         float var56 = 3.0F;
-         RenderUtils.drawRoundedRect(context.getMatrices(), var51, var53, var56, var55, 1.5F, ColorUtils.rgba(255, 255, 255, 30));
-         float var57 = var55 * rows / var27;
-         float var58 = var53 + (var55 - var57) * (var28 == 0 ? 0.0F : (float)this.index / var28);
-         RenderUtils.drawRoundedRect(context.getMatrices(), var51, var58, var56, var57, 1.5F, helper21(helper20(), 220));
+      Font var20 = helper19("sf_regular", 10);
+      if (var20 != null) {
+         var20.drawCenteredString(
+            context.getMatrices(), "Сменить аккаунт", var12 + var9 / 2.0F, var15 + 2.0F + var16 / 2.0F - 3.5F, helper21(-1, (int)((150.0F + 105.0F * var18) * r))
+         );
       }
 
       return var15 + var16;
    }
 
    private float helper9(DrawContext context, int mouseX, int mouseY, float r, float top, float dt) {
-      float var7 = 18.0F;
-      float var8 = 178.0F;
+      float var7 = 16.0F;
+      float var8 = 150.0F;
       float var9 = var7;
       float var10 = 7.0F;
       float var11 = var9 + var10 + var8;
@@ -592,30 +477,10 @@ public class LumenMenuScreen extends Screen implements QClient {
          }
 
          if (helper23(mouseX, mouseY, this.volume3)) {
-            this.flag = true;
-            return true;
-         }
-
-         if (helper23(mouseX, mouseY, this.volume4)) {
-            this.helper11(this.stringBuilder.toString());
-            return true;
-         }
-
-         if (this.text2 != null && helper23(mouseX, mouseY, this.volume11)) {
-            this.helper13(this.text2);
             helper25();
+            this.client.setScreen(new AccountGuiScreen(this));
             return true;
          }
-
-         for (int var7 = 0; var7 < this.floats.size(); var7++) {
-            if (helper23(mouseX, mouseY, this.floats.get(var7))) {
-               this.helper12(this.strings2.get(var7));
-               helper25();
-               return true;
-            }
-         }
-
-         this.flag = false;
       }
 
       return super.mouseClicked(mouseX, mouseY, button);
@@ -628,18 +493,6 @@ public class LumenMenuScreen extends Screen implements QClient {
          return true;
       } else {
          return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
-      }
-   }
-
-   @Override
-   public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
-      if (helper23(mouseX, mouseY, this.volume10)) {
-         int var9 = AccountGuiScreen.MANAGER.size();
-         int var10 = Math.max(0, var9 - 3);
-         this.index = MathHelper.clamp(this.index - (int)Math.signum(verticalAmount), 0, var10);
-         return true;
-      } else {
-         return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
       }
    }
 
@@ -666,67 +519,6 @@ public class LumenMenuScreen extends Screen implements QClient {
          this.flag3 = true;
          this.client.scheduleStop();
       }
-   }
-
-   @Override
-   public boolean charTyped(char chr, int modifiers) {
-      if (this.flag && !Character.isISOControl(chr) && this.stringBuilder.length() < 24) {
-         this.stringBuilder.append(chr);
-         return true;
-      } else {
-         return super.charTyped(chr, modifiers);
-      }
-   }
-
-   @Override
-   public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-      if (this.flag) {
-         if (keyCode == 259) {
-            if (this.stringBuilder.length() > 0) {
-               this.stringBuilder.deleteCharAt(this.stringBuilder.length() - 1);
-            }
-
-            return true;
-         }
-
-         if (keyCode == 257 || keyCode == 335) {
-            this.helper11(this.stringBuilder.toString());
-            return true;
-         }
-
-         if (keyCode == 256) {
-            this.flag = false;
-            return true;
-         }
-      }
-
-      return super.keyPressed(keyCode, scanCode, modifiers);
-   }
-
-   private void helper11(String name) {
-      if (name != null) {
-         name = name.trim();
-         if (!name.isEmpty()) {
-            if (!AccountGuiScreen.MANAGER.isAccount(name)) {
-               AccountGuiScreen.MANAGER.addAccount(new Account(LocalDateTime.now(), name));
-            }
-
-            this.helper12(name);
-            this.stringBuilder.setLength(0);
-            this.flag = false;
-         }
-      }
-   }
-
-   private void helper12(String name) {
-      AccountGuiScreen.MANAGER.saveLastSelected(name);
-      AccountGuiScreen.MANAGER.restoreLastSession();
-      AccountGuiScreen.MANAGER.save();
-   }
-
-   private void helper13(String name) {
-      AccountGuiScreen.MANAGER.removeAccount(name);
-      AccountGuiScreen.MANAGER.save();
    }
 
    private String helper14() {

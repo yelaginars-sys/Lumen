@@ -139,7 +139,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
             "No accounts",
             x2 + width / 2.0F,
             y2 + height / 2.0F - helper25(var16) / 2.0F,
-            helper20(helper19(45), 180)
+            helper20(-1, 180)
          );
       }
 
@@ -185,7 +185,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       Font var14 = helper21("suisse", 12);
       float var15 = x2 + height;
       float var16 = width - height - 26.0F;
-      int var17 = var10 ? helper18() : -1;
+      int var17 = -1;
       this.helper26(var13, matrices, account.name(), var15, y2 + 9.0F, var16, var17);
       helper22(
          var14,
@@ -241,7 +241,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
          text,
          x2 + width / 2.0F,
          y2 + height / 1.5F - helper25(var13) / 2.0F + 2.0F,
-         danger ? ColorUtils.rgba(255, 120, 123, 255) : helper20(helper19(45), 255)
+         -1
       );
    }
 
@@ -388,7 +388,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
    private void helper11(String name, boolean switchTo) {
       if (name != null) {
          String var3 = name.trim();
-         if (var3.length() >= 3 && var3.length() <= 16) {
+         if (var3.length() >= 3 && var3.length() <= 16 && var3.matches("[A-Za-z0-9_]+")) {
             Account var4 = MANAGER.getAccount(var3).orElseGet(() -> {
                Account var1 = new Account(LocalDateTime.now(), var3);
                MANAGER.addAccount(var1);
@@ -561,7 +561,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
                this.VOLUME3,
                var5,
                this.account2 + this.volume2 / 2.0F - var4.getHeight() / 2.0F + 5.0F,
-               AccountGuiScreen.helper18()
+               -1
             );
             var5 += var4.getWidth(this.VOLUME3) + 8.0F;
          }
@@ -569,7 +569,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
          boolean var6 = this.VOLUME4.isEmpty() && !this.strings;
          String var2 = var6 ? this.VOLUME : this.VOLUME4;
          if (!var2.isEmpty()) {
-            int var8 = var6 ? AccountGuiScreen.helper20(AccountGuiScreen.helper19(45), 125) : -1;
+            int var8 = var6 ? AccountGuiScreen.helper20(-1, 125) : -1;
             AccountGuiScreen.helper22(
                var3, matrices, var2, var5, this.account2 + this.volume2 / 2.0F - AccountGuiScreen.helper25(var3) / 2.0F + 5.0F, var8
             );
@@ -669,7 +669,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       }
 
       private static boolean helper7(char chr) {
-         return Character.isLetterOrDigit(chr) || chr == '_' || chr == '-';
+         return chr < 128 && (Character.isLetterOrDigit(chr) || chr == '_' || chr == '-');
       }
 
       private String helper8() {
