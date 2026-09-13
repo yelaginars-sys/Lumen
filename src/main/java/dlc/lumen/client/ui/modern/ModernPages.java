@@ -89,17 +89,19 @@ public final class ModernPages {
       float var17 = w - var6 - 8.0F;
       int var18 = COSMETIC_TYPES.length;
       int var19 = Math.max(0, Math.min(index5, var18 - 1));
-      float var20 = (var17 - 6.0F * (var18 - 1)) / var18;
+      float var20 = (var17 - 2.0F * 6.0F) / 3.0F;
 
       for (int var21 = 0; var21 < var18; var21++) {
          int var22 = var21;
-         g.pill(var16 + var21 * (var20 + 6.0F), y, var20, 18.0F, COSMETIC_TABS[var21], null, null, var19 == var21, "cos" + var21, button -> {
+         float var33 = var16 + var21 % 3 * (var20 + 6.0F);
+         float var34 = y + var21 / 3 * 24.0F;
+         g.pill(var33, var34, var20, 18.0F, COSMETIC_TABS[var21], null, null, var19 == var21, "cos" + var21, button -> {
             index5 = var22;
             return true;
          });
       }
 
-      float var30 = y + 24.0F;
+      float var30 = y + 50.0F;
       g.pushClip(var16, var30 - 2.0F, var17 + 6.0F, Math.max(0.0F, y + h - var30 + 2.0F));
       String var24 = COSMETIC_TYPES[var19];
       boolean var25 = pulse.cosmetic.LocalCosmetics.selectedIndices().isEmpty();
