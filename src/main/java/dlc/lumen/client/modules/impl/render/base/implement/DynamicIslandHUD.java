@@ -245,7 +245,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
       float var8 = x + 4.0F;
       float var9 = y + (height - var7) * 0.5F;
       helper5(matrices, var8, var9, var7);
-      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 22.0F, ColorUtils.clientText());
+      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 30.0F, ColorUtils.clientText());
    }
 
    private static void helper5(MatrixStack matrices, float x, float y, float h) {
