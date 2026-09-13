@@ -8,13 +8,13 @@ import dlc.lumen.client.modules.impl.player.ItemScroller;
 import dlc.lumen.client.modules.impl.render.BetterMinecraft;
 import dlc.lumen.client.modules.impl.render.HealHelper;
 import dlc.lumen.client.modules.impl.render.ShulkerPreview;
+import dlc.lumen.client.ui.inventory.LumenInvButton;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
@@ -142,28 +142,20 @@ abstract class HandledScreenMixin {
       if (MinecraftClient.getInstance().player != null) {
          if (!(self instanceof GenericContainerScreen gcs && AutoBuyEngine.isAuctionScreen(gcs))) {
             boolean isChest = InventoryButtons.hasContainerSlots(self);
-            int btnY = this.field_2800 - 22;
-            int btnHeight = 20;
+            int btnX = this.field_2776 + this.field_2792 + 5;
+            int btnY = this.field_2800 + 2;
+            int btnGap = 17;
             if (isChest) {
-               int btnWidth = 80;
-               int gap = 4;
-               int totalWidth = btnWidth * 2 + gap;
-               int startX = this.field_2776 + (this.field_2792 - totalWidth) / 2;
-               ButtonWidget btnTake = ButtonWidget.builder(Text.literal("Взять всё"), b -> InventoryButtons.takeAll(self, this::method_2383))
-                  .dimensions(startX, btnY, btnWidth, btnHeight)
-                  .build();
-               ButtonWidget btnDrop = ButtonWidget.builder(Text.literal("Выкинуть всё"), b -> InventoryButtons.dropAll(self, this::method_2383))
-                  .dimensions(startX + btnWidth + gap, btnY, btnWidth, btnHeight)
-                  .build();
-               ((ScreenInvoker)this).lumen$addDrawableChild(btnTake);
-               ((ScreenInvoker)this).lumen$addDrawableChild(btnDrop);
+               ((ScreenInvoker)this).lumen$addDrawableChild(
+                  new LumenInvButton("Взять всё", () -> InventoryButtons.takeAll(self, this::method_2383), btnX, btnY)
+               );
+               ((ScreenInvoker)this).lumen$addDrawableChild(
+                  new LumenInvButton("Выкинуть всё", () -> InventoryButtons.dropAll(self, this::method_2383), btnX, btnY + btnGap)
+               );
             } else {
-               int btnWidth = 95;
-               int startX = this.field_2776 + (this.field_2792 - btnWidth) / 2;
-               ButtonWidget btnDrop = ButtonWidget.builder(Text.literal("Выкинуть всё"), b -> InventoryButtons.dropAll(self, this::method_2383))
-                  .dimensions(startX, btnY, btnWidth, btnHeight)
-                  .build();
-               ((ScreenInvoker)this).lumen$addDrawableChild(btnDrop);
+               ((ScreenInvoker)this).lumen$addDrawableChild(
+                  new LumenInvButton("Выкинуть всё", () -> InventoryButtons.dropAll(self, this::method_2383), btnX, btnY)
+               );
             }
          }
       }
