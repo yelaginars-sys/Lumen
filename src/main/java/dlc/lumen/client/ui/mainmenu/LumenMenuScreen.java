@@ -116,7 +116,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       float var8 = Math.min(0.1F, (float)(var6 - this.timestamp) / 1000.0F);
       this.timestamp = var6;
       float var9 = (float)var6 / 1000.0F;
-      this.helper2(context, var5, mouseX, mouseY, var8);
+      this.helper2(context, var5, mouseX, mouseY);
       BlurProgram.getInstance().forceDraw();
       if (!this.flag2 && !this.flag3 && this.volume2 > 0.0F) {
          this.volume2 = Math.max(0.0F, this.volume2 - 0.08F);
@@ -136,7 +136,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       super.render(context, mouseX, mouseY, delta);
    }
 
-   private void helper2(DrawContext context, float r, double mouseX, double mouseY, float frameDelta) {
+   private void helper2(DrawContext context, float r, double mouseX, double mouseY) {
       context.draw();
       int width = this.width;
       int height = this.height;
@@ -147,7 +147,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.40F, ColorUtils.setAlphaColor(theme, (int)(22.0F * r)));
       RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.22F, ColorUtils.setAlphaColor(-1, (int)(10.0F * r)));
       context.draw();
-      MenuParticles.render(context, width, height, mouseX, mouseY, frameDelta, r);
+      MenuParticles.render(context, width, height, mouseX, mouseY, r);
       context.draw();
    }
 

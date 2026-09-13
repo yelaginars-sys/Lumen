@@ -16,12 +16,15 @@ public final class MenuParticles {
    private static double lastMouseY = -1.0;
    private static double spawnDebt;
    private static double ambientDebt;
+   private static long lastNano = 0L;
 
    private MenuParticles() {
    }
 
-   public static void render(DrawContext context, int width, int height, double mouseX, double mouseY, float frameDelta, float alphaScale) {
-      double dt = MathHelper.clamp(frameDelta, 0.001, 0.05);
+   public static void render(DrawContext context, int width, int height, double mouseX, double mouseY, float alphaScale) {
+      long now = System.nanoTime();
+      double dt = lastNano == 0L ? 0.016 : MathHelper.clamp((now - lastNano) / 1.0E9, 0.001, 0.05);
+      lastNano = now;
       MatrixStack matrices = context.getMatrices();
       int theme;
       try {

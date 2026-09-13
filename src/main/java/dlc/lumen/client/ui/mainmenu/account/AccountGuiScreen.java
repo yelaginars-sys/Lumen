@@ -1,5 +1,6 @@
 package dlc.lumen.client.ui.mainmenu.account;
 
+import dlc.lumen.client.ui.mainmenu.MenuParticles;
 import dlc.lumen.api.utils.client.ClientSoundPlayer;
 
 import dlc.lumen.api.QClient;
@@ -73,7 +74,11 @@ public final class AccountGuiScreen extends Screen implements QClient {
    @Override
    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
       MatrixStack var5 = context.getMatrices();
-      MenuBackground.render(context, this.width, this.height);
+      context.fillGradient(0, 0, this.width, this.height, ColorUtils.rgb(9, 10, 15), ColorUtils.rgb(16, 18, 27));
+      int lumenGlow = ColorUtils.getThemeColor();
+      RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.7F, ColorUtils.setAlphaColor(lumenGlow, 24));
+      RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.45F, ColorUtils.setAlphaColor(lumenGlow, 20));
+      MenuParticles.render(context, this.width, this.height, mouseX, mouseY, 1.0F);
       float var6 = this.width / 2.0F - 200.0F;
       float var7 = this.height / 2.0F - 80.0F + 40.0F;
       float var8 = 150.94339F;
@@ -126,10 +131,10 @@ public final class AccountGuiScreen extends Screen implements QClient {
       for (Account var13 : var8) {
          float var14 = x2 + 10.0F + (var9 + 10.0F) * var11;
          float var15 = y2 + 10.0F + this.volume + var10;
-         this.helper4(matrices, var13, var14, var15, var9, 40.0F, mouseX, mouseY);
+         this.helper4(matrices, var13, var14, var15, var9, 28.0F, mouseX, mouseY);
          if (++var11 > 1) {
             var11 = 0;
-            var10 += 50.0F;
+            var10 += 34.0F;
          }
       }
 
@@ -147,7 +152,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
 
       ScissorUtils.pop();
       if (var11 != 0) {
-         var10 += 50.0F;
+         var10 += 34.0F;
       }
 
       float var17 = var10 > 0.0F ? var10 - 10.0F : 0.0F;
@@ -182,30 +187,30 @@ public final class AccountGuiScreen extends Screen implements QClient {
          );
       }
 
-      RenderUtils.drawPlayerHead(matrices, account.name(), x2 + 5.0F, y2 + 5.0F, height - 10.0F, 4.0F);
-      Font var13 = helper21("suisse", 14);
-      Font var14 = helper21("suisse", 12);
-      float var15 = x2 + height;
+      RenderUtils.drawPlayerHead(matrices, account.name(), x2 + 5.0F, y2 + (height - 18.0F) / 2.0F, 18.0F, 3.0F);
+      Font var13 = helper21("suisse", 12);
+      Font var14 = helper21("suisse", 10);
+      float var15 = x2 + 26.0F;
       float var16 = width - height - 26.0F;
       int var17 = -1;
-      this.helper26(var13, matrices, account.name(), var15, y2 + 9.0F, var16, var17);
+      this.helper26(var13, matrices, account.name(), var15, y2 + 5.0F, var16, var17);
       helper22(
          var14,
          matrices,
          account.creationDate().format(DateTimeFormatter.ofPattern("dd MMMM HH:mm", Locale.ENGLISH)),
          var15,
-         y2 + 25.0F,
+         y2 + 16.0F,
          helper20(-1, 76)
       );
       Font var18 = helper21("icon", 16);
       int var19 = account.favorite() ? ColorUtils.rgba(255, 160, 102, 255) : helper20(-1, 95);
-      helper22(var18, matrices, "D", x2 + width - 16.0F, y2 + 8.5F, var19);
-      helper22(var18, matrices, "C", x2 + width - 16.0F, y2 + height - 16.0F, ColorUtils.rgba(255, 101, 104, 230));
+      helper22(var18, matrices, "D", x2 + width - 15.0F, y2 + 5.5F, var19);
+      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, ColorUtils.rgba(255, 101, 104, 230));
    }
 
    private void helper5(MatrixStack matrices, float x2, float y2, float width, float height) {
-      int var6 = helper20(ColorUtils.darken(helper19(45), 0.17F), 190);
-      int var7 = helper20(ColorUtils.darken(helper19(180), 0.11F), 205);
+      int var6 = ColorUtils.rgba(13, 14, 20, 190);
+      int var7 = ColorUtils.rgba(19, 21, 30, 205);
       RenderUtils.drawGradientRect(matrices, x2, y2, width, height, 8.0F, var6, var7);
       RenderUtils.drawRoundedRectOutline(
          matrices,
@@ -215,19 +220,19 @@ public final class AccountGuiScreen extends Screen implements QClient {
          height,
          8.0F,
          0.9F,
-         helper20(helper18(), 150),
-         helper20(helper19(90), 80),
-         helper20(helper19(180), 60),
-         helper20(helper18(), 140)
+         helper20(-1, 150),
+         helper20(-1, 80),
+         helper20(-1, 60),
+         helper20(-1, 140)
       );
    }
 
    private void helper6(MatrixStack matrices, float x2, float y2, float width, float height, int mouseX, int mouseY) {
       boolean var8 = HoveringUtils.isHovered(mouseX, mouseY, x2, y2, width, height);
       RenderUtils.drawRoundedRect(
-         matrices, x2, y2, width, height, 5.0F, helper20(ColorUtils.darken(helper19(180), var8 ? 0.19F : 0.13F), 170)
+         matrices, x2, y2, width, height, 5.0F, ColorUtils.rgba(19, 21, 30, var8 ? 205 : 170)
       );
-      RenderUtils.drawRoundedRectOutline(matrices, x2, y2, width, height, 5.0F, 5.0F, 5.0F, 5.0F, 1.0F, helper20(helper18(), var8 ? 190 : 80));
+      RenderUtils.drawRoundedRectOutline(matrices, x2, y2, width, height, 5.0F, 5.0F, 5.0F, 5.0F, 1.0F, helper20(-1, var8 ? 190 : 80));
    }
 
    private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
