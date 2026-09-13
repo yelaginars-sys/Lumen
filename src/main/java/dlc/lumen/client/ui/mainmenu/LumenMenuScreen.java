@@ -116,7 +116,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       float var8 = Math.min(0.1F, (float)(var6 - this.timestamp) / 1000.0F);
       this.timestamp = var6;
       float var9 = (float)var6 / 1000.0F;
-      this.helper2(context, var5);
+      this.helper2(context, var5, mouseX, mouseY, var8);
       BlurProgram.getInstance().forceDraw();
       if (!this.flag2 && !this.flag3 && this.volume2 > 0.0F) {
          this.volume2 = Math.max(0.0F, this.volume2 - 0.08F);
@@ -136,16 +136,19 @@ public class LumenMenuScreen extends Screen implements QClient {
       super.render(context, mouseX, mouseY, delta);
    }
 
-   private void helper2(DrawContext context, float r) {
+   private void helper2(DrawContext context, float r, double mouseX, double mouseY, float frameDelta) {
       context.draw();
-      if (mc.getResourceManager().getResource(TEXTURE_ID).isPresent()) {
-         RenderUtils.drawImage(context.getMatrices(), TEXTURE_ID, 0.0F, 0.0F, this.width, this.height, -1);
-         RenderUtils.drawRoundedRect(
-            context.getMatrices(), 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.setAlphaColor(ColorUtils.rgb(0, 0, 0), (int)(95.0F * r))
-         );
-      } else {
-         MenuBackground.render(context, this.width, this.height);
-      }
+      int width = this.width;
+      int height = this.height;
+      context.fillGradient(0, 0, width, height, ColorUtils.rgb(9, 10, 15), ColorUtils.rgb(16, 18, 27));
+      MatrixStack matrices = context.getMatrices();
+      int theme = ColorUtils.getThemeColor();
+      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.62F, ColorUtils.setAlphaColor(theme, (int)(26.0F * r)));
+      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.40F, ColorUtils.setAlphaColor(theme, (int)(22.0F * r)));
+      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.22F, ColorUtils.setAlphaColor(-1, (int)(10.0F * r)));
+      context.draw();
+      MenuParticles.render(context, width, height, mouseX, mouseY, frameDelta, r);
+      context.draw();
    }
 
    private void updateState(DrawContext context, float x, float y, float w, float h) {
