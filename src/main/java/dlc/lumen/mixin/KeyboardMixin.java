@@ -14,13 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Keyboard.class)
 public class KeyboardMixin implements QClient {
-   @Inject(method = "onKey", at = @At("HEAD"), cancellable = true)
+   @Inject(method = "onKey", at = @At("HEAD"))
    public void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
       if (mc.currentScreen == null) {
          KeyBoardUtils.call(key, action);
-         if (key == 344 && action == 1 && mc.currentScreen != null) {
-            ci.cancel();
-         }
       }
    }
 
