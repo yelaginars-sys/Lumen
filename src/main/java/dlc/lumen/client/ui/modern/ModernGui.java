@@ -573,14 +573,7 @@ public class ModernGui extends Screen implements QClient {
    }
 
    private void helper7(float x, float centerY, float h, int color) {
-      float var5 = h * 0.22F;
-      float var6 = h * 0.18F;
-      float var7 = h;
-      float var8 = h * 0.55F;
-      float var9 = var5 * 0.5F;
-      RenderUtils.drawRoundedRect(this.m, x + 1.0F, centerY - var7 / 2.0F, var5, var7 - 2.0F, var9, color);
-      RenderUtils.drawRoundedRect(this.m, x + (var5 + var6), centerY - var8 / 2.0F, var5, var8 + 6.0F, var9, color);
-      RenderUtils.drawRoundedRect(this.m, x - 1.0F + 2.0F * (var5 + var6), centerY - var7 / 2.0F, var5, var7 - 2.0F, var9, color);
+      RenderUtils.drawImage(this.m, TEXTURE_ID, x, centerY - h / 2.0F, h, h, color);
    }
 
    public void toggle(float tx, float ty, boolean on, Object key) {
