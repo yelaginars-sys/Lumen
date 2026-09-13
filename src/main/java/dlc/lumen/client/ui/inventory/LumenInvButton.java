@@ -38,7 +38,7 @@ public class LumenInvButton implements Element, Drawable, Selectable {
       RenderUtils.drawRoundedRect(matrices, this.x, this.y, WIDTH, HEIGHT, 4.0F, background);
       Font font = Fonts.getFont("inter_medium", 13);
       if (font != null) {
-         float textX = this.x + (WIDTH - font.getStringWidth(this.label)) / 2.0F;
+         float textX = this.x + 8.0F;
          float textY = this.y + (HEIGHT - font.getHeight()) / 2.0F;
          int color = this.hovered ? ColorUtils.getThemeColor() : ColorUtils.clientText();
          font.drawString(matrices, this.label, textX, textY, color);

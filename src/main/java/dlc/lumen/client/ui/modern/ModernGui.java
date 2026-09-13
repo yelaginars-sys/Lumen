@@ -266,12 +266,12 @@ public class ModernGui extends Screen implements QClient {
       this.rect(this.x + 116.0F - 0.5F, this.y + 6.0F, 0.5F, 306.0F, 0.0F, ModernTheme.LINE());
       float var2 = this.x + 8.0F;
       float var3 = 100.0F;
-      float var4 = 18.0F;
+      float var4 = 30.0F;
       float var5 = var4 * 1.02F;
       float var6 = var2 + (var3 - var5) / 2.0F;
-      float var7 = this.y + 22.0F;
+      float var7 = this.y + 31.0F;
       this.helper7(var6, var7, var4, this.a(ModernTheme.accent()));
-      float var8 = this.y + 44.0F;
+      float var8 = this.y + 56.0F;
       boolean var9 = this.focus == FOCUS_SEARCH;
       this.rect(var2, var8, var3, 19.0F, 6.5F, ModernTheme.FIELD());
       if (var9) {
@@ -296,7 +296,7 @@ public class ModernGui extends Screen implements QClient {
          this.buffer = text2;
          return true;
       });
-      float var26 = this.y + 69.0F;
+      float var26 = this.y + 81.0F;
 
       for (Module.ModuleCategory var15 : categories()) {
          boolean var16 = page2 == ModernGui.Page.MODULES && var15 == moduleCategory && text2.isBlank();
