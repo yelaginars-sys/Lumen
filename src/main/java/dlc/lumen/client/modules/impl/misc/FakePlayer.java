@@ -8,6 +8,8 @@ import dlc.lumen.api.events.implement.EventUpdate;
 import dlc.lumen.client.modules.Module;
 import dlc.lumen.client.modules.settings.implement.BindSetting;
 import dlc.lumen.client.modules.settings.implement.BooleanSetting;
+import dlc.lumen.client.modules.settings.implement.FloatSetting;
+import dlc.lumen.client.modules.settings.implement.TextSetting;
 import java.util.UUID;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.entity.Entity.RemovalReason;
@@ -18,18 +20,23 @@ import net.minecraft.util.math.MathHelper;
 
 public class FakePlayer extends Module {
    public static FakePlayer INSTANCE = new FakePlayer();
-   private final BindSetting bindSetting = new BindSetting("Кнопка спавна", -1);
-   private final BooleanSetting booleanSetting = new BooleanSetting("Урон и смерть", false);
-   private final BooleanSetting booleanSetting2 = new BooleanSetting("Авто-респавн", true).visible(() -> this.booleanSetting.isState());
-   private OtherClientPlayerEntity fakePlayer = null;
-   private boolean flag = false;
-   private int index = 0;
-   private int index2 = 0;
+    private final BindSetting bindSetting = new BindSetting("Кнопка спавна", -1);
+    private final TextSetting textSetting = new TextSetting("Имя", "FakePlayer", 16);
+    private final FloatSetting floatSetting = new FloatSetting("Здоровье", 20.0F, 1.0F, 100.0F, 1.0F);
+    private final BooleanSetting booleanSetting3 = new BooleanSetting("Копировать инвентарь", true);
+    private final BooleanSetting booleanSetting4 = new BooleanSetting("Синхронизировать инвентарь", true);
+    private final BooleanSetting booleanSetting = new BooleanSetting("Урон и смерть", false);
+    private final BooleanSetting booleanSetting2 = new BooleanSetting("Авто-респавн", true).visible(() -> this.booleanSetting.isState());
+    private OtherClientPlayerEntity fakePlayer = null;
+    private boolean flag = false;
+    private int index = 0;
+    private int index2 = 0;
+    private int index3 = 0;
 
-   public FakePlayer() {
-      super("FakePlayer", "Спавнит фейкового игрока для тренировки", Module.ModuleCategory.MISC);
-      this.addSettings(this.bindSetting, this.booleanSetting, this.booleanSetting2);
-   }
+    public FakePlayer() {
+       super("FakePlayer", "Спавнит фейкового игрока для тренировки", Module.ModuleCategory.MISC);
+       this.addSettings(this.bindSetting, this.textSetting, this.floatSetting, this.booleanSetting3, this.booleanSetting4, this.booleanSetting, this.booleanSetting2);
+    }
 
    @EventLink
    public void onEvent(EventBinding event) {
@@ -81,14 +88,21 @@ public class FakePlayer extends Module {
       }
    }
 
-   @EventLink
-   public void onEvent(EventUpdate event) {
-      if (mc.player != null && mc.world != null) {
-         if (this.index2 > 0 && --this.index2 == 0) {
-            this.helper3();
-         }
+    @EventLink
+    public void onEvent(EventUpdate event) {
+       if (mc.player != null && mc.world != null) {
+          if (this.index2 > 0 && --this.index2 == 0) {
+             this.helper3();
+          }
 
-         if (this.flag) {
+          if (this.fakePlayer != null && this.fakePlayer.isAlive() && this.booleanSetting4.isState()) {
+             if (++this.index3 >= 5) {
+                this.index3 = 0;
+                this.fakePlayer.getInventory().clone(mc.player.getInventory());
+             }
+          }
+
+          if (this.flag) {
             if (this.index > 0) {
                this.index--;
             } else {
@@ -100,10 +114,15 @@ public class FakePlayer extends Module {
       }
    }
 
-   private void helper3() {
-      if (mc.player != null && mc.world != null) {
-         this.removeFakePlayer();
-         GameProfile var1 = new GameProfile(UUID.randomUUID(), "FakePlayer_" + System.currentTimeMillis() % 10000L);
+    private void helper3() {
+       if (mc.player != null && mc.world != null) {
+          this.removeFakePlayer();
+          String var0 = this.textSetting.get().trim();
+          if (var0.isEmpty()) {
+             var0 = "FakePlayer";
+          }
+
+          GameProfile var1 = new GameProfile(UUID.randomUUID(), var0);
          this.fakePlayer = new OtherClientPlayerEntity(mc.world, var1);
          double var2 = Math.toRadians(mc.player.getYaw());
          double var4 = mc.player.getX() - Math.sin(var2) * 2.0;
@@ -122,8 +141,11 @@ public class FakePlayer extends Module {
             this.fakePlayer.refreshPositionAndAngles(var4, var11.getY(), var6, mc.player.getYaw() + 180.0F, 0.0F);
          }
 
-         this.fakePlayer.getInventory().clone(mc.player.getInventory());
-         this.fakePlayer.setHealth(20.0F);
+          if (this.booleanSetting3.isState()) {
+             this.fakePlayer.getInventory().clone(mc.player.getInventory());
+          }
+
+          this.fakePlayer.setHealth(this.floatSetting.get());
          this.fakePlayer.setInvulnerable(false);
          mc.world.addEntity(this.fakePlayer);
       }
@@ -145,11 +167,12 @@ public class FakePlayer extends Module {
    }
 
    @Override
-   public void onDisable() {
+    public void onDisable() {
       this.removeFakePlayer();
       this.flag = false;
       this.index = 0;
       this.index2 = 0;
+      this.index3 = 0;
       super.onDisable();
    }
 }
