@@ -78,7 +78,9 @@ public final class AccountGuiScreen extends Screen implements QClient {
       int lumenGlow = ColorUtils.getThemeColor();
       RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.7F, ColorUtils.setAlphaColor(lumenGlow, 24));
       RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.45F, ColorUtils.setAlphaColor(lumenGlow, 20));
+      context.draw();
       MenuParticles.render(context, this.width, this.height, mouseX, mouseY, 1.0F);
+      context.draw();
       float var6 = this.width / 2.0F - 200.0F;
       float var7 = this.height / 2.0F - 80.0F + 40.0F;
       float var8 = 150.94339F;
