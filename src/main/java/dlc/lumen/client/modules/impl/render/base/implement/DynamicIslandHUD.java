@@ -81,7 +81,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
    @Override
    public void onRender(EventRender.Default eventRender) {
       if (mc != null && mc.getWindow() != null) {
-         Font var2 = this.helper26(13);
+         Font var2 = this.helper26(18);
          Font var3 = this.helper26(11);
          Font var4 = this.helper26(9);
          Font var5 = this.helper27(10);
@@ -231,21 +231,21 @@ public class DynamicIslandHUD extends InterfaceProcessing {
          case MUSIC -> this.flag ? 164.0F : helper41(titleFont, music.collapsedText());
          case DEFAULT -> {
             float var6 = helper30(titleFont, "LumenDLC", 96.0F);
-            yield helper29(26.0F + var6 + 4.0F, 52.0F, 104.0F);
+            yield helper29(28.0F + var6 + 4.0F, 52.0F, 104.0F);
          }
       };
    }
 
    private float helper3(DynamicIslandHUD.StatusType status, DynamicIslandHUD.MusicState music) {
-      return status == DynamicIslandHUD.StatusType.MUSIC && this.flag ? 76.0F + (music.lyric().isBlank() ? 0.0F : 10.0F) : 16.0F;
+      return status == DynamicIslandHUD.StatusType.MUSIC && this.flag ? 76.0F + (music.lyric().isBlank() ? 0.0F : 10.0F) : 18.0F;
    }
 
    private void helper4(MatrixStack matrices, float x, float y, float width, float height, Font font) {
-      float var7 = height - 2.0F;
+      float var7 = 16.0F;
       float var8 = x + 4.0F;
       float var9 = y + (height - var7) * 0.5F;
       helper5(matrices, var8, var9, var7);
-      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 26.0F, ColorUtils.clientText());
+      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 28.0F, ColorUtils.clientText());
    }
 
    private static void helper5(MatrixStack matrices, float x, float y, float h) {
