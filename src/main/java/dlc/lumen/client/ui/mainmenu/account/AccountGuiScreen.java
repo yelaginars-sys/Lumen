@@ -1,6 +1,7 @@
 package dlc.lumen.client.ui.mainmenu.account;
 
 import dlc.lumen.client.ui.mainmenu.MenuParticles;
+import net.minecraft.util.Identifier;
 import dlc.lumen.api.utils.client.ClientSoundPlayer;
 
 import dlc.lumen.api.QClient;
@@ -41,6 +42,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
    private static final float VOLUME2 = 160.0F;
    private static final float VOLUME3 = 10.0F;
    private static final float VOLUME4 = 25.0F;
+   private static final Identifier MENU_BG = Identifier.of("lumen", "textures/mainmenu/menu_bg.png");
    private final Map<String, Float> strings = new HashMap<>();
    private final Screen screen2;
    private final AccountGuiScreen.TextField accountGuiScreen = new AccountGuiScreen.TextField("Nickname", "icon", "e");
@@ -74,13 +76,19 @@ public final class AccountGuiScreen extends Screen implements QClient {
    @Override
    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
       MatrixStack var5 = context.getMatrices();
-      context.fillGradient(0, 0, this.width, this.height, ColorUtils.rgb(9, 10, 15), ColorUtils.rgb(16, 18, 27));
+      if (mc.getResourceManager().getResource(MENU_BG).isPresent()) {
+         float bgScale = Math.max(this.width / 2560.0F, this.height / 1440.0F);
+         float bgW = 2560.0F * bgScale;
+         float bgH = 1440.0F * bgScale;
+         RenderUtils.drawImage(var5, MENU_BG, (this.width - bgW) / 2.0F, (this.height - bgH) / 2.0F, bgW, bgH, -1);
+         RenderUtils.drawRoundedRect(var5, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.setAlphaColor(ColorUtils.rgb(8, 9, 14), 175));
+      } else {
+         RenderUtils.drawRoundedRect(var5, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.rgb(9, 10, 15));
+      }
+
       int lumenGlow = ColorUtils.getThemeColor();
-      RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.7F, ColorUtils.setAlphaColor(lumenGlow, 24));
-      RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.45F, ColorUtils.setAlphaColor(lumenGlow, 20));
-      context.draw();
+      RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.7F, ColorUtils.setAlphaColor(lumenGlow, 26));
       MenuParticles.render(context, this.width, this.height, mouseX, mouseY, 1.0F);
-      context.draw();
       float var6 = this.width / 2.0F - 200.0F;
       float var7 = this.height / 2.0F - 80.0F + 40.0F;
       float var8 = 150.94339F;

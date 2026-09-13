@@ -140,15 +140,20 @@ public class LumenMenuScreen extends Screen implements QClient {
       context.draw();
       int width = this.width;
       int height = this.height;
-      context.fillGradient(0, 0, width, height, ColorUtils.rgb(9, 10, 15), ColorUtils.rgb(16, 18, 27));
       MatrixStack matrices = context.getMatrices();
+      if (mc.getResourceManager().getResource(TEXTURE_ID).isPresent()) {
+         float scale = Math.max(width / 2560.0F, height / 1440.0F);
+         float dw = 2560.0F * scale;
+         float dh = 1440.0F * scale;
+         RenderUtils.drawImage(matrices, TEXTURE_ID, (width - dw) / 2.0F, (height - dh) / 2.0F, dw, dh, -1);
+         RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, width, height, 0.0F, ColorUtils.setAlphaColor(ColorUtils.rgb(8, 9, 14), (int)(165.0F * r)));
+      } else {
+         RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, width, height, 0.0F, ColorUtils.rgb(9, 10, 15));
+      }
+
       int theme = ColorUtils.getThemeColor();
-      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.62F, ColorUtils.setAlphaColor(theme, (int)(26.0F * r)));
-      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.40F, ColorUtils.setAlphaColor(theme, (int)(22.0F * r)));
-      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.22F, ColorUtils.setAlphaColor(-1, (int)(10.0F * r)));
-      context.draw();
+      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.62F, ColorUtils.setAlphaColor(theme, (int)(24.0F * r)));
       MenuParticles.render(context, width, height, mouseX, mouseY, r);
-      context.draw();
    }
 
    private void updateState(DrawContext context, float x, float y, float w, float h) {
