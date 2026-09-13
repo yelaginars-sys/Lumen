@@ -319,15 +319,15 @@ public final class AccountGuiScreen extends Screen implements QClient {
       for (Account var14 : var9) {
          float var15 = listX + 10.0F + (var10 + 10.0F) * var12;
          float var16 = panelY + 10.0F + this.volume + var11;
-         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 29.0F, var16 + 7.0F, 18.0, 16.0)) {
+         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 22.0F, var16 + 2.0F, 18.0, 12.0)) {
             var14.toggleFavorite();
             MANAGER.save();
             helper17();
             return true;
          }
 
-         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 20.0F, var16 + 24.0F, 16.0, 16.0)
-            || button == 1 && HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 40.0)) {
+         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 22.0F, var16 + 14.0F, 18.0, 12.0)
+            || button == 1 && HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 28.0)) {
             MANAGER.removeAccount(var14.name());
             if (this.account2 == var14) {
                this.helper(MANAGER.stream().findFirst().orElse(null));
@@ -337,7 +337,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
             return true;
          }
 
-         if (HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 40.0)) {
+         if (HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 28.0)) {
             if (button == 0) {
                helper15(var14.name());
                this.helper(var14);
@@ -350,7 +350,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
 
          if (++var12 > 1) {
             var12 = 0;
-            var11 += 50.0F;
+            var11 += 34.0F;
          }
       }
 
