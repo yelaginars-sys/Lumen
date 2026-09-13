@@ -126,9 +126,9 @@ public class LumenMenuScreen extends Screen implements QClient {
       float var14 = helper17(var5, 0.34F, 0.52F);
       this.helper4(context, mouseX, mouseY, var11, var12, var8);
       this.helper3(context, var10, var9);
-      float var18 = MathHelper.clamp(this.height * 0.5F - 45.0F + this.height * 0.035F, this.height * 0.16F, this.height - 90.0F);
+      float var18 = MathHelper.clamp(this.height * 0.5F - 48.0F + this.height * 0.035F, this.height * 0.16F, this.height - 96.0F);
       this.helper8(context, mouseX, mouseY, var13, var18 + (1.0F - var13) * 20.0F, var8);
-      float var19 = var18 + 62.0F;
+      float var19 = var18 + 68.0F;
       this.helper9(context, mouseX, mouseY, var14, var19 + (1.0F - var14) * 20.0F, var8);
       super.render(context, mouseX, mouseY, delta);
    }
@@ -184,8 +184,8 @@ public class LumenMenuScreen extends Screen implements QClient {
       float var7 = 150.0F;
       float var8 = 100.0F;
       float var9 = this.height / 2.0F - var8 / 2.0F;
-      float var10 = Math.max(12.0F, this.width * 0.5F - 230.0F);
-      float var11 = Math.min(this.width - 12.0F - var7, this.width * 0.5F + 230.0F - var7);
+      float var10 = Math.max(12.0F, this.width * 0.5F - 300.0F);
+      float var11 = Math.min(this.width - 12.0F - var7, this.width * 0.5F + 300.0F - var7);
       helper22(this.volume8, var10, var9, var7, var8);
       helper22(this.volume9, var11, var9, var7, var8);
       float var12 = (1.0F - aLeft) * -34.0F;
@@ -309,32 +309,32 @@ public class LumenMenuScreen extends Screen implements QClient {
 
    private float helper8(DrawContext context, int mouseX, int mouseY, float r, float top, float dt) {
       float var9 = 170.0F;
-      float var10 = 26.0F;
+      float var10 = 32.0F;
       float var11 = this.width / 2.0F;
       float var12 = var11 - var9 / 2.0F;
       float var13 = top;
       this.updateState(context, var12, var13, var9, var10);
-      if (!GlobalProfileAvatar.drawRounded(context, var12 + 6.0F, var13 + 4.0F, 18.0F, 18.0F, 9.0F, helper21(-1, (int)(255.0F * r)))) {
-         Font var14 = helper19("icon", 12);
+      if (!GlobalProfileAvatar.drawRounded(context, var12 + 7.0F, var13 + 5.0F, 22.0F, 22.0F, 11.0F, helper21(-1, (int)(255.0F * r)))) {
+         Font var14 = helper19("icon", 14);
          if (var14 != null) {
-            var14.draw(context.getMatrices(), "e", var12 + 10.0F, var13 + 6.0F, helper21(helper20(), (int)(255.0F * r)));
+            var14.draw(context.getMatrices(), "e", var12 + 12.0F, var13 + 8.0F, helper21(helper20(), (int)(255.0F * r)));
          }
       }
 
-      Font var47 = helper19("sf_regular", 9);
+      Font var47 = helper19("sf_regular", 10);
       if (var47 != null) {
          var47.drawCenteredString(
-            context.getMatrices(), "Выбранный аккаунт", var12 + var9 / 2.0F, var13 + 2.0F, helper21(-1, (int)(150.0F * r))
+            context.getMatrices(), "Выбранный аккаунт", var12 + var9 / 2.0F, var13 + 3.0F, helper21(-1, (int)(150.0F * r))
          );
       }
 
-      Font var48 = helper19("suisse", 12);
+      Font var48 = helper19("suisse", 14);
       if (var48 != null) {
          var48.drawCenteredString(
             context.getMatrices(),
-            this.helper24(var48, this.helper15(), var9 - 36.0F),
+            this.helper24(var48, this.helper15(), var9 - 40.0F),
             var12 + var9 / 2.0F,
-            var13 + 12.0F,
+            var13 + 15.0F,
             helper21(-1, (int)(255.0F * r))
          );
       }
