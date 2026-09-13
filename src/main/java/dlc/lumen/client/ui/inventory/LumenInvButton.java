@@ -9,6 +9,7 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.Selectable.SelectionType;
+import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class LumenInvButton implements Element, Drawable, Selectable {
@@ -62,6 +63,10 @@ public class LumenInvButton implements Element, Drawable, Selectable {
    @Override
    public SelectionType getType() {
       return this.hovered ? SelectionType.HOVERED : SelectionType.NONE;
+   }
+
+   @Override
+   public void appendNarrations(NarrationMessageBuilder builder) {
    }
 
    @Override
