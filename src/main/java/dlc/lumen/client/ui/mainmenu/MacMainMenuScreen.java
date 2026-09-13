@@ -1,5 +1,7 @@
 package dlc.lumen.client.ui.mainmenu;
 
+import dlc.lumen.api.utils.client.ClientSoundPlayer;
+
 import dlc.lumen.api.QClient;
 import dlc.lumen.api.utils.animation.AnimationUtils;
 import dlc.lumen.api.utils.animation.Easings;
@@ -276,7 +278,7 @@ public class MacMainMenuScreen extends Screen implements QClient {
    private static void updateState() {
       MinecraftClient var0 = MinecraftClient.getInstance();
       if (var0 != null) {
-         var0.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+         ClientSoundPlayer.playGuiClick();
       }
    }
 

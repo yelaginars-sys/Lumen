@@ -1,5 +1,7 @@
 package dlc.lumen.client.ui.mainmenu.account;
 
+import dlc.lumen.api.utils.client.ClientSoundPlayer;
+
 import dlc.lumen.api.QClient;
 import dlc.lumen.api.utils.color.ColorUtils;
 import dlc.lumen.api.utils.math.HoveringUtils;
@@ -452,7 +454,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
    private static void helper17() {
       MinecraftClient var0 = MinecraftClient.getInstance();
       if (var0 != null) {
-         var0.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+         ClientSoundPlayer.playGuiClick();
       }
    }
 

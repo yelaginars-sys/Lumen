@@ -36,6 +36,10 @@ public final class ClientSoundPlayer {
       playGuiSound(false);
    }
 
+   public static void playGuiClick() {
+      playGuiSound(true);
+   }
+
    private static void playGuiSound(boolean open) {
       ClientSounds sounds = ClientSounds.INSTANCE;
       if (sounds != null && sounds.isEnable()) {

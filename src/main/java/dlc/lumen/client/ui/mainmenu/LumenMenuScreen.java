@@ -1,5 +1,7 @@
 package dlc.lumen.client.ui.mainmenu;
 
+import dlc.lumen.api.utils.client.ClientSoundPlayer;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import dlc.lumen.Lumen;
 import dlc.lumen.api.QClient;
@@ -611,8 +613,7 @@ public class LumenMenuScreen extends Screen implements QClient {
 
    private static void helper25() {
       try {
-         MinecraftClient var0 = MinecraftClient.getInstance();
-         var0.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+         ClientSoundPlayer.playGuiClick();
       } catch (Exception var1) {
       }
    }
