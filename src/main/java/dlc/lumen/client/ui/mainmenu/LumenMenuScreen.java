@@ -182,7 +182,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       float var4 = this.width / 2.0F;
       float var5 = (float)Math.sin(time * 1.6F) * 1.8F;
       float var6 = Math.max(34.0F, this.height * 0.13F) + var5 + (1.0F - r) * -8.0F;
-      float var7 = 24.0F * (0.9F + 0.1F * r);
+      float var7 = 40.0F * (0.9F + 0.1F * r);
       float var8 = var7 * 1.02F;
       updateState2(context.getMatrices(), var4 - var8 / 2.0F, var6 + var7 / 2.0F, var7, helper21(helper20(), (int)(255.0F * r)));
       var6 += var7 + 6.0F;

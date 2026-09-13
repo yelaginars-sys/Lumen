@@ -352,7 +352,7 @@ public class WaterMark extends InterfaceProcessing {
          }
 
           float var54 = var7 + 4.0F;
-          float brandW = 10.0F + 4.0F;
+          float brandW = 0.0F;
           var54 += brandW;
 
          for (String[] var58 : var31) {
@@ -363,7 +363,6 @@ public class WaterMark extends InterfaceProcessing {
          float var57 = var54;
          drawHudBg(eventRender.getContext().getMatrices(), var3, var4, var57 + 2.0F, var8);
           float var59 = var3 + var7 + 4.0F;
-          RenderUtils.drawImage(var2, LOGO, var59, var4 + 2.0F, 10.0F, 10.0F, -1);
          this.waterMarks.clear();
          this.segRowY2 = var4;
          this.segRowH2 = var8;
