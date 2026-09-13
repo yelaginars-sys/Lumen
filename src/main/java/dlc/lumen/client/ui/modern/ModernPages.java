@@ -16,8 +16,6 @@ import dlc.lumen.client.autoset.AutoSetKit;
 import dlc.lumen.client.autoset.AutoSetKitStorage;
 import dlc.lumen.client.modules.impl.render.ClickGuiTheme;
 import dlc.lumen.client.modules.settings.implement.TextSetting;
-import dlc.lumen.client.render.figura.FiguraAvatarIcons;
-import dlc.lumen.client.render.figura.FiguraBridge;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +54,8 @@ public final class ModernPages {
    private static float volume3 = 0.98F;
    private static int index4 = Integer.MIN_VALUE;
    private static int index5 = 0;
+   private static final String[] COSMETIC_TABS = new String[]{"Все", "Плащи", "Крылья", "Тело", "Питомцы", "Шляпы"};
+   private static final String[] COSMETIC_TYPES = new String[]{"", "cape", "wings", "bodywear", "pet", "hat"};
 
    private ModernPages() {
    }
@@ -82,18 +82,18 @@ public final class ModernPages {
          : (g.client() != null && g.client().getSession() != null ? g.client().getSession().getUsername() : "Player");
       Font var13 = g.font(11);
       g.textCenter(var13, g.clip(var13, var29, var10), x + var6 / 2.0F, y + 2.0F + var7 - 22.0F, ModernTheme.accent());
-      int var14 = FiguraBridge.selectedCount();
+      int var14 = pulse.cosmetic.LocalCosmetics.selectedIndices().size();
       String var15 = var14 == 0 ? "ничего не надето" : "надето: " + var14;
       g.textCenter(g.font(9), var15, x + var6 / 2.0F, y + var7 - 12.0F + 2.0F, ModernTheme.TEXT_MUTED());
       float var16 = x + var6 + 8.0F;
       float var17 = w - var6 - 8.0F;
-      FiguraBridge.Category[] var18 = FiguraBridge.Category.values();
-      int var19 = Math.max(0, Math.min(index5, var18.length - 1));
-      float var20 = (var17 - 6.0F * (var18.length - 1)) / var18.length;
+      int var18 = COSMETIC_TYPES.length;
+      int var19 = Math.max(0, Math.min(index5, var18 - 1));
+      float var20 = (var17 - 6.0F * (var18 - 1)) / var18;
 
-      for (int var21 = 0; var21 < var18.length; var21++) {
+      for (int var21 = 0; var21 < var18; var21++) {
          int var22 = var21;
-         g.pill(var16 + var21 * (var20 + 6.0F), y, var20, 18.0F, var18[var21].title, null, null, var19 == var21, "mdl" + var21, button -> {
+         g.pill(var16 + var21 * (var20 + 6.0F), y, var20, 18.0F, COSMETIC_TABS[var21], null, null, var19 == var21, "cos" + var21, button -> {
             index5 = var22;
             return true;
          });
@@ -101,16 +101,30 @@ public final class ModernPages {
 
       float var30 = y + 24.0F;
       g.pushClip(var16, var30 - 2.0F, var17 + 6.0F, Math.max(0.0F, y + h - var30 + 2.0F));
-      List<FiguraBridge.AvatarInfo> var31 = FiguraBridge.listAvatarInfos(var18[var19]);
+      String var24 = COSMETIC_TYPES[var19];
+      boolean var25 = pulse.cosmetic.LocalCosmetics.selectedIndices().isEmpty();
       float var23 = var30 - var5;
-      FiguraBridge.Category var24 = var18[var19];
-      boolean var25 = FiguraBridge.getSelected(var24) == null;
-      helper(g, var16, var23, var17, var24.removeTitle, null, var25, "none" + var24.name(), () -> FiguraBridge.select(var24, null));
+      helper(g, var16, var23, var17, "Убрать всё", null, var25, "cosnone", () -> pulse.cosmetic.LocalCosmetics.clearAll());
       var23 += 22.0F;
 
-      for (FiguraBridge.AvatarInfo var27 : var31) {
-         boolean var28 = FiguraBridge.isSelectedAny(var27.id());
-         helper(g, var16, var23, var17, var27.name(), FiguraAvatarIcons.icon(var27), var28, var27.id(), () -> FiguraBridge.select(var24, var27.id()));
+      for (int var27 = 0; var27 < pulse.cosmetic.LocalCosmetics.size(); var27++) {
+         if (!var24.isEmpty() && !pulse.cosmetic.LocalCosmetics.type(var27).equals(var24)) {
+            continue;
+         }
+
+         boolean var28 = pulse.cosmetic.LocalCosmetics.isSelected(var27);
+         int var32 = var27;
+         helper(
+            g,
+            var16,
+            var23,
+            var17,
+            pulse.cosmetic.LocalCosmetics.name(var27),
+            pulse.cosmetic.LocalCosmetics.texture(var27),
+            var28,
+            "cos" + var27,
+            () -> pulse.cosmetic.LocalCosmetics.toggle(var32)
+         );
          var23 += 22.0F;
       }
 

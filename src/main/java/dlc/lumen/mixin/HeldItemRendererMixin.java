@@ -7,8 +7,6 @@ import dlc.lumen.client.modules.impl.combat.Aura;
 import dlc.lumen.client.modules.impl.render.ShaderHands;
 import dlc.lumen.client.modules.impl.render.SwingAnimations;
 import dlc.lumen.client.modules.impl.render.ViewModel;
-import dlc.lumen.client.render.models.CosmeticManager;
-import dlc.lumen.client.render.models.CosmeticSword;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -157,39 +155,6 @@ public abstract class HeldItemRendererMixin {
             matrices.translate(viewModel.mainHandX.get(), viewModel.mainHandY.get(), viewModel.mainHandZ.get());
          } else {
             matrices.translate(viewModel.offHandX.get(), viewModel.offHandY.get(), viewModel.offHandZ.get());
-         }
-      }
-   }
-
-   @Inject(method = "renderFirstPersonItem", at = @At("HEAD"), cancellable = true)
-   private void lumen$cosmeticSwordFirstPerson(
-      AbstractClientPlayerEntity player,
-      float tickDelta,
-      float pitch,
-      Hand hand,
-      float swingProgress,
-      ItemStack stack,
-      float equipProgress,
-      MatrixStack matrices,
-      VertexConsumerProvider vertexConsumers,
-      int light,
-      CallbackInfo ci
-   ) {
-      CosmeticSword sword = CosmeticManager.getSelectedSword();
-      if (sword != null && sword.isCustom() && hand == Hand.MAIN_HAND) {
-         if (!stack.isEmpty() && stack.getItem() instanceof SwordItem) {
-            int i = player.getMainArm() == Arm.RIGHT ? 1 : -1;
-            float sinSqrt = MathHelper.sin(MathHelper.sqrt(swingProgress) * (float) Math.PI);
-            matrices.push();
-            matrices.translate(i * 0.56F, -1.05F + equipProgress * -0.6F, -0.72F);
-            matrices.translate(0.0F, sinSqrt * 0.12F, 0.0F);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(i * 45.0F));
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(sinSqrt * -20.0F));
-            matrices.scale(0.9F, 0.9F, 0.9F);
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F));
-            CosmeticManager.renderSelectedSword(matrices, vertexConsumers, light);
-            matrices.pop();
-            ci.cancel();
          }
       }
    }

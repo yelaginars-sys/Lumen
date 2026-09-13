@@ -34,8 +34,6 @@ import dlc.lumen.client.render.figura.FiguraAvatarPersistence;
 import dlc.lumen.client.render.figura.FiguraBridge;
 import dlc.lumen.client.render.figura.FiguraKeybindGuard;
 import dlc.lumen.client.render.figura.FriendModelManager;
-import dlc.lumen.client.render.models.CosmeticWorldRenderer;
-import dlc.lumen.client.render.models.PetManager;
 import dlc.lumen.client.social.GlobalSocialManager;
 import dlc.lumen.client.social.GlobalSocialStorage;
 import dlc.lumen.client.voice.call.VoiceCallManager;
@@ -98,8 +96,6 @@ public enum Lumen implements ModInitializer, QClient {
       EventInvoker.register(AutoBuyEngine.INSTANCE);
       EventInvoker.register(AutoSetCollector.INSTANCE);
       EventInvoker.register(ItemPickupTracker.INSTANCE);
-      EventInvoker.register(PetManager.INSTANCE);
-      EventInvoker.register(CosmeticWorldRenderer.INSTANCE);
       FiguraBridge.installBundledAvatars();
       FiguraBridge.loadPersisted();
       EventInvoker.register(FiguraAvatarPersistence.INSTANCE);

@@ -42,7 +42,8 @@
 		]
 	},
 	"mixins": [
-		"lumen.mixins.json"
+		"lumen.mixins.json",
+		"pulse.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.18.4",

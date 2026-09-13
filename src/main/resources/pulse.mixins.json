@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ru.pulse.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [],
+  "client": [
+    "CosmeticRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}

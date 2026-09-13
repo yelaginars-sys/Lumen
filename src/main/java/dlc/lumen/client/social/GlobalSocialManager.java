@@ -9,8 +9,6 @@ import dlc.lumen.api.QClient;
 import dlc.lumen.api.events.EventLink;
 import dlc.lumen.api.events.implement.EventTickPost;
 import dlc.lumen.api.utils.chat.ChatUtils;
-import dlc.lumen.client.render.models.CosmeticPet;
-import dlc.lumen.client.render.models.CosmeticSword;
 import dlc.lumen.client.render.models.CustomModelManager;
 import dlc.lumen.client.render.models.CustomModelType;
 import dlc.lumen.client.voice.call.VoiceCallManager;
@@ -354,16 +352,6 @@ public enum GlobalSocialManager implements QClient {
    public String getPartyFiguraModelId(UUID playerUuid) {
       GlobalSocialManager.PartyMemberSnapshot var2 = this.getPartyMember(playerUuid);
       return var2 == null ? null : helper23(var2.figuraId());
-   }
-
-   public CosmeticSword getPartySword(UUID playerUuid) {
-      GlobalSocialManager.PartyMemberSnapshot var2 = this.getPartyMember(playerUuid);
-      return var2 == null ? CosmeticSword.NONE : CosmeticSword.fromId(var2.swordId());
-   }
-
-   public CosmeticPet getPartyPet(UUID playerUuid) {
-      GlobalSocialManager.PartyMemberSnapshot var2 = this.getPartyMember(playerUuid);
-      return var2 == null ? CosmeticPet.NONE : CosmeticPet.fromId(var2.petId());
    }
 
    public Vec3d getRenderPosition(GlobalSocialManager.PartyMemberSnapshot member) {
