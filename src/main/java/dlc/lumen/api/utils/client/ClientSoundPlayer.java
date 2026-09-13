@@ -41,7 +41,7 @@ public final class ClientSoundPlayer {
       if (sounds != null && sounds.isEnable()) {
          String mode = sounds.stateSounds.getCurrent();
          if (mode != null && !"Нет".equals(mode)) {
-            playSound(mode + ".wav", sounds.volume.get() / sounds.volume.getMax(), open ? 1.0F : 0.95F);
+            playSound(mode + ".wav", sounds.volume.get() / sounds.volume.getMax(), 1.0F);
             return;
          }
       }
