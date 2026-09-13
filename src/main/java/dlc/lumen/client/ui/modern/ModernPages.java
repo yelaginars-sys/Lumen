@@ -116,13 +116,16 @@ public final class ModernPages {
 
          boolean var28 = pulse.cosmetic.LocalCosmetics.isSelected(var27);
          int var32 = var27;
+         Identifier var33 = "cape".equals(pulse.cosmetic.LocalCosmetics.type(var27))
+            ? pulse.cosmetic.LocalCosmetics.texture(var27)
+            : null;
          helper(
             g,
             var16,
             var23,
             var17,
             pulse.cosmetic.LocalCosmetics.name(var27),
-            pulse.cosmetic.LocalCosmetics.texture(var27),
+            var33,
             var28,
             "cos" + var27,
             () -> pulse.cosmetic.LocalCosmetics.toggle(var32)
