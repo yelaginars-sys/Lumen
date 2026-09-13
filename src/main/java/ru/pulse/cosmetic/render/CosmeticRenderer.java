@@ -15,6 +15,7 @@ public class CosmeticRenderer {
    private final GeckolibCosmeticRenderer geckolibRenderer = GeckolibCosmeticRenderer.getInstance();
    private final RenderStack stack = new RenderStack();
    private static final float RAD_TO_DEG = 180.0F / (float)Math.PI;
+   public static float HAT_Y_OFFSET = 0.45F;
 
    public static CosmeticRenderer getInstance() {
       if (instance == null) {
@@ -66,7 +67,7 @@ public class CosmeticRenderer {
       switch (var4) {
          case HEAD:
             this.transformToModelPart(var2.head);
-            var3 = 0.5F;
+            var3 = 0.5F - HAT_Y_OFFSET;
             break;
          case ABOVE_HEAD:
             var3 = 0.75F;
