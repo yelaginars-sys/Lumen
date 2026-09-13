@@ -21,7 +21,6 @@ import dlc.lumen.client.modules.impl.render.base.implement.BotMonitor;
 import dlc.lumen.client.modules.impl.render.base.implement.CalculatorHUD;
 import dlc.lumen.client.modules.impl.render.base.implement.Cooldown;
 import dlc.lumen.client.modules.impl.render.base.implement.DynamicIslandHUD;
-import dlc.lumen.client.modules.impl.render.base.implement.HeldItemsHUD;
 import dlc.lumen.client.modules.impl.render.base.implement.HelperBinds;
 import dlc.lumen.client.modules.impl.render.base.implement.HotbarHUD;
 import dlc.lumen.client.modules.impl.render.base.implement.InventoryHUD;
@@ -63,7 +62,6 @@ public class Interface extends Module {
    private final HotbarHUD hotbarHUD2;
    private final ScoreBoardHUD scoreBoardHUD2;
    private final DynamicIslandHUD dynamicIslandBottomY;
-   private final HeldItemsHUD heldItemsHUD2;
    private final CalculatorHUD calculatorHUD2;
    private final BotMonitor botMonitor2;
    private boolean flag;
@@ -112,7 +110,6 @@ public class Interface extends Module {
       new BooleanSetting("Hotbar HUD", true),
       new BooleanSetting("ScoreBoard HUD", true),
       new BooleanSetting("DinamicIsland", true),
-      new BooleanSetting("Предметы в руках", true),
        new BooleanSetting("Калькулятор", false),
        new BooleanSetting("Боты", true)
    );
@@ -140,7 +137,6 @@ public class Interface extends Module {
       this.scoreBoardHUD2 = new ScoreBoardHUD(Lumen.draggable(this, "ScoreBoardHUD", 220.0F, 40.0F));
       this.dynamicIslandBottomY = new DynamicIslandHUD(Lumen.draggable(this, "DynamicIslandHUD", 10.0F, 300.0F));
       this.waterMarkSegmentDragging.setInterfaceModule(this);
-      this.heldItemsHUD2 = new HeldItemsHUD(Lumen.draggable(this, "HeldItemsHUD", 10.0F, 325.0F));
        this.calculatorHUD2 = new CalculatorHUD(Lumen.draggable(this, "CalculatorHUD", 150.0F, 40.0F));
        this.botMonitor2 = new BotMonitor(Lumen.draggable(this, "BotMonitor", 220.0F, 120.0F));
    }
@@ -205,8 +201,6 @@ public class Interface extends Module {
          return this.scoreBoardHUD2;
       } else if (this.checkCondition3(this.dynamicIslandBottomY) && this.checkCondition2(this.dynamicIslandBottomY, mouseX, mouseY)) {
          return this.dynamicIslandBottomY;
-      } else if (this.checkCondition3(this.heldItemsHUD2) && this.checkCondition2(this.heldItemsHUD2, mouseX, mouseY)) {
-         return this.heldItemsHUD2;
       } else if (this.checkCondition3(this.calculatorHUD2) && this.checkCondition2(this.calculatorHUD2, mouseX, mouseY)) {
          return this.calculatorHUD2;
       } else {
@@ -979,7 +973,6 @@ public class Interface extends Module {
       var1.put("inventoryHUD", this.inventoryHUD2);
       var1.put("scoreBoardHUD", this.scoreBoardHUD2);
       var1.put("dynamicIslandHUD", this.dynamicIslandBottomY);
-      var1.put("heldItemsHUD", this.heldItemsHUD2);
        var1.put("calculatorHUD", this.calculatorHUD2);
        var1.put("botMonitor", this.botMonitor2);
       return var1;
@@ -1018,7 +1011,6 @@ public class Interface extends Module {
          case "hotbarHUD" -> 9;
          case "scoreBoardHUD" -> 10;
          case "dynamicIslandHUD" -> 11;
-         case "heldItemsHUD" -> 12;
           case "calculatorHUD" -> 12;
           case "botMonitor" -> 13;
          default -> -1;
@@ -1106,10 +1098,6 @@ public class Interface extends Module {
 
          if (var12) {
             this.updateState2(this.dynamicIslandBottomY, event);
-         }
-
-         if (this.waterMarkShown.is("Предметы в руках")) {
-            this.updateState2(this.heldItemsHUD2, event);
          }
 
           if (this.waterMarkShown.is("Боты")) {
