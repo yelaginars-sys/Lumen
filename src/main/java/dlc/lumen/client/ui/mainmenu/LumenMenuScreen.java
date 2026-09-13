@@ -167,7 +167,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       Font var9 = helper19("suisse", 19);
       Font var10 = helper19("sf_regular", 10);
       if (var9 != null) {
-         var9.drawCenteredString(context.getMatrices(), "Lumen Client", var4, var6, helper21(-1, (int)(255.0F * r)));
+         var9.drawCenteredString(context.getMatrices(), "Lumen DLC", var4, var6, helper21(-1, (int)(255.0F * r)));
          var6 += var9.getHeight() + 2.0F;
       }
 
