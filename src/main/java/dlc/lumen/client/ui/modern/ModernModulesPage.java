@@ -99,8 +99,13 @@ public final class ModernModulesPage {
 
       float var20 = x + w - 11.0F - 20.0F;
       g.toggle(var20, y + 9.5F, var8, module.getName());
+      if (module.getKey() != -1 || g.isBinding(module)) {
+         String var21 = g.isBinding(module) ? "..." : KeyBoardUtils.getBindName(module.getKey());
+         g.textRight(g.font(9), var21, var20 - 6.0F, g.textY(y, 29.0F, g.font(9)), ModernTheme.TEXT_FAINT());
+      }
+
       g.hit(x, y, w, 29.0F, button -> {
-         if (button == 1) {
+         if (button == 1 || button == 2) {
             g.startBind(module);
             return true;
          } else {
@@ -119,8 +124,6 @@ public final class ModernModulesPage {
                var21 += toBooleanOrDefault2(g, var25, var22, var21, var23) + 6.0F;
             }
          }
-
-         toBooleanOrDefault4(g, module, var22, var21, var23);
       }
 
       g.alpha = var12;
@@ -373,17 +376,6 @@ public final class ModernModulesPage {
          return true;
       });
       return 15.0F;
-   }
-
-   private static void toBooleanOrDefault4(ModernGui g, Module module, float x, float y, float w) {
-      Font var5 = g.font(11);
-      g.text(var5, "Бинд", x, g.textY(y, 11.0F, var5), ModernTheme.TEXT_DIM());
-      String var6 = g.isBinding(module) ? "..." : (module.getKey() == -1 ? "нажми" : KeyBoardUtils.getBindName(module.getKey()));
-      helper10(g, x + w, y, var6, module.getKey() != -1 || g.isBinding(module));
-      g.hit(x, y, w, 11.0F, button -> {
-         g.startBind(module);
-         return true;
-      });
    }
 
    private static void helper10(ModernGui g, float rightX, float y, String key, boolean active) {
