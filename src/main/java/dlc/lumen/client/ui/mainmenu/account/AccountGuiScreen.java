@@ -88,7 +88,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       this.helper2(var5, mouseX, mouseY, var6, var7, var8, var11);
       Font var12 = helper21("suisse", 15);
       helper23(
-         var12, var5, "© Lumen Client 2026", this.width / 2.0F, this.height - helper25(var12) - 4.0F, helper20(helper19(90), 127)
+         var12, var5, "© Lumen Client 2026", this.width / 2.0F, this.height - helper25(var12) - 4.0F, helper20(-1, 127)
       );
       super.render(context, mouseX, mouseY, delta);
    }
@@ -175,10 +175,10 @@ public final class AccountGuiScreen extends Screen implements QClient {
             height,
             4.0F,
             1.2F,
-            helper20(helper18(), 210),
-            helper20(helper19(90), 130),
-            helper20(helper19(180), 130),
-            helper20(helper18(), 210)
+            helper20(-1, 210),
+            helper20(-1, 130),
+            helper20(-1, 130),
+            helper20(-1, 210)
          );
       }
 
@@ -232,7 +232,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
 
    private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
       boolean var10 = HoveringUtils.isHovered(mouseX, mouseY, x2, y2, width, height);
-      int var11 = danger ? ColorUtils.rgba(255, 101, 104, 255) : helper18();
+      int var11 = danger ? ColorUtils.rgba(255, 101, 104, 255) : -1;
       int var12 = helper20(ColorUtils.darken(var11, var10 ? 0.24F : 0.15F), var10 ? 205 : 150);
       RenderUtils.drawRoundedRect(matrices, x2, y2, width, height, 6.0F, var12);
       this.helper8(matrices, x2, y2, width, height, var10 ? 1.0F : 0.0F);

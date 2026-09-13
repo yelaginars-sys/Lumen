@@ -48,6 +48,7 @@ import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
 public class LumenMenuScreen extends Screen implements QClient {
+   private static final int EXIT_RED = ColorUtils.rgb(255, 82, 82);
    private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/mainmenu/menu_bg.png");
    private static final Identifier TEXTURE_ID2 = Identifier.of("lumen", "textures/mainmenu/single_bg.png");
    private static final Identifier TEXTURE_ID3 = Identifier.of("lumen", "textures/mainmenu/multi_bg.png");
@@ -210,7 +211,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       MatrixStack var17 = context.getMatrices();
       if (var13 > 0.001F) {
          RenderUtils.drawRoundedRect(
-            var17, var16[0] - 3.0F, var16[1] - 3.0F, var16[2] + 6.0F, var16[3] + 6.0F, 15.0F, helper21(helper20(), (int)(70.0F * var13 * r))
+            var17, var16[0] - 3.0F, var16[1] - 3.0F, var16[2] + 6.0F, var16[3] + 6.0F, 15.0F, helper21(-1, (int)(70.0F * var13 * r))
          );
       }
 
@@ -218,7 +219,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       this.helper6(context, var16, bg, (int)((225.0F + 30.0F * var13) * r));
       if (var13 > 0.001F) {
          RenderUtils.drawRoundedRect(
-            var17, var16[0] + 4.0F, var16[1] + 4.0F, var16[2] - 8.0F, var16[3] - 8.0F, 8.0F, helper21(helper20(), (int)(40.0F * var13 * r))
+            var17, var16[0] + 4.0F, var16[1] + 4.0F, var16[2] - 8.0F, var16[3] - 8.0F, 8.0F, helper21(-1, (int)(40.0F * var13 * r))
          );
       }
 
@@ -230,7 +231,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       }
 
       if (var19 != null) {
-         var19.drawCenteredString(var17, sub, var20, var16[1] + var16[3] - 13.0F, helper21(helper20(), (int)(220.0F * r)));
+         var19.drawCenteredString(var17, sub, var20, var16[1] + var16[3] - 13.0F, helper21(-1, (int)(220.0F * r)));
       }
    }
 
@@ -397,7 +398,7 @@ public class LumenMenuScreen extends Screen implements QClient {
          var17.scale(var20, var20, 1.0F);
          var17.translate(-var18, -var19, 0.0F);
          var16.drawCenteredString(
-            var17, "h", var18, var13 + 2.0F + var7 / 2.0F - 5.0F + 2.0F, helper21(helper20(), (int)(220.0F + 35.0F * var15))
+            var17, "h", var18, var13 + 2.0F + var7 / 2.0F - 5.0F + 2.0F, helper21(EXIT_RED, (int)(220.0F + 35.0F * var15))
          );
          var17.pop();
       }
@@ -413,7 +414,7 @@ public class LumenMenuScreen extends Screen implements QClient {
          var24,
          var7,
          var7 / 2.0F,
-         helper21(helper20(), (int)((90.0F + 120.0F * this.volume2) * r))
+         helper21(-1, (int)((90.0F + 120.0F * this.volume2) * r))
       );
       Font var25 = helper19("sf_regular", 9);
       if (var25 != null) {
@@ -422,7 +423,7 @@ public class LumenMenuScreen extends Screen implements QClient {
             "Протяни, чтобы выйти",
             var23 + var8 / 2.0F,
             var13 + 2.0F + var7 / 2.0F - 3.0F,
-            helper21(-1, (int)((150.0F - 90.0F * this.volume2) * r))
+            helper21(EXIT_RED, (int)((150.0F - 90.0F * this.volume2) * r))
          );
       }
 
@@ -437,7 +438,7 @@ public class LumenMenuScreen extends Screen implements QClient {
          var26 + 4.0F,
          var26 + 4.0F,
          (var26 + 4.0F) / 2.0F,
-         helper21(helper20(), (int)((55.0F + 120.0F * this.volume2) * r))
+         helper21(-1, (int)((55.0F + 120.0F * this.volume2) * r))
       );
       RenderUtils.drawRoundedRect(context.getMatrices(), var21, var22, var26, var26, var26 / 2.0F, helper21(helper20(), (int)(255.0F * r)));
       return var13 + var7;
