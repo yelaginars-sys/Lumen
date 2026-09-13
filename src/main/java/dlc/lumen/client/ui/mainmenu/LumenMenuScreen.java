@@ -50,6 +50,7 @@ import org.joml.Matrix4f;
 public class LumenMenuScreen extends Screen implements QClient {
    private static final Identifier TEXTURE_ID2 = Identifier.of("lumen", "textures/mainmenu/single_bg.png");
    private static final Identifier TEXTURE_ID3 = Identifier.of("lumen", "textures/mainmenu/multi_bg.png");
+   private static final Identifier TEXTURE_ID4 = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
    private static final String[] STRING = new String[]{"", "", ""};
    private static final String[] STRING2 = new String[]{"web", "tg", "yt"};
    private static final float VOLUME = 200.0F;
@@ -137,6 +138,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       context.draw();
       MatrixStack matrices = context.getMatrices();
       RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.rgb(9, 10, 15));
+      MenuParticles.render(context, this.width, this.height, mouseX, mouseY, r);
    }
 
    private void updateState(DrawContext context, float x, float y, float w, float h) {
@@ -146,11 +148,22 @@ public class LumenMenuScreen extends Screen implements QClient {
    }
 
    private static void updateState2(MatrixStack matrices, float x, float centerY, float h, int color) {
+      float var5 = h * 0.22F;
+      float var6 = h * 0.18F;
+      float var7 = h;
+      float var8 = h * 0.55F;
+      float var9 = var5 * 0.5F;
+      RenderUtils.drawImage(matrices, TEXTURE_ID4, x, centerY - var7 / 2.0F, var7, var7, color);
    }
 
    private void helper3(DrawContext context, float r, float time) {
       float var4 = this.width / 2.0F;
-      float var6 = Math.max(34.0F, this.height * 0.13F) + (1.0F - r) * -8.0F;
+      float var5 = (float)Math.sin(time * 1.6F) * 1.8F;
+      float var6 = Math.max(34.0F, this.height * 0.13F) + var5 + (1.0F - r) * -8.0F;
+      float var7 = 40.0F * (0.9F + 0.1F * r);
+      float var8 = var7 * 1.02F;
+      updateState2(context.getMatrices(), var4 - var8 / 2.0F, var6 + var7 / 2.0F, var7, helper21(helper20(), (int)(255.0F * r)));
+      var6 += var7 + 6.0F;
       Font var9 = helper19("suisse", 19);
       Font var10 = helper19("sf_regular", 10);
       if (var9 != null) {

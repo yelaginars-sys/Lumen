@@ -19,6 +19,7 @@ import lombok.Generated;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
 
 public class WaterMark extends InterfaceProcessing {
    private boolean showFps2 = true;
@@ -41,6 +42,7 @@ public class WaterMark extends InterfaceProcessing {
    private static final String TEXT3 = "P";
    private static final String TEXT4 = "x";
     private static final String TEXT5 = "g";
+    private static final Identifier LOGO = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
 
    public void setInterfaceModule(Interface interfaceModule) {
       this.interfaceModule2 = interfaceModule;

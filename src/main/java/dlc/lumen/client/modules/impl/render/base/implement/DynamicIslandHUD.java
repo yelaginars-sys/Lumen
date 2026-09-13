@@ -54,6 +54,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
    private static final Identifier TEXTURE_ID3 = Identifier.of("lumen", "textures/dynamicisland/music/pause.png");
    private static final Identifier TEXTURE_ID4 = Identifier.of("lumen", "textures/dynamicisland/music/next.png");
     private static final Identifier TEXTURE_ID5 = Identifier.of("lumen", "textures/dynamicisland/music/no_image.png");
+    private static final Identifier LOGO_ID = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
     private final AnimationUtils animationUtils = new AnimationUtils(48.0F, 6.4F, Easings.BACK_OUT);
    private final AnimationUtils animationUtils2 = new AnimationUtils(15.0F, 6.4F, Easings.BACK_OUT);
    private final AnimationUtils animationUtils3 = new AnimationUtils(0.0F, 10.0F, Easings.LINEAR);
@@ -230,7 +231,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
          case MUSIC -> this.flag ? 164.0F : helper41(titleFont, music.collapsedText());
           case DEFAULT -> {
              float var6 = helper30(titleFont, "LumenDLC", 96.0F);
-             yield helper29(var6 + 16.0F, 52.0F, 104.0F);
+             yield helper29(26.0F + var6 + 4.0F, 52.0F, 104.0F);
           }
       };
    }
@@ -240,7 +241,16 @@ public class DynamicIslandHUD extends InterfaceProcessing {
    }
 
     private void helper4(MatrixStack matrices, float x, float y, float width, float height, Font font) {
-      this.helper37(matrices, font, "LumenDLC", x + 8.0F, helper31(y, height, font), width - 16.0F, ColorUtils.clientText());
+      float var7 = 14.0F;
+      float var8 = x + 4.0F;
+      float var9 = y + (height - var7) * 0.5F;
+      helper5(matrices, var8, var9, var7);
+      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 26.0F, ColorUtils.clientText());
+   }
+
+   private static void helper5(MatrixStack matrices, float x, float y, float h) {
+      int var4 = ColorUtils.getThemeColor();
+      RenderUtils.drawImage(matrices, LOGO_ID, x + 1.0F, y, h, h, var4);
    }
 
    private void helper6(
