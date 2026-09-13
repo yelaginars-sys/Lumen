@@ -81,7 +81,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
    @Override
    public void onRender(EventRender.Default eventRender) {
       if (mc != null && mc.getWindow() != null) {
-         Font var2 = this.helper26(18);
+         Font var2 = this.helper26(13);
          Font var3 = this.helper26(11);
          Font var4 = this.helper26(9);
          Font var5 = this.helper27(10);
@@ -237,7 +237,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
    }
 
    private float helper3(DynamicIslandHUD.StatusType status, DynamicIslandHUD.MusicState music) {
-      return status == DynamicIslandHUD.StatusType.MUSIC && this.flag ? 76.0F + (music.lyric().isBlank() ? 0.0F : 10.0F) : 24.0F;
+      return status == DynamicIslandHUD.StatusType.MUSIC && this.flag ? 76.0F + (music.lyric().isBlank() ? 0.0F : 10.0F) : 20.0F;
    }
 
    private void helper4(MatrixStack matrices, float x, float y, float width, float height, Font font) {
