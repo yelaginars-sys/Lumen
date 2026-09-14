@@ -135,9 +135,10 @@ public class LumenMenuScreen extends Screen implements QClient {
    }
 
    private void helper2(DrawContext context, float r, double mouseX, double mouseY) {
-      context.draw();
+      MenuBackground.render(context, this.width, this.height);
       MatrixStack matrices = context.getMatrices();
-      RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.rgb(9, 10, 15));
+      RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, this.width, this.height, 0.0F, helper21(ColorUtils.rgb(5, 6, 10), (int)(150.0F * r)));
+      RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, this.width, this.height, 0.0F, helper21(helper20(), (int)(22.0F * r)));
       MenuParticles.render(context, this.width, this.height, mouseX, mouseY, r);
    }
 

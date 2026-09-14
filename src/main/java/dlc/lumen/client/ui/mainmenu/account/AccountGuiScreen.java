@@ -90,7 +90,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       this.helper2(var5, mouseX, mouseY, var6, var7, var8, var11);
       Font var12 = helper21("suisse", 15);
       helper23(
-          var12, var5, "© Lumen DLC 2026", this.width / 2.0F, this.height - helper25(var12) - 4.0F, helper20(-1, 127)
+          var12, var5, "© Lumen DLC 2026", this.width / 2.0F, this.height - helper25(var12) - 4.0F, helper20(helper18(), 127)
       );
       super.render(context, mouseX, mouseY, delta);
    }
@@ -143,7 +143,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
             "No accounts",
             x2 + width / 2.0F,
             y2 + height / 2.0F - helper25(var16) / 2.0F,
-            helper20(-1, 180)
+            helper20(helper18(), 180)
          );
       }
 
@@ -177,10 +177,10 @@ public final class AccountGuiScreen extends Screen implements QClient {
             height,
             4.0F,
             1.2F,
-            helper20(-1, 210),
-            helper20(-1, 130),
-            helper20(-1, 130),
-            helper20(-1, 210)
+            helper20(helper18(), 210),
+            helper20(helper18(), 130),
+            helper20(helper18(), 130),
+            helper20(helper18(), 210)
          );
       }
 
@@ -189,7 +189,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       Font var14 = helper21("suisse", 10);
       float var15 = x2 + 26.0F;
       float var16 = width - height - 26.0F;
-      int var17 = -1;
+      int var17 = helper18();
       this.helper26(var13, matrices, account.name(), var15, y2 + 5.0F, var16, var17);
       helper22(
          var14,
@@ -197,12 +197,12 @@ public final class AccountGuiScreen extends Screen implements QClient {
          account.creationDate().format(DateTimeFormatter.ofPattern("dd MMMM HH:mm", Locale.ENGLISH)),
          var15,
          y2 + 16.0F,
-         helper20(-1, 76)
+         helper20(helper18(), 76)
       );
       Font var18 = helper21("icon", 16);
-      int var19 = account.favorite() ? ColorUtils.rgba(255, 160, 102, 255) : helper20(-1, 95);
+      int var19 = account.favorite() ? ColorUtils.rgba(255, 160, 102, 255) : helper20(helper18(), 95);
       helper22(var18, matrices, "D", x2 + width - 15.0F, y2 + 5.5F, var19);
-      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, helper20(-1, 160));
+      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, helper20(helper18(), 160));
    }
 
    private void helper5(MatrixStack matrices, float x2, float y2, float width, float height) {
@@ -217,10 +217,10 @@ public final class AccountGuiScreen extends Screen implements QClient {
          height,
          8.0F,
          0.9F,
-         helper20(-1, 150),
-         helper20(-1, 80),
-         helper20(-1, 60),
-         helper20(-1, 140)
+         helper20(helper18(), 150),
+         helper20(helper18(), 80),
+         helper20(helper18(), 60),
+         helper20(helper18(), 140)
       );
    }
 
@@ -229,12 +229,12 @@ public final class AccountGuiScreen extends Screen implements QClient {
       RenderUtils.drawRoundedRect(
          matrices, x2, y2, width, height, 5.0F, ColorUtils.rgba(19, 21, 30, var8 ? 205 : 170)
       );
-      RenderUtils.drawRoundedRectOutline(matrices, x2, y2, width, height, 5.0F, 5.0F, 5.0F, 5.0F, 1.0F, helper20(-1, var8 ? 190 : 80));
+      RenderUtils.drawRoundedRectOutline(matrices, x2, y2, width, height, 5.0F, 5.0F, 5.0F, 5.0F, 1.0F, helper20(helper18(), var8 ? 190 : 80));
    }
 
     private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
       boolean var10 = HoveringUtils.isHovered(mouseX, mouseY, x2, y2, width, height);
-      int var11 = -1;
+      int var11 = helper18();
       int var12 = helper20(ColorUtils.darken(var11, var10 ? 0.24F : 0.15F), var10 ? 205 : 150);
       RenderUtils.drawRoundedRect(matrices, x2, y2, width, height, 6.0F, var12);
       this.helper8(matrices, x2, y2, width, height, var10 ? 1.0F : 0.0F);
@@ -245,7 +245,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
          text,
          x2 + width / 2.0F,
          y2 + height / 1.5F - helper25(var13) / 2.0F + 2.0F,
-         -1
+         helper18()
       );
    }
 
@@ -565,7 +565,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
                this.VOLUME3,
                var5,
                this.account2 + this.volume2 / 2.0F - var4.getHeight() / 2.0F + 5.0F,
-               -1
+               helper18()
             );
             var5 += var4.getWidth(this.VOLUME3) + 8.0F;
          }
@@ -573,7 +573,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
          boolean var6 = this.VOLUME4.isEmpty() && !this.strings;
          String var2 = var6 ? this.VOLUME : this.VOLUME4;
          if (!var2.isEmpty()) {
-            int var8 = var6 ? AccountGuiScreen.helper20(-1, 125) : -1;
+            int var8 = var6 ? AccountGuiScreen.helper20(helper18(), 125) : helper18();
             AccountGuiScreen.helper22(
                var3, matrices, var2, var5, this.account2 + this.volume2 / 2.0F - AccountGuiScreen.helper25(var3) / 2.0F + 5.0F, var8
             );
