@@ -102,8 +102,8 @@ public class SpookyRotation extends RotationsSystem {
             yawSpeed = 0.6F + this.random.nextFloat() * 0.8F;
             pitchSpeed = 0.0F;
          } else {
-            yawSpeed = Math.min(18.0F, Math.max(2.5F, errYaw * 0.55F)) + this.random.nextFloat() * 1.5F;
-            pitchSpeed = Math.min(10.0F, Math.max(1.0F, errPitch * 0.45F)) + this.random.nextFloat();
+            yawSpeed = Math.min(20.0F, Math.max(2.5F, errYaw * 0.85F)) + this.random.nextFloat() * 1.5F;
+            pitchSpeed = Math.min(12.0F, Math.max(1.0F, errPitch * 0.7F)) + this.random.nextFloat();
          }
       } else {
          long unseen = now - this.invisibleSinceMs;
