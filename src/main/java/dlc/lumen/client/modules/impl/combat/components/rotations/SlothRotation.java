@@ -612,14 +612,14 @@ public class SlothRotation extends RotationsSystem implements QClient {
       this.volume27 = 2.4F;
       this.level5 = this.level6 = this.level7 = 0.0;
       this.timestamp6 = now;
-      this.volume28 = SlothDatasetProfile.maximumYawSpeed(this.random) * 2.0F;
-      this.volume29 = SlothDatasetProfile.maximumPitchSpeed(this.random);
-      this.volume30 = SlothDatasetProfile.yawAcceleration(this.random) * 1.35F;
-      this.volume31 = SlothDatasetProfile.pitchAcceleration(this.random);
-      this.volume32 = SlothDatasetProfile.yawDeceleration(this.random) * 1.35F;
-      this.volume33 = SlothDatasetProfile.pitchDeceleration(this.random);
-      this.volume34 = SlothDatasetProfile.yawJerkLimit(this.random) * 1.35F;
-      this.volume35 = SlothDatasetProfile.pitchJerkLimit(this.random);
+       this.volume28 = SlothDatasetProfile.maximumYawSpeed(this.random);
+       this.volume29 = SlothDatasetProfile.maximumPitchSpeed(this.random);
+       this.volume30 = SlothDatasetProfile.yawAcceleration(this.random);
+       this.volume31 = SlothDatasetProfile.pitchAcceleration(this.random);
+       this.volume32 = SlothDatasetProfile.yawDeceleration(this.random);
+       this.volume33 = SlothDatasetProfile.pitchDeceleration(this.random);
+       this.volume34 = SlothDatasetProfile.yawJerkLimit(this.random);
+       this.volume35 = SlothDatasetProfile.pitchJerkLimit(this.random);
       float var4 = this.computefloat2(target);
       long var5 = SlothDatasetProfile.reactionMillis(this.random, var4, this.precision6);
       this.timestamp2 = now + var5 * 1000000L;
@@ -827,7 +827,7 @@ public class SlothRotation extends RotationsSystem implements QClient {
           this.volume53 = tx;
           this.volume54 = ty;
           this.volume55 = tz;
-          this.timestamp24 = now + (250L + this.random.nextInt(750)) * 1000000L;
+          this.timestamp24 = now + (500L + this.random.nextInt(1000)) * 1000000L;
        }
 
        float rate = (float)(1.0 - Math.exp(-deltaTime / 0.12));
@@ -1143,7 +1143,7 @@ public class SlothRotation extends RotationsSystem implements QClient {
     }
 
     private float computeTremorYaw(float value, boolean precision) {
-       if (!precision && this.random.nextFloat() < 0.4F) {
+       if (!precision && this.random.nextFloat() < 0.6F) {
           float step = GCDUtil.getGCDValue();
           return value + (this.random.nextBoolean() ? 1.0F : -1.0F) * step * (this.random.nextFloat() < 0.85F ? 1.0F : 2.0F);
        }
@@ -1152,7 +1152,7 @@ public class SlothRotation extends RotationsSystem implements QClient {
     }
 
     private float computeTremorPitch(float value, boolean precision) {
-       if (!precision && this.random.nextFloat() < 0.4F) {
+       if (!precision && this.random.nextFloat() < 0.6F) {
           float step = GCDUtil.getGCDValue();
           return value + (this.random.nextBoolean() ? 1.0F : -1.0F) * step * (this.random.nextFloat() < 0.85F ? 1.0F : 2.0F);
        }
