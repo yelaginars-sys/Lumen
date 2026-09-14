@@ -2,6 +2,7 @@ package dlc.lumen.api.storages.implement.helpertstorages.enumvar;
 
 import dlc.lumen.client.modules.impl.combat.AimAssistant;
 import dlc.lumen.client.modules.impl.combat.AimBot;
+import dlc.lumen.client.modules.impl.combat.AntiBot;
 import dlc.lumen.client.modules.impl.combat.Aura;
 import dlc.lumen.client.modules.impl.combat.AutoStan;
 import dlc.lumen.client.modules.impl.combat.AutoSwap;
@@ -97,6 +98,7 @@ import dlc.lumen.client.modules.impl.render.Trajectories;
 import dlc.lumen.client.modules.impl.render.ViewArmorDurability;
 import dlc.lumen.client.modules.impl.render.ViewModel;
 import dlc.lumen.client.modules.impl.render.ViralJump;
+import dlc.lumen.client.modules.impl.render.WardenESP;
 import dlc.lumen.client.modules.impl.render.WorldParticles;
 import dlc.lumen.client.modules.impl.render.Zoom;
 
@@ -199,5 +201,7 @@ public interface ModuleRewords {
    AppleFarmer appleFarmer = AppleFarmer.INSTANCE;
    AucReissue aucReissue = AucReissue.INSTANCE;
    MaceHelper maceHelper = MaceHelper.INSTANCE;
+   AntiBot antiBot = AntiBot.INSTANCE;
+   WardenESP wardenESP = WardenESP.INSTANCE;
    Optimizer optimizer = Optimizer.INSTANCE;
 }
