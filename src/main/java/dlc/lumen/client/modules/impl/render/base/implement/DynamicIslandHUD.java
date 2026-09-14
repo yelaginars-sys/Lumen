@@ -54,7 +54,7 @@ public class DynamicIslandHUD extends InterfaceProcessing {
    private static final Identifier TEXTURE_ID3 = Identifier.of("lumen", "textures/dynamicisland/music/pause.png");
    private static final Identifier TEXTURE_ID4 = Identifier.of("lumen", "textures/dynamicisland/music/next.png");
     private static final Identifier TEXTURE_ID5 = Identifier.of("lumen", "textures/dynamicisland/music/no_image.png");
-    private static final Identifier LOGO_ID = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
+    private static final Identifier LOGO_ID = Identifier.of("lumen", "textures/waterlogo/lumenik_small.png");
     private final AnimationUtils animationUtils = new AnimationUtils(48.0F, 6.4F, Easings.BACK_OUT);
    private final AnimationUtils animationUtils2 = new AnimationUtils(15.0F, 6.4F, Easings.BACK_OUT);
    private final AnimationUtils animationUtils3 = new AnimationUtils(0.0F, 10.0F, Easings.LINEAR);

@@ -50,7 +50,7 @@ import org.joml.Matrix4f;
 public class LumenMenuScreen extends Screen implements QClient {
    private static final Identifier TEXTURE_ID2 = Identifier.of("lumen", "textures/mainmenu/single_bg.png");
    private static final Identifier TEXTURE_ID3 = Identifier.of("lumen", "textures/mainmenu/multi_bg.png");
-   private static final Identifier TEXTURE_ID4 = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
+   private static final Identifier TEXTURE_ID4 = Identifier.of("lumen", "textures/waterlogo/lumenik_small.png");
    private static final String[] STRING = new String[]{"", "", ""};
    private static final String[] STRING2 = new String[]{"web", "tg", "yt"};
    private static final float VOLUME = 200.0F;
