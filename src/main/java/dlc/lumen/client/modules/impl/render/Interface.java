@@ -99,20 +99,20 @@ public class Interface extends Module {
    public final ModeSetting appearEffect = new ModeSetting("Эффект", "Обычный", "Обычный", "Глитч", "Соединение", "Раскрытие");
     private final ListSetting waterMarkShown = new ListSetting(
        "Элементы",
-       new BooleanSetting("Ватермарка", true),
-       new BooleanSetting("Горячие клавиши", true),
-       new BooleanSetting("Серверные бинды", true),
-       new BooleanSetting("Зелья", true),
-       new BooleanSetting("Таргет худ", true),
+       new BooleanSetting("Watermark", true),
+       new BooleanSetting("Hot Keys", true),
+       new BooleanSetting("Server Binds", true),
+       new BooleanSetting("Potions", true),
+       new BooleanSetting("Target Hud", true),
        new BooleanSetting("Watermark+", true),
-       new BooleanSetting("Броня", true),
-       new BooleanSetting("Кулдауны", true),
+       new BooleanSetting("Armor Hud", true),
+       new BooleanSetting("Cooldowns", true),
        new BooleanSetting("Inventory HUD", true),
        new BooleanSetting("Hotbar HUD", true),
        new BooleanSetting("ScoreBoard HUD", true),
        new BooleanSetting("DinamicIsland", true),
-       new BooleanSetting("Калькулятор", false),
-       new BooleanSetting("Боты", true)
+       new BooleanSetting("calculator", false),
+       new BooleanSetting("Bots", true)
     );
    private final BooleanSetting targetHudHoverEnabled = new BooleanSetting("Показывать при наведении", true);
    private final ListSetting listSetting = new ListSetting("Таргет худ", this.targetHudHoverEnabled);
@@ -210,13 +210,13 @@ public class Interface extends Module {
    }
 
     public boolean handleMusicClick(double mouseX, double mouseY, int button) {
-       return this.waterMarkShown.is("Боты") && this.botMonitor2.handleClick(mouseX, mouseY, button)
+       return this.waterMarkShown.is("Bots") && this.botMonitor2.handleClick(mouseX, mouseY, button)
           ? true
           : this.waterMarkShown.is("DinamicIsland") && this.dynamicIslandBottomY.handleClick(mouseX, mouseY, button);
     }
 
    public boolean handleWidgetClick(double mouseX, double mouseY, int button) {
-      if (!this.waterMarkShown.is("Калькулятор")) {
+      if (!this.waterMarkShown.is("calculator")) {
          this.calculatorHUD2.blur();
          return false;
       } else {
@@ -225,11 +225,11 @@ public class Interface extends Module {
    }
 
    public boolean handleWidgetKey(int keyCode, int scanCode, int modifiers) {
-      return this.waterMarkShown.is("Калькулятор") && this.calculatorHUD2.handleKey(keyCode);
+      return this.waterMarkShown.is("calculator") && this.calculatorHUD2.handleKey(keyCode);
    }
 
    public boolean handleWidgetChar(char character) {
-      return this.waterMarkShown.is("Калькулятор") && this.calculatorHUD2.handleChar(character);
+      return this.waterMarkShown.is("calculator") && this.calculatorHUD2.handleChar(character);
    }
 
    public void releaseWidgetFocus() {
@@ -1021,16 +1021,16 @@ public class Interface extends Module {
    @EventLink(priority = -200)
    public void onEvent(EventRender.Default event) {
       boolean var2 = this.waterMarkShown.is("Watermark");
-      boolean var3 = this.waterMarkShown.is("Watermark+");
-      boolean var4 = this.waterMarkShown.is("Hot Keys");
-      boolean var5 = this.waterMarkShown.is("Server Binds");
-      boolean var6 = this.waterMarkShown.is("Potions");
-      boolean var7 = this.waterMarkShown.is("Target Hud");
-      boolean var8 = this.waterMarkShown.is("Armor Hud");
-      boolean var9 = this.waterMarkShown.is("Cooldowns");
-      boolean var10 = this.waterMarkShown.is("Inventory HUD");
-      boolean var11 = this.waterMarkShown.is("Hotbar HUD");
-      boolean var12 = this.waterMarkShown.is("ScoreBoard HUD");
+      boolean var3 = this.waterMarkShown.is("Hot Keys");
+      boolean var4 = this.waterMarkShown.is("Server Binds");
+      boolean var5 = this.waterMarkShown.is("Potions");
+      boolean var6 = this.waterMarkShown.is("Target Hud");
+      boolean var7 = this.waterMarkShown.is("Armor Hud");
+      boolean var8 = this.waterMarkShown.is("Cooldowns");
+      boolean var9 = this.waterMarkShown.is("Inventory HUD");
+      boolean var10 = this.waterMarkShown.is("Hotbar HUD");
+      boolean var11 = this.waterMarkShown.is("ScoreBoard HUD");
+      boolean var12 = this.waterMarkShown.is("DinamicIsland");
       if (mc != null && mc.getWindow() != null && mc.currentScreen instanceof ChatScreen) {
          Font var13 = this.helper(18);
          float var14 = mc.getWindow().getScaledWidth() * 0.5F - var13.getWidth("ПКМ - по элементу для открытия настроек") * 0.5F;
@@ -1101,11 +1101,11 @@ public class Interface extends Module {
             this.updateState2(this.dynamicIslandBottomY, event);
          }
 
-          if (this.waterMarkShown.is("Боты")) {
+          if (this.waterMarkShown.is("Bots")) {
              this.updateState2(this.botMonitor2, event);
           }
 
-         if (this.waterMarkShown.is("Калькулятор")) {
+         if (this.waterMarkShown.is("calculator")) {
             this.updateState2(this.calculatorHUD2, event);
          } else {
             this.calculatorHUD2.blur();
