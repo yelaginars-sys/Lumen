@@ -3,6 +3,7 @@ package dlc.lumen.client.modules.impl.combat.components.rotations;
 import dlc.lumen.api.QClient;
 import dlc.lumen.api.storages.implement.FreeLookStorage;
 import dlc.lumen.api.storages.implement.RotationStorage;
+import dlc.lumen.api.utils.math.MathUtils;
 import dlc.lumen.api.utils.rotate.Rotation;
 import dlc.lumen.api.utils.rotate.RotationUtils;
 import dlc.lumen.client.modules.impl.combat.components.RotationsSystem;
@@ -28,7 +29,7 @@ public class ArtygriefRotation extends RotationsSystem implements QClient {
       float currentPitch = FreeLookStorage.isActive()
          ? MathHelper.clamp(FreeLookStorage.getFreePitch(), -90.0F, 90.0F)
          : MathHelper.clamp(mc.player.getPitch(), -90.0F, 90.0F);
-      float speed = 1.0F;
+      float speed = MathUtils.random(0.35F, 0.6F);
       float finalYaw = currentYaw + MathHelper.wrapDegrees(chestYaw - currentYaw) * speed;
       float finalPitch = currentPitch + (chestPitch - currentPitch) * speed;
       float[] fixed = RotationUtils.correctRotation(new float[]{finalYaw, MathHelper.clamp(finalPitch, -90.0F, 90.0F)});
