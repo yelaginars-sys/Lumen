@@ -32,7 +32,8 @@ import dlc.lumen.client.modules.impl.combat.components.rotations.FuntimeRotation
 import dlc.lumen.client.modules.impl.combat.components.rotations.Holy2Rotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.HolyWorldRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.ReallyWorldRotation;
-import dlc.lumen.client.modules.impl.combat.components.rotations.LegitRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.HelixWaveRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.ArtygriefRotation;import dlc.lumen.client.modules.impl.combat.components.rotations.LegitRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SlothRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.TestRotation;
@@ -93,7 +94,7 @@ import net.minecraft.world.RaycastContext.ShapeType;
 
 public class Aura extends Module {
    public static Aura INSTANCE = new Aura();
-   public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "NoRotate", "Funtime", "NoRotate", "SpookyTime", "ReallyWorld");
+    public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "Funtime", "SpookyTime", "ReallyWorld", "HelixWave", "Artygrief", "Sloth");
    private final ListSetting value = new ListSetting(
       "Таргеты",
       new BooleanSetting("Игроки", true),
@@ -129,7 +130,9 @@ public class Aura extends Module {
    private final WhiteRiseRotation whiteRiseRotation = new WhiteRiseRotation(this);
    private final LegitRotation legitRotation = new LegitRotation();
    private final SpookyTimeRotation spookyTimeRotation = new SpookyTimeRotation();
-   private final ReallyWorldRotation reallyWorldRotation = new ReallyWorldRotation();
+    private final ReallyWorldRotation reallyWorldRotation = new ReallyWorldRotation();
+    private final HelixWaveRotation helixWaveRotation = new HelixWaveRotation();
+    private final ArtygriefRotation artygriefRotation = new ArtygriefRotation();
    private final NeuroRotation neuroRotation = new NeuroRotation();
    private boolean flag;
    private boolean flag2 = false;
@@ -232,7 +235,7 @@ public class Aura extends Module {
    }
 
    private void updateState(EventMoveInput event) {
-      if (mc.player != null && this.target2 != null && !this.rotationType.is("NoRotate") && this.modeSetting.getIndex() != 0) {
+      if (mc.player != null && this.target2 != null && this.modeSetting.getIndex() != 0) {
          if (this.modeSetting.getIndex() == 1) {
             MovingUtil.fixMovementFree(event);
          }
@@ -241,7 +244,7 @@ public class Aura extends Module {
 
    @EventLink
    public void onKeyboardInput(EventKeyboardInput event) {
-      if (mc.player != null && mc.world != null && this.target2 != null && !this.rotationType.is("NoRotate")) {
+      if (mc.player != null && mc.world != null && this.target2 != null) {
          float var2 = this.computefloat();
          if (this.modeSetting.getIndex() == 2) {
             event.setYaw(var2, mc.player.getYaw());
@@ -498,22 +501,6 @@ public class Aura extends Module {
                }
 
                var1 = this.neuroRotation;
-            } else if (this.rotationType.is("NoRotate")) {
-               var1 = new RotationsSystem() {
-                  @Override
-                  public void updateRotations(LivingEntity target) {
-                     RotationStorage.update(
-                        new Rotation(FreeLookStorage.getFreeYaw(), FreeLookStorage.getFreePitch()),
-                        MathUtils.random(100.0F, 170.0F),
-                        MathUtils.random(100.0F, 170.0F),
-                        MathUtils.random(100.0F, 170.0F),
-                        MathUtils.random(100.0F, 170.0F),
-                        1,
-                        6,
-                        false
-                     );
-                  }
-               };
             } else if (this.rotationType.is("Data")) {
                var1 = new RotationsSystem() {
                   @Override
@@ -544,6 +531,10 @@ public class Aura extends Module {
                var1 = this.spookyTimeRotation;
             } else if (this.rotationType.is("ReallyWorld")) {
                var1 = this.reallyWorldRotation;
+            } else if (this.rotationType.is("HelixWave")) {
+               var1 = this.helixWaveRotation;
+            } else if (this.rotationType.is("Artygrief")) {
+               var1 = this.artygriefRotation;
             } else {
                final Vec2f var2 = RotationUtils.getRotations(this.computeVec3d(this.target2, this.target2.getLeashPos(1.0F)));
                var1 = new RotationsSystem() {

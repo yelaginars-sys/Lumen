@@ -40,7 +40,7 @@ public class ModernGui extends Screen implements QClient {
    public static final float SIDE_W = 116.0F;
    public static final float HEADER_H = 32.0F;
     public static final float PAD = 9.0F;
-    private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
+    private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/waterlogo/lumenik_small.png");
     private static boolean flag;
    private static Module.ModuleCategory moduleCategory = Module.ModuleCategory.COMBAT;
    private static ModernGui.Page page2 = ModernGui.Page.MODULES;

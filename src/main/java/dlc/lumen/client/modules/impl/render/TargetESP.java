@@ -3,6 +3,7 @@ package dlc.lumen.client.modules.impl.render;
 import com.mojang.blaze3d.systems.RenderSystem;
 import dlc.lumen.api.events.EventLink;
 import dlc.lumen.api.events.implement.Event3DRender;
+import dlc.lumen.api.events.implement.EventAttackEntity;
 import dlc.lumen.api.events.implement.EventRender;
 import dlc.lumen.api.storages.implement.helpertstorages.enumvar.ModuleClass;
 import dlc.lumen.api.utils.animation.Easings;
@@ -61,7 +62,7 @@ public class TargetESP extends Module {
       {1, -1, 1, 1, 1, 1},
       {-1, -1, 1, -1, 1, 1}
    };
-   private final ModeSetting modeSetting = new ModeSetting("Режим", "Души", "Кольцо 2", "Души", "Молнии", "Зако", "Орбиты", "Ромб");
+   private final ModeSetting modeSetting = new ModeSetting("Режим", "Души", "Кольцо 2", "Души", "Молнии", "МолнииV2", "Зако", "Орбиты", "Ромб");
    private final FloatSetting floatSetting = new FloatSetting("Размер", 1.15F, 0.6F, 2.5F, 0.05F);
    private final FloatSetting floatSetting2 = new FloatSetting("Радиус кольца", 0.5F, 0.3F, 1.5F, 0.05F);
    private final FloatSetting floatSetting3 = new FloatSetting("Скорость кольца", 1.0F, 0.3F, 3.0F, 0.1F);
@@ -96,6 +97,7 @@ public class TargetESP extends Module {
    private static final int INDEX2 = 5;
    private static final int INDEX3 = 18;
    private final ArrayList<TargetESP.LightningBolt> targetESPs2 = new ArrayList<>();
+   private final TargetLightningV2 lightningV2 = new TargetLightningV2();
    private static final int INDEX4 = 28;
    private static final int INDEX5 = 16;
    private static final int INDEX6 = 24;
@@ -192,6 +194,7 @@ public class TargetESP extends Module {
       this.timestamp3 = 0L;
       this.volume24 = 0.0F;
       this.targetESPs2.clear();
+      this.lightningV2.clear();
       super.onDisable();
    }
 
@@ -362,6 +365,10 @@ public class TargetESP extends Module {
                      this.helper12(event);
                   }
 
+                  if (this.modeSetting.is("МолнииV2")) {
+                     this.helperLightningV2(event, var8 ? var4 : null);
+                  }
+
                   if (this.modeSetting.is("Орбиты")) {
                      this.helper18(event);
                   }
@@ -378,7 +385,21 @@ public class TargetESP extends Module {
       }
    }
 
-   private TargetESP.LightningBolt helper8(float height, float width, ThreadLocalRandom rnd) {
+    @EventLink
+    public void onAttackLightningV2(EventAttackEntity event) {
+       if (this.modeSetting.is("МолнииV2") && event.getTarget() instanceof LivingEntity target) {
+          this.lightningV2.onAttack(target);
+       }
+    }
+
+    private void helperLightningV2(Event3DRender event, LivingEntity target) {
+       this.lightningV2.setBaseColor(this.resolveInt());
+       this.lightningV2.setHurtColor(this.booleanSetting.isState());
+       this.lightningV2.onRender3D(event.getMatrices(), event.getTickDelta(), target);
+    }
+
+    private TargetESP.LightningBolt helper8(float height, float width, ThreadLocalRandom rnd) {
+
       double var4 = Math.max(0.35, width * 0.7);
       double var6 = rnd.nextDouble() * Math.PI * 2.0;
       double var8 = (rnd.nextBoolean() ? 1 : -1) * Math.PI * (1.1 + rnd.nextDouble() * 1.4);
