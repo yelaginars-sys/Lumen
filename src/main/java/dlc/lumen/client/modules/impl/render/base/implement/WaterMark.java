@@ -7,6 +7,7 @@ import dlc.lumen.api.utils.draggable.Draggable;
 import dlc.lumen.api.utils.render.RenderUtils;
 import dlc.lumen.api.utils.render.fonts.msdf.Font;
 import dlc.lumen.api.utils.render.fonts.msdf.Fonts;
+import dlc.lumen.api.utils.server.ServerUtil;
 import dlc.lumen.client.modules.impl.render.Interface;
 import dlc.lumen.client.modules.impl.render.base.InterfaceProcessing;
 import java.util.ArrayList;
@@ -25,8 +26,9 @@ public class WaterMark extends InterfaceProcessing {
    private boolean showFps2 = true;
    private boolean showMs2 = true;
    private boolean showServer2 = true;
-   private boolean showTps2 = true;
-   public static final List<String> SEGMENT_KEYS = List.of("fps", "ms", "server", "tps");
+    private boolean showTps2 = true;
+    private boolean showPvp2 = true;
+    public static final List<String> SEGMENT_KEYS = List.of("fps", "ms", "server", "tps", "pvp");
    private final List<String> segmentOrderConfig = new ArrayList<>(SEGMENT_KEYS);
    private final List<WaterMark.SegRect> waterMarks = new ArrayList<>();
    private float segRowY2;
@@ -68,6 +70,7 @@ public class WaterMark extends InterfaceProcessing {
          case "ms" -> this.showMs2;
          case "server" -> this.showServer2;
          case "tps" -> this.showTps2;
+         case "pvp" -> this.showPvp2;
          default -> false;
       };
    }
@@ -84,9 +87,12 @@ public class WaterMark extends InterfaceProcessing {
             case "server":
                this.showServer2 = true;
                break;
-            case "tps":
-               this.showTps2 = true;
-         }
+             case "tps":
+                this.showTps2 = true;
+                break;
+             case "pvp":
+                this.showPvp2 = true;
+          }
       }
    }
 
@@ -333,9 +339,9 @@ public class WaterMark extends InterfaceProcessing {
          float var30 = 3.0F;
          ArrayList<String[]> var31 = new ArrayList<>();
 
-         for (String var33 : this.segmentOrderConfig) {
-            if (this.isSegmentShown(var33)) {
-               switch (var33) {
+          for (String var33 : this.segmentOrderConfig) {
+             if (this.isSegmentShown(var33) && this.isSegmentActive(var33)) {
+                switch (var33) {
                   case "fps":
                      var31.add(new String[]{"q", var20, var21, "fps"});
                      break;
@@ -345,9 +351,12 @@ public class WaterMark extends InterfaceProcessing {
                   case "server":
                      var31.add(new String[]{"x", var53, "", "server"});
                      break;
-                  case "tps":
-                     var31.add(new String[]{"g", var27, var28, "tps"});
-               }
+                   case "tps":
+                      var31.add(new String[]{"g", var27, var28, "tps"});
+                      break;
+                   case "pvp":
+                      var31.add(new String[]{"", pvpValue(), "pvp", "pvp"});
+                }
             }
          }
 
@@ -406,12 +415,13 @@ public class WaterMark extends InterfaceProcessing {
             }
 
             float var51 = helper4(var2, var5, var43[0], var50, var14 + 5.5F, var10, 2.0F);
-            if (var43[2].isEmpty()) {
-               this.helper5(var2, var43[1], var51, var13 + 5.5F, var9, var12);
-            } else {
-               var6.drawString(var2, var43[1], var51, var13 + 5.5F, var12);
-               var6.drawString(var2, var43[2], var51 + var6.getStringWidth(var43[1]) - 0.5F, var13 + 5.5F, ColorUtils.clientIcon());
-            }
+             if (var43[2].isEmpty()) {
+                this.helper5(var2, var43[1], var51, var13 + 5.5F, var9, var12);
+             } else {
+                int valueColor = "pvp".equals(var44) ? ColorUtils.rgba(240, 75, 75, 255) : var12;
+                var6.drawString(var2, var43[1], var51, var13 + 5.5F, valueColor);
+                var6.drawString(var2, var43[2], var51 + var6.getStringWidth(var43[1]) - 0.5F, var13 + 5.5F, ColorUtils.clientIcon());
+             }
          }
 
          this.draggable.setWidth(var57 - 12.0F);
@@ -500,7 +510,22 @@ public class WaterMark extends InterfaceProcessing {
       }
    }
 
-   private String helper6(String serverName) {
+    private boolean isSegmentActive(String key) {
+       return !"pvp".equals(key) || ServerUtil.isPvPZone() || ServerUtil.pvpTime() >= 0;
+    }
+
+    private static String pvpValue() {
+       int seconds = ServerUtil.pvpTime();
+       if (seconds < 0) {
+          return "ON";
+       }
+
+       int total = Math.max(0, seconds);
+       int rest = total % 60;
+       return total / 60 + ":" + (rest < 10 ? "0" + rest : String.valueOf(rest));
+    }
+
+    private String helper6(String serverName) {
       if (serverName != null && !serverName.isEmpty()) {
          String var2 = serverName;
          int var3 = var2.indexOf(58);
@@ -539,10 +564,15 @@ public class WaterMark extends InterfaceProcessing {
       this.showServer2 = showServer;
    }
 
-   @Generated
-   public void setShowTps(boolean showTps) {
-      this.showTps2 = showTps;
-   }
+    @Generated
+    public void setShowTps(boolean showTps) {
+       this.showTps2 = showTps;
+    }
+
+    @Generated
+    public void setShowPvp(boolean showPvp) {
+       this.showPvp2 = showPvp;
+    }
 
    @Generated
    public void setSegRowY(float segRowY) {
@@ -589,10 +619,15 @@ public class WaterMark extends InterfaceProcessing {
       return this.showServer2;
    }
 
-   @Generated
-   public boolean isShowTps() {
-      return this.showTps2;
-   }
+    @Generated
+    public boolean isShowTps() {
+       return this.showTps2;
+    }
+
+    @Generated
+    public boolean isShowPvp() {
+       return this.showPvp2;
+    }
 
    @Generated
    public List<String> getSegmentOrder() {

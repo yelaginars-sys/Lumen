@@ -119,8 +119,10 @@ public class Interface extends Module {
    private final FloatSetting floatSetting = new FloatSetting("Размер таргет худа", 1.0F, 0.5F, 2.0F, 0.05F);
    private final FloatSetting scoreBoardScale = new FloatSetting("Размер скорборда", 1.0F, 0.5F, 2.5F, 0.05F);
    private int index = 0;
-   private final AnimationUtils animationUtils24 = new AnimationUtils(1.0F, 15.0F, Easings.CUBIC_OUT);
-   private final AnimationUtils animationUtils25 = new AnimationUtils(1.0F, 8.2F, Easings.BACK_OUT);
+    private final AnimationUtils animationUtils24 = new AnimationUtils(1.0F, 15.0F, Easings.CUBIC_OUT);
+    private final AnimationUtils animationUtils25 = new AnimationUtils(1.0F, 8.2F, Easings.BACK_OUT);
+    private final AnimationUtils animationUtils26 = new AnimationUtils(1.0F, 15.0F, Easings.CUBIC_OUT);
+    private final AnimationUtils animationUtils27 = new AnimationUtils(1.0F, 8.2F, Easings.BACK_OUT);
 
    public Interface() {
       super("Interface", "Интерфейс клиента", Module.ModuleCategory.RENDER);
@@ -837,6 +839,7 @@ public class Interface extends Module {
          case "ms" -> "Пинг";
          case "server" -> "Сервер";
          case "tps" -> "Тпс";
+         case "pvp" -> "Пвп";
          default -> key;
       };
    }
@@ -846,6 +849,7 @@ public class Interface extends Module {
          case "fps" -> new AnimationUtils[]{this.animationUtils5, this.animationUtils6};
          case "ms" -> new AnimationUtils[]{this.animationUtils7, this.animationUtils8};
          case "server" -> new AnimationUtils[]{this.animationUtils9, this.animationUtils10};
+         case "pvp" -> new AnimationUtils[]{this.animationUtils26, this.animationUtils27};
          default -> new AnimationUtils[]{this.animationUtils11, this.animationUtils12};
       };
    }
