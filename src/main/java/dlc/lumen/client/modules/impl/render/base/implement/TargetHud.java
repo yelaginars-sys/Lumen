@@ -309,15 +309,25 @@ public class TargetHud extends InterfaceProcessing {
       }
    }
 
-   private void updateState5(EventRender.Default eventRender, MatrixStack matrices, ItemStack stack, float slotX, float slotY, float itemScale) {
-      if (!stack.isEmpty()) {
-         matrices.push();
-         matrices.translate(slotX, slotY, 0.0F);
-         matrices.scale(itemScale, itemScale, 1.0F);
-         eventRender.getContext().drawItem(stack, 0, 0);
-         matrices.pop();
-      }
-   }
+    private void updateState5(EventRender.Default eventRender, MatrixStack matrices, ItemStack stack, float slotX, float slotY, float itemScale) {
+       if (!stack.isEmpty()) {
+          matrices.push();
+          matrices.translate(slotX, slotY, 0.0F);
+          matrices.scale(itemScale, itemScale, 1.0F);
+          eventRender.getContext().drawItem(stack, 0, 0);
+          matrices.pop();
+          if (stack.hasGlint()) {
+             float size = 16.0F * itemScale;
+             RenderUtils.drawRoundedRectOutline(
+                matrices, slotX - 1.0F, slotY - 1.0F, size + 2.0F, size + 2.0F, 2.0F, 0.6F,
+                ColorUtils.rgba(170, 120, 255, 200),
+                ColorUtils.rgba(170, 120, 255, 200),
+                ColorUtils.rgba(170, 120, 255, 200),
+                ColorUtils.rgba(170, 120, 255, 200)
+             );
+          }
+       }
+    }
 
    private void updateState6(MatrixStack matrices, float cx, float cy, float size, int color) {
       Font var6 = Fonts.getFont("iconz", 11);

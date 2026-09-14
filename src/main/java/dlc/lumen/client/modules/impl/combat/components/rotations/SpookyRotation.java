@@ -87,6 +87,14 @@ public class SpookyRotation extends RotationsSystem {
       }
 
       boolean exact = !lookaway && this.isExact(eye, target);
+      Vec3d toGoalForErr = goal.subtract(eye);
+      double horForErr = Math.sqrt(toGoalForErr.x * toGoalForErr.x + toGoalForErr.z * toGoalForErr.z);
+      float errYaw = Math.abs(
+         MathHelper.wrapDegrees((float)(Math.toDegrees(Math.atan2(toGoalForErr.z, toGoalForErr.x)) - 90.0) - this.preciseYaw)
+      );
+      float errPitch = Math.abs(
+         MathHelper.clamp((float)(-Math.toDegrees(Math.atan2(toGoalForErr.y, horForErr))), -89.0F, 89.0F) - this.precisePitch
+      );
       float yawSpeed;
       float pitchSpeed;
       if (visible && !lookaway) {
@@ -94,8 +102,8 @@ public class SpookyRotation extends RotationsSystem {
             yawSpeed = 0.6F + this.random.nextFloat() * 0.8F;
             pitchSpeed = 0.0F;
          } else {
-            yawSpeed = 2.5F + this.random.nextFloat() * 1.5F;
-            pitchSpeed = 1.0F + this.random.nextFloat() * 1.5F;
+            yawSpeed = Math.min(18.0F, Math.max(2.5F, errYaw * 0.55F)) + this.random.nextFloat() * 1.5F;
+            pitchSpeed = Math.min(10.0F, Math.max(1.0F, errPitch * 0.45F)) + this.random.nextFloat();
          }
       } else {
          long unseen = now - this.invisibleSinceMs;
