@@ -1,7 +1,6 @@
 package dlc.lumen.client.ui.mainmenu.account;
 
 import dlc.lumen.client.ui.mainmenu.MenuParticles;
-import net.minecraft.util.Identifier;
 import dlc.lumen.api.utils.client.ClientSoundPlayer;
 
 import dlc.lumen.api.QClient;
@@ -41,9 +40,8 @@ public final class AccountGuiScreen extends Screen implements QClient {
    private static final float VOLUME = 400.0F;
    private static final float VOLUME2 = 160.0F;
    private static final float VOLUME3 = 10.0F;
-   private static final float VOLUME4 = 25.0F;
-   private static final Identifier MENU_BG = Identifier.of("lumen", "textures/mainmenu/menu_bg.png");
-   private final Map<String, Float> strings = new HashMap<>();
+    private static final float VOLUME4 = 25.0F;
+    private final Map<String, Float> strings = new HashMap<>();
    private final Screen screen2;
    private final AccountGuiScreen.TextField accountGuiScreen = new AccountGuiScreen.TextField("Nickname", "icon", "e");
    private final AccountGuiScreen.TextField accountGuiScreen2 = new AccountGuiScreen.TextField("Search", "icon1", "l");
@@ -76,18 +74,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
    @Override
    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
       MatrixStack var5 = context.getMatrices();
-      if (mc.getResourceManager().getResource(MENU_BG).isPresent()) {
-         float bgScale = Math.max(this.width / 2560.0F, this.height / 1440.0F);
-         float bgW = 2560.0F * bgScale;
-         float bgH = 1440.0F * bgScale;
-         RenderUtils.drawImage(var5, MENU_BG, (this.width - bgW) / 2.0F, (this.height - bgH) / 2.0F, bgW, bgH, -1);
-         RenderUtils.drawRoundedRect(var5, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.setAlphaColor(ColorUtils.rgb(8, 9, 14), 175));
-      } else {
-         RenderUtils.drawRoundedRect(var5, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.rgb(9, 10, 15));
-      }
-
-      int lumenGlow = ColorUtils.getThemeColor();
-      RenderUtils.drawRoundCircle(var5, this.width * 0.5F, this.height * 0.35F, this.height * 0.7F, ColorUtils.setAlphaColor(lumenGlow, 26));
+      RenderUtils.drawRoundedRect(var5, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.rgb(9, 10, 15));
       MenuParticles.render(context, this.width, this.height, mouseX, mouseY, 1.0F);
       float var6 = this.width / 2.0F - 200.0F;
       float var7 = this.height / 2.0F - 80.0F + 40.0F;
@@ -103,7 +90,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       this.helper2(var5, mouseX, mouseY, var6, var7, var8, var11);
       Font var12 = helper21("suisse", 15);
       helper23(
-         var12, var5, "© Lumen Client 2026", this.width / 2.0F, this.height - helper25(var12) - 4.0F, helper20(-1, 127)
+          var12, var5, "© Lumen DLC 2026", this.width / 2.0F, this.height - helper25(var12) - 4.0F, helper20(-1, 127)
       );
       super.render(context, mouseX, mouseY, delta);
    }
@@ -215,7 +202,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
       Font var18 = helper21("icon", 16);
       int var19 = account.favorite() ? ColorUtils.rgba(255, 160, 102, 255) : helper20(-1, 95);
       helper22(var18, matrices, "D", x2 + width - 15.0F, y2 + 5.5F, var19);
-      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, ColorUtils.rgba(255, 101, 104, 230));
+      helper22(var18, matrices, "C", x2 + width - 15.0F, y2 + height - 13.5F, helper20(-1, 160));
    }
 
    private void helper5(MatrixStack matrices, float x2, float y2, float width, float height) {
@@ -245,9 +232,9 @@ public final class AccountGuiScreen extends Screen implements QClient {
       RenderUtils.drawRoundedRectOutline(matrices, x2, y2, width, height, 5.0F, 5.0F, 5.0F, 5.0F, 1.0F, helper20(-1, var8 ? 190 : 80));
    }
 
-   private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
+    private void helper7(MatrixStack matrices, float x2, float y2, float width, float height, String text, boolean danger, int mouseX, int mouseY) {
       boolean var10 = HoveringUtils.isHovered(mouseX, mouseY, x2, y2, width, height);
-      int var11 = danger ? ColorUtils.rgba(255, 101, 104, 255) : -1;
+      int var11 = -1;
       int var12 = helper20(ColorUtils.darken(var11, var10 ? 0.24F : 0.15F), var10 ? 205 : 150);
       RenderUtils.drawRoundedRect(matrices, x2, y2, width, height, 6.0F, var12);
       this.helper8(matrices, x2, y2, width, height, var10 ? 1.0F : 0.0F);
@@ -319,15 +306,15 @@ public final class AccountGuiScreen extends Screen implements QClient {
       for (Account var14 : var9) {
          float var15 = listX + 10.0F + (var10 + 10.0F) * var12;
          float var16 = panelY + 10.0F + this.volume + var11;
-         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 29.0F, var16 + 7.0F, 18.0, 16.0)) {
+         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 22.0F, var16 + 2.0F, 18.0, 12.0)) {
             var14.toggleFavorite();
             MANAGER.save();
             helper17();
             return true;
          }
 
-         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 20.0F, var16 + 24.0F, 16.0, 16.0)
-            || button == 1 && HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 40.0)) {
+         if (HoveringUtils.isHovered(mouseX, mouseY, var15 + var10 - 22.0F, var16 + 14.0F, 18.0, 12.0)
+            || button == 1 && HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 28.0)) {
             MANAGER.removeAccount(var14.name());
             if (this.account2 == var14) {
                this.helper(MANAGER.stream().findFirst().orElse(null));
@@ -337,7 +324,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
             return true;
          }
 
-         if (HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 40.0)) {
+         if (HoveringUtils.isHovered(mouseX, mouseY, var15, var16, var10, 28.0)) {
             if (button == 0) {
                helper15(var14.name());
                this.helper(var14);
@@ -350,7 +337,7 @@ public final class AccountGuiScreen extends Screen implements QClient {
 
          if (++var12 > 1) {
             var12 = 0;
-            var11 += 50.0F;
+            var11 += 34.0F;
          }
       }
 

@@ -48,8 +48,6 @@ import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
 public class LumenMenuScreen extends Screen implements QClient {
-   private static final int EXIT_RED = ColorUtils.rgb(255, 82, 82);
-   private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/mainmenu/menu_bg.png");
    private static final Identifier TEXTURE_ID2 = Identifier.of("lumen", "textures/mainmenu/single_bg.png");
    private static final Identifier TEXTURE_ID3 = Identifier.of("lumen", "textures/mainmenu/multi_bg.png");
    private static final Identifier TEXTURE_ID4 = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
@@ -138,22 +136,9 @@ public class LumenMenuScreen extends Screen implements QClient {
 
    private void helper2(DrawContext context, float r, double mouseX, double mouseY) {
       context.draw();
-      int width = this.width;
-      int height = this.height;
       MatrixStack matrices = context.getMatrices();
-      if (mc.getResourceManager().getResource(TEXTURE_ID).isPresent()) {
-         float scale = Math.max(width / 2560.0F, height / 1440.0F);
-         float dw = 2560.0F * scale;
-         float dh = 1440.0F * scale;
-         RenderUtils.drawImage(matrices, TEXTURE_ID, (width - dw) / 2.0F, (height - dh) / 2.0F, dw, dh, -1);
-         RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, width, height, 0.0F, ColorUtils.setAlphaColor(ColorUtils.rgb(8, 9, 14), (int)(165.0F * r)));
-      } else {
-         RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, width, height, 0.0F, ColorUtils.rgb(9, 10, 15));
-      }
-
-      int theme = ColorUtils.getThemeColor();
-      RenderUtils.drawRoundCircle(matrices, width * 0.5F, height * 0.40F, height * 0.62F, ColorUtils.setAlphaColor(theme, (int)(24.0F * r)));
-      MenuParticles.render(context, width, height, mouseX, mouseY, r);
+      RenderUtils.drawRoundedRect(matrices, 0.0F, 0.0F, this.width, this.height, 0.0F, ColorUtils.rgb(9, 10, 15));
+      MenuParticles.render(context, this.width, this.height, mouseX, mouseY, r);
    }
 
    private void updateState(DrawContext context, float x, float y, float w, float h) {
@@ -182,7 +167,7 @@ public class LumenMenuScreen extends Screen implements QClient {
       Font var9 = helper19("suisse", 19);
       Font var10 = helper19("sf_regular", 10);
       if (var9 != null) {
-         var9.drawCenteredString(context.getMatrices(), "Lumen Client", var4, var6, helper21(-1, (int)(255.0F * r)));
+         var9.drawCenteredString(context.getMatrices(), "Lumen DLC", var4, var6, helper21(-1, (int)(255.0F * r)));
          var6 += var9.getHeight() + 2.0F;
       }
 
@@ -405,9 +390,9 @@ public class LumenMenuScreen extends Screen implements QClient {
          float var20 = 1.0F + 0.1F * var15;
          var17.scale(var20, var20, 1.0F);
          var17.translate(-var18, -var19, 0.0F);
-         var16.drawCenteredString(
-            var17, "h", var18, var13 + 2.0F + var7 / 2.0F - 5.0F + 2.0F, helper21(EXIT_RED, (int)(220.0F + 35.0F * var15))
-         );
+          var16.drawCenteredString(
+             var17, "h", var18, var13 + 2.0F + var7 / 2.0F - 5.0F + 2.0F, helper21(-1, (int)(220.0F + 35.0F * var15))
+          );
          var17.pop();
       }
 
@@ -431,7 +416,7 @@ public class LumenMenuScreen extends Screen implements QClient {
             "Протяни, чтобы выйти",
             var23 + var8 / 2.0F,
             var13 + 2.0F + var7 / 2.0F - 3.0F,
-            helper21(EXIT_RED, (int)((150.0F - 90.0F * this.volume2) * r))
+            helper21(-1, (int)((150.0F - 90.0F * this.volume2) * r))
          );
       }
 

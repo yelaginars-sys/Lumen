@@ -39,9 +39,9 @@ public class ModernGui extends Screen implements QClient {
    public static final float H = 318.0F;
    public static final float SIDE_W = 116.0F;
    public static final float HEADER_H = 32.0F;
-   public static final float PAD = 9.0F;
-   private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
-   private static boolean flag;
+    public static final float PAD = 9.0F;
+    private static final Identifier TEXTURE_ID = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
+    private static boolean flag;
    private static Module.ModuleCategory moduleCategory = Module.ModuleCategory.COMBAT;
    private static ModernGui.Page page2 = ModernGui.Page.MODULES;
    private static String text2 = "";
@@ -572,11 +572,11 @@ public class ModernGui extends Screen implements QClient {
       this.m.pop();
    }
 
-   private void helper7(float x, float centerY, float h, int color) {
-      RenderUtils.drawImage(this.m, TEXTURE_ID, x, centerY - h / 2.0F, h, h, color);
-   }
+    private void helper7(float x, float centerY, float h, int color) {
+       RenderUtils.drawImage(this.m, TEXTURE_ID, x, centerY - h / 2.0F, h, h, color);
+    }
 
-   public void toggle(float tx, float ty, boolean on, Object key) {
+    public void toggle(float tx, float ty, boolean on, Object key) {
       float var5 = ModernAnim.value("tgl:" + key, on ? 1.0F : 0.0F, 16.0F);
       this.rect(tx, ty, 20.0F, 10.0F, 4.0F, ColorUtils.interpolate(ModernTheme.TOGGLE_OFF(), ModernTheme.accent(), var5));
       float var6 = tx + 1.0F + 10.0F * var5;

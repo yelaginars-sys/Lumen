@@ -41,8 +41,8 @@ public class WaterMark extends InterfaceProcessing {
    private static final String TEXT2 = "q";
    private static final String TEXT3 = "P";
    private static final String TEXT4 = "x";
-   private static final String TEXT5 = "g";
-   private static final Identifier LOGO = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
+    private static final String TEXT5 = "g";
+    private static final Identifier LOGO = Identifier.of("lumen", "textures/waterlogo/lumenik.png");
 
    public void setInterfaceModule(Interface interfaceModule) {
       this.interfaceModule2 = interfaceModule;
