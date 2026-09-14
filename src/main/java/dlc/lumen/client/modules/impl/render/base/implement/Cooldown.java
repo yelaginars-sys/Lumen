@@ -276,8 +276,8 @@ public class Cooldown extends InterfaceProcessing {
                this.draggable.setHeight(15.0F);
             }
          } else {
-            float var31 = 0.0F;
-            float var33 = 15.0F;
+             float var31 = 0.0F;
+             float var33 = 18.0F;
             List<Item> var35 = this.helper4(var5);
 
             for (Item var10 : var35) {
