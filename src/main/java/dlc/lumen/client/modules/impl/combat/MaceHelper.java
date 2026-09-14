@@ -14,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.MaceItem;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -25,12 +26,15 @@ public class MaceHelper extends Module {
    public final BooleanSetting maceAutoSwap = new BooleanSetting("Свап на булаву", true);
    private final FloatSetting floatSetting = new FloatSetting("Дист. булавы", 3.0F, 1.0F, 6.0F, 0.1F);
    private final FloatSetting floatSetting2 = new FloatSetting("Мин. высота над целью", 0.1F, 0.0F, 2.0F, 0.1F);
+   private final BooleanSetting chargeSetting = new BooleanSetting("Заряд", true);
+   private final FloatSetting chargeDelay = new FloatSetting("Задержка заряда", 20.0F, 5.0F, 100.0F, 1.0F);
    private LivingEntity livingEntity = null;
    private int index = 0;
+   private int chargeCooldown = 0;
 
    public MaceHelper() {
       super("Mace Helper", "Логика булавы: свап, атака при падении, наводка", Module.ModuleCategory.COMBAT);
-      this.addSettings(this.maceAutoSwap, this.floatSetting, this.floatSetting2);
+      this.addSettings(this.maceAutoSwap, this.floatSetting, this.floatSetting2, this.chargeSetting, this.chargeDelay);
    }
 
    @EventLink
@@ -66,6 +70,12 @@ public class MaceHelper extends Module {
                   mc.player.swingHand(Hand.MAIN_HAND);
                   this.index = 4;
                }
+            }
+
+            if (this.chargeCooldown > 0) {
+               this.chargeCooldown--;
+            } else if (this.chargeSetting.isState()) {
+               this.throwChargeDown();
             }
          }
       }
@@ -170,7 +180,51 @@ public class MaceHelper extends Module {
       return !smashReady && var7 < minY ? false : mc.player.squaredDistanceTo(entity) < rangeSq;
    }
 
-   private void updateState() {
+   private void throwChargeDown() {
+      if (mc.player == null || mc.interactionManager == null) {
+         return;
+      }
+
+      Hand hand = null;
+      int slot = -1;
+      if (!mc.player.getOffHandStack().isEmpty() && mc.player.getOffHandStack().isOf(Items.WIND_CHARGE)) {
+         hand = Hand.OFF_HAND;
+      } else {
+         for (int i = 0; i <= 8; i++) {
+            ItemStack stack = mc.player.getInventory().getStack(i);
+            if (!stack.isEmpty() && stack.isOf(Items.WIND_CHARGE)) {
+               slot = i;
+               break;
+            }
+         }
+
+         if (slot < 0) {
+            return;
+         }
+
+         hand = Hand.MAIN_HAND;
+      }
+
+      int prevSlot = mc.player.getInventory().selectedSlot;
+      if (slot >= 0) {
+         mc.player.getInventory().selectedSlot = slot;
+      }
+
+      float prevPitch = mc.player.getPitch();
+      float yaw = mc.player.getYaw();
+      mc.player.setPitch(90.0F);
+      RotationStorage.update(new Rotation(yaw, 90.0F), 360.0F, 360.0F, 360.0F, 360.0F, 1, 1, false);
+      mc.interactionManager.interactItem(mc.player, hand);
+      mc.player.swingHand(hand);
+      mc.player.setPitch(prevPitch);
+      if (slot >= 0) {
+         mc.player.getInventory().selectedSlot = prevSlot;
+      }
+
+      this.chargeCooldown = Math.max(1, Math.round(this.chargeDelay.getValue().floatValue()));
+   }
+
+    private void updateState() {
       if (this.livingEntity != null && mc.player != null) {
          Vec3d var1 = this.livingEntity.getBoundingBox().getCenter();
          Vec2f var2 = RotationUtils.getRotations(var1);
@@ -191,6 +245,7 @@ public class MaceHelper extends Module {
    public void onEnable() {
       this.livingEntity = null;
       this.index = 0;
+      this.chargeCooldown = 0;
       super.onEnable();
    }
 
@@ -198,6 +253,7 @@ public class MaceHelper extends Module {
    public void onDisable() {
       this.livingEntity = null;
       this.index = 0;
+      this.chargeCooldown = 0;
       super.onDisable();
    }
 }
