@@ -73,8 +73,11 @@ public class SpookyRotation extends RotationsSystem {
 
       boolean lookaway = false;
       if (now >= this.nextLookawayMs) {
-         this.lookawayPoint = aim.add(
-            (this.random.nextDouble() - 0.5) * 2.4, (this.random.nextDouble() - 0.5) * 1.2, (this.random.nextDouble() - 0.5) * 2.4
+         Vec3d center = target.getBoundingBox().getCenter();
+         double angle = this.random.nextDouble() * Math.PI * 2.0;
+         double dist = 0.8 + this.random.nextDouble() * 1.2;
+         this.lookawayPoint = center.add(
+            Math.cos(angle) * dist, (this.random.nextDouble() - 0.5) * 1.2, Math.sin(angle) * dist
          );
          this.lookawayUntilMs = now + 10L + this.random.nextInt(110);
          this.nextLookawayMs = now + 600L + this.random.nextInt(1200);
@@ -102,8 +105,11 @@ public class SpookyRotation extends RotationsSystem {
             yawSpeed = 0.6F + this.random.nextFloat() * 0.8F;
             pitchSpeed = 0.0F;
          } else {
-            yawSpeed = Math.min(20.0F, Math.max(2.5F, errYaw * 0.85F)) + this.random.nextFloat() * 1.5F;
-            pitchSpeed = Math.min(12.0F, Math.max(1.0F, errPitch * 0.7F)) + this.random.nextFloat();
+            float closeT = MathHelper.clamp((float)((eye.distanceTo(aim) - 1.0) / 2.0), 0.0F, 1.0F);
+            float floorYaw = 0.8F + 1.7F * closeT;
+            float floorPitch = 0.5F + 0.5F * closeT;
+            yawSpeed = Math.min(20.0F, Math.max(floorYaw, errYaw * 0.85F)) + this.random.nextFloat() * 1.5F;
+            pitchSpeed = Math.min(12.0F, Math.max(floorPitch, errPitch * 0.7F)) + this.random.nextFloat();
          }
       } else {
          long unseen = now - this.invisibleSinceMs;
