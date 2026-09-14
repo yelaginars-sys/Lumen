@@ -12,10 +12,10 @@ import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.math.Vec3d;
 
 public class SpookyTimeRotation extends RotationsSystem {
-   private static final float YAW_STIFFNESS = 0.32F;
-   private static final float YAW_DAMPING = 0.42F;
-   private static final float PITCH_STIFFNESS = 0.30F;
-   private static final float PITCH_DAMPING = 0.45F;
+   private static final float YAW_STIFFNESS = 0.30F;
+   private static final float YAW_DAMPING = 0.58F;
+   private static final float PITCH_STIFFNESS = 0.28F;
+   private static final float PITCH_DAMPING = 0.60F;
    private static final float YAW_CAP = 30.0F;
    private static final float PITCH_CAP = 20.0F;
    private static final float YAW_ACCEL = 5.0F;
@@ -26,7 +26,7 @@ public class SpookyTimeRotation extends RotationsSystem {
    private static final float RATE_SMOOTH = 0.35F;
    private static final float RATE_GAIN = 0.25F;
    private static final int PREDICT_WARMUP_TICKS = 5;
-   private static final float AIM_SPREAD = 0.30F;
+   private static final float AIM_SPREAD = 0.15F;
 
    private float yawVelocity;
    private float pitchVelocity;
@@ -74,7 +74,7 @@ public class SpookyTimeRotation extends RotationsSystem {
             (this.random.nextDouble() * 2.0 - 1.0) * AIM_SPREAD * (box.maxY - box.minY) / 2.0,
             (this.random.nextDouble() * 2.0 - 1.0) * AIM_SPREAD * (box.maxZ - box.minZ) / 2.0
          );
-         this.aimOffsetTicks = 4 + this.random.nextInt(5);
+         this.aimOffsetTicks = 6 + this.random.nextInt(6);
       }
 
       Vec3d delta = box.getCenter().add(this.aimOffset).subtract(mc.player.getEyePos());
@@ -110,7 +110,7 @@ public class SpookyTimeRotation extends RotationsSystem {
       float newPitch = MathHelper.clamp(mc.player.getPitch() + this.pitchVelocity, -89.0F, 89.0F);
       Vec2f corrected = correctRotation(newYaw, newPitch);
       RotationStorage.update(
-         new Rotation(corrected.x, corrected.y), 40.0F, 25.0F, 20.0F, 15.0F, 1, 1, Aura.clientLook.isState()
+         new Rotation(corrected.x, corrected.y), 40.0F, 25.0F, 20.0F, 15.0F, 20, 1, Aura.clientLook.isState()
       );
    }
 

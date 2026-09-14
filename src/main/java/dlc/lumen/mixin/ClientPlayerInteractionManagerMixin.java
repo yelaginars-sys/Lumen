@@ -41,14 +41,17 @@ public abstract class ClientPlayerInteractionManagerMixin {
       }
    }
 
-   @Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
-   private void lumen$blockContainerInteraction(ClientPlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
-      if (ModuleClass.noInteract != null && ModuleClass.noInteract.blocksContainers() && player != null && hit != null && player.getWorld() != null) {
-         if (player.getWorld().getBlockState(hit.getBlockPos()).createScreenHandlerFactory(player.getWorld(), hit.getBlockPos()) != null) {
-            cir.setReturnValue(ActionResult.PASS);
-         }
-      }
-   }
+    @Inject(method = "interactBlock", at = @At("HEAD"), cancellable = true)
+    private void lumen$blockContainerInteraction(ClientPlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
+       if (ModuleClass.noInteract != null && player != null && hit != null && player.getWorld() != null) {
+          if (ModuleClass.noInteract.blocksAll()) {
+             cir.setReturnValue(ActionResult.PASS);
+          } else if (ModuleClass.noInteract.blocksContainers()
+             && player.getWorld().getBlockState(hit.getBlockPos()).createScreenHandlerFactory(player.getWorld(), hit.getBlockPos()) != null) {
+             cir.setReturnValue(ActionResult.PASS);
+          }
+       }
+    }
 
    @Inject(method = "interactEntity", at = @At("HEAD"), cancellable = true)
    private void lumen$armorStandInteraction(PlayerEntity player, Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
