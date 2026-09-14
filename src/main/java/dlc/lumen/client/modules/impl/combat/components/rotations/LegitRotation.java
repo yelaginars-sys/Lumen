@@ -136,10 +136,14 @@ public class LegitRotation extends RotationsSystem implements QClient {
    }
 
     private Vec3d computeVec3d(LivingEntity entity) {
-       this.volume3 = this.volume3 + (0.02F + this.random.nextFloat() * 0.09F);
+       this.volume3 = this.volume3 + (0.03F + this.random.nextFloat() * 0.12F);
        Box var2 = this.getPredictedBox(entity);
-       float var3 = (float)(Math.sin(this.volume3 * 0.3) * 0.35 + 0.5 + (this.random.nextFloat() - 0.5F) * 0.3F);
-       this.volume5 = this.volume5 + (this.random.nextFloat() - 0.5F) * (0.15F + this.random.nextFloat() * 0.7F);
+       float var3 = (float)(Math.sin(this.volume3 * 0.3) * 0.4 + 0.5 + (this.random.nextFloat() - 0.5F) * 0.4F);
+       if (this.random.nextFloat() < 0.12F) {
+          this.volume5 = this.random.nextFloat() * (float)(Math.PI * 2);
+       } else {
+          this.volume5 = this.volume5 + (this.random.nextFloat() - 0.5F) * (0.3F + this.random.nextFloat() * 0.9F);
+       }
       if (this.volume5 > (float) (Math.PI * 2)) {
          this.volume5 -= (float) (Math.PI * 2);
       }
@@ -149,7 +153,7 @@ public class LegitRotation extends RotationsSystem implements QClient {
       }
 
        float var4 = this.random.nextFloat() * (float)var2.getLengthX() * (0.3F + this.random.nextFloat() * 1.4F);
-       this.volume6 = this.volume6 + (var4 - this.volume6) * (0.05F + this.random.nextFloat() * 0.2F);
+       this.volume6 = this.volume6 + (var4 - this.volume6) * (0.15F + this.random.nextFloat() * 0.3F);
       Vec3d var5 = var2.getCenter();
       double var6 = var5.x + Math.cos(this.volume5) * this.volume6;
       double var8 = var5.z + Math.sin(this.volume5) * this.volume6;
