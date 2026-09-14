@@ -34,6 +34,8 @@ import dlc.lumen.client.modules.impl.combat.components.rotations.HolyWorldRotati
 import dlc.lumen.client.modules.impl.combat.components.rotations.ReallyWorldRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.ReallyWorldV2Rotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeV3Rotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeV3_116Rotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeV3DuelsRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.HelixWaveRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.ArtygriefRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.FovRotation;
@@ -141,6 +143,10 @@ public class Aura extends Module {
     private final ArtygriefRotation artygriefRotation = new ArtygriefRotation();
     private final FunTimeV4Rotation funTimeV4Rotation = new FunTimeV4Rotation();
     private final SpookyTimeV3Rotation spookyTimeV3Rotation = new SpookyTimeV3Rotation();
+    private final SpookyTimeV3_116Rotation spookyTimeV3_116Rotation = new SpookyTimeV3_116Rotation();
+    private final SpookyTimeV3DuelsRotation spookyTimeV3DuelsRotation = new SpookyTimeV3DuelsRotation();
+    public final ModeSetting spookyV3Profile = new ModeSetting("Профиль SpookyTimeV3", "Спуки 1.21", "Спуки 1.21", "Спуки 1.16", "Спуки-дуэли")
+       .visible(() -> this.rotationType.is("SpookyTimeV3"));
     private final FovRotation fovRotation = new FovRotation();
     private final ReallyWorldV2Rotation reallyWorldV2Rotation = new ReallyWorldV2Rotation();
    private final NeuroRotation neuroRotation = new NeuroRotation();
@@ -186,6 +192,7 @@ public class Aura extends Module {
       super("AttackAura", "Автоматически наводиться и бьёт таргета", Module.ModuleCategory.COMBAT);
       this.addSettings(
          this.rotationType,
+         this.spookyV3Profile,
          this.value,
          this.floatSetting,
          this.floatSetting2,
@@ -557,7 +564,13 @@ public class Aura extends Module {
             } else if (this.rotationType.is("FunTimeV4")) {
                var1 = this.funTimeV4Rotation;
             } else if (this.rotationType.is("SpookyTimeV3")) {
-               var1 = this.spookyTimeV3Rotation;
+               if (this.spookyV3Profile.is("Спуки-дуэли")) {
+                  var1 = this.spookyTimeV3DuelsRotation;
+               } else if (this.spookyV3Profile.is("Спуки 1.16")) {
+                  var1 = this.spookyTimeV3_116Rotation;
+               } else {
+                  var1 = this.spookyTimeV3Rotation;
+               }
             } else if (this.rotationType.is("FOV")) {
                var1 = this.fovRotation;
             } else if (this.rotationType.is("ReallyWorldV2")) {
@@ -1534,6 +1547,8 @@ public class Aura extends Module {
       this.funtimeRotation.reset();
       this.funTimeV4Rotation.reset();
       this.spookyTimeV3Rotation.reset();
+      this.spookyTimeV3_116Rotation.reset();
+      this.spookyTimeV3DuelsRotation.reset();
       this.fovRotation.reset();
       this.flag2 = false;
       this.slothRotation.reset();
