@@ -183,8 +183,15 @@ public class SlothRotation extends RotationsSystem implements QClient {
    private int index20 = Integer.MIN_VALUE;
    private int index21;
    private Vec3d vec3d = Vec3d.ZERO;
-   private float volume48 = 1.0F;
-   private float volume49;
+    private float volume48 = 1.0F;
+    private float volume49;
+    private float volume50;
+    private float volume51;
+    private float volume52;
+    private float volume53;
+    private float volume54;
+    private float volume55;
+    private long timestamp24;
    private long timestamp23;
    private final SlothPatternEasing.PatternDriver slothPatternEasing = new SlothPatternEasing.PatternDriver();
    private float boost46 = 1.0F;
@@ -306,6 +313,9 @@ public class SlothRotation extends RotationsSystem implements QClient {
       this.vec3d = Vec3d.ZERO;
       this.volume48 = 1.0F;
       this.volume49 = 0.0F;
+      this.volume50 = this.volume51 = this.volume52 = 0.0F;
+      this.volume53 = this.volume54 = this.volume55 = 0.0F;
+      this.timestamp24 = 0L;
       this.timestamp23 = 0L;
       this.slothPatternEasing.reset();
       if (mc.player != null) {
@@ -742,6 +752,10 @@ public class SlothRotation extends RotationsSystem implements QClient {
          var12.minY + var12.getLengthY() * this.boost15,
          var12.minZ + var12.getLengthZ() * this.boost16
       );
+      this.updateMultipoint(deltaTime);
+      var13 = var13.add(
+         var12.getLengthX() * this.volume50, var12.getLengthY() * this.volume51, var12.getLengthZ() * this.volume52
+      );
       double var14 = mc.player.getEyePos().distanceTo(var13);
       double var16;
       if (precision) {
@@ -776,7 +790,53 @@ public class SlothRotation extends RotationsSystem implements QClient {
       return var13.add(var18.multiply(var24));
    }
 
-   private double resolveDouble(double value, double delta, double minimum, double maximum) {
+    private void updateMultipoint(double deltaTime) {
+       long now = System.nanoTime();
+       if (now >= this.timestamp24) {
+          int pick = this.random.nextInt(5);
+          float tx = 0.0F;
+          float ty = 0.0F;
+          float tz = 0.0F;
+          if (pick == 0) {
+             ty = 0.22F;
+          } else if (pick == 1) {
+             ty = -0.08F;
+          } else if (pick == 2) {
+             ty = -0.42F;
+          } else if (pick == 3) {
+             tx = -0.3F;
+          } else {
+             tx = 0.3F;
+          }
+
+          tx += (this.random.nextFloat() - 0.5F) * 0.24F;
+          ty += (this.random.nextFloat() - 0.5F) * 0.16F;
+          tz += (this.random.nextFloat() - 0.5F) * 0.24F;
+          if (this.random.nextFloat() < 0.22F) {
+             float push = (this.random.nextBoolean() ? 1.0F : -1.0F) * (0.15F + this.random.nextFloat() * 0.15F);
+             int axis = this.random.nextInt(3);
+             if (axis == 0) {
+                tx += push;
+             } else if (axis == 1) {
+                ty += push;
+             } else {
+                tz += push;
+             }
+          }
+
+          this.volume53 = tx;
+          this.volume54 = ty;
+          this.volume55 = tz;
+          this.timestamp24 = now + (250L + this.random.nextInt(750)) * 1000000L;
+       }
+
+       float rate = (float)(1.0 - Math.exp(-deltaTime / 0.12));
+       this.volume50 += (this.volume53 - this.volume50) * rate;
+       this.volume51 += (this.volume54 - this.volume51) * rate;
+       this.volume52 += (this.volume55 - this.volume52) * rate;
+    }
+
+    private double resolveDouble(double value, double delta, double minimum, double maximum) {
       if (Math.abs(delta) < 1.0E-8) {
          return 1.0;
       }
