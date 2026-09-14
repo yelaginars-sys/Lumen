@@ -54,6 +54,16 @@ public class InGameGuiMixin implements QClient {
       }
    }
 
+   @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)
+   private void lumen$renderStatusEffectOverlay(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
+      if (ModuleClass.INSTANCE != null && ModuleClass.interfaceModule != null) {
+         Interface interfaceModule = ModuleClass.interfaceModule;
+         if (interfaceModule.isEnable() && interfaceModule.isHudElementVisible("potions")) {
+            ci.cancel();
+         }
+      }
+   }
+
    @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
    private void lumen$renderHotbar(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
       if (ModuleClass.INSTANCE != null && ModuleClass.interfaceModule != null) {

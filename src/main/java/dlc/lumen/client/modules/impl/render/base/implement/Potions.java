@@ -10,6 +10,7 @@ import dlc.lumen.api.utils.render.RenderUtils;
 import dlc.lumen.api.utils.render.fonts.msdf.Font;
 import dlc.lumen.api.utils.render.fonts.msdf.Fonts;
 import dlc.lumen.api.utils.scissor.ScissorUtils;
+import dlc.lumen.client.modules.impl.render.FullBright;
 import dlc.lumen.client.modules.impl.render.base.InterfaceProcessing;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +27,7 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.entry.RegistryEntry;
 
 public class Potions extends InterfaceProcessing {
@@ -90,7 +92,27 @@ public class Potions extends InterfaceProcessing {
       return (var3 < 10 ? "0" + var3 : String.valueOf(var3)) + ":" + (var4 < 10 ? "0" + var4 : String.valueOf(var4));
    }
 
-   private void updateState(StatusEffectInstance effect) {
+    private List<StatusEffectInstance> helper9() {
+       ArrayList<StatusEffectInstance> result = new ArrayList<>();
+       if (mc != null && mc.player != null) {
+          for (StatusEffectInstance instance : mc.player.getStatusEffects()) {
+             if (instance.getEffectType() == StatusEffects.NIGHT_VISION) {
+                continue;
+             }
+
+             result.add(instance);
+          }
+
+          FullBright fullBright = FullBright.INSTANCE;
+          if (fullBright != null && fullBright.isEnable() && fullBright.showInPotions.getValue()) {
+             result.add(new StatusEffectInstance(StatusEffects.NIGHT_VISION, StatusEffectInstance.INFINITE, 0));
+          }
+       }
+
+       return result;
+    }
+
+    private void updateState(StatusEffectInstance effect) {
       StatusEffect var2 = effect.getEffectType().value();
       Potions.PotionSnapshot var3 = this.statusEffects.computeIfAbsent(var2, e -> new Potions.PotionSnapshot());
       var3.entry = effect.getEffectType();
@@ -148,7 +170,7 @@ public class Potions extends InterfaceProcessing {
          var4 = ColorUtils.getThemeColor();
       }
 
-      Collection<StatusEffectInstance> var5 = mc != null && mc.player != null ? mc.player.getStatusEffects() : List.of();
+      Collection<StatusEffectInstance> var5 = this.helper9();
       if (var5.isEmpty()) {
          boolean var39 = mc.currentScreen instanceof ChatScreen;
          if (!var39) {
@@ -271,7 +293,7 @@ public class Potions extends InterfaceProcessing {
       int var8 = ColorUtils.getThemeColor(var4 + 120);
       int var9 = ColorUtils.getThemeColor(var4 + 180);
       int var10 = ColorUtils.getThemeColor(var4 + 210);
-      Collection<StatusEffectInstance> var11 = mc != null && mc.player != null ? mc.player.getStatusEffects() : List.of();
+      Collection<StatusEffectInstance> var11 = this.helper9();
       HashSet<StatusEffect> var12 = new HashSet<>();
 
       for (StatusEffectInstance var14 : var11) {

@@ -3,14 +3,17 @@ package dlc.lumen.client.modules.impl.render;
 import dlc.lumen.api.events.EventLink;
 import dlc.lumen.api.events.implement.EventUpdate;
 import dlc.lumen.client.modules.Module;
+import dlc.lumen.client.modules.settings.implement.BooleanSetting;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
 public class FullBright extends Module {
    public static FullBright INSTANCE = new FullBright();
+   public final BooleanSetting showInPotions = new BooleanSetting("Показывать в Potions", true);
 
    public FullBright() {
       super("FullBright", "Всегда светло", Module.ModuleCategory.RENDER);
+      this.addSettings(this.showInPotions);
    }
 
    @EventLink
