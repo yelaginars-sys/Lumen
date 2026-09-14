@@ -421,12 +421,12 @@ public class SlothRotation extends RotationsSystem implements QClient {
                      float var14 = (float)(-Math.toDegrees(Math.atan2(var12.y, var12.horizontalLength())));
                      float var15 = this.computefloat5(target, var12.length());
                      float var16 = this.computefloat6(target, var12.length());
-                     float var17 = MathHelper.clamp(this.volume37, -var15 * (var9 ? 0.272F : 0.85F), var15 * (var9 ? 0.272F : 0.85F));
-                     float var18 = MathHelper.clamp(this.volume38, -var16 * (var9 ? 0.224F : 0.72F), var16 * (var9 ? 0.224F : 0.72F));
-                     float var19 = MathHelper.clamp(this.computefloat3(var2), -var16 * (var9 ? 0.176F : 0.78F), var16 * (var9 ? 0.176F : 0.78F));
+                      float var17 = MathHelper.clamp(this.volume37, -var15 * (var9 ? 0.38F : 0.85F), var15 * (var9 ? 0.38F : 0.85F));
+                      float var18 = MathHelper.clamp(this.volume38, -var16 * (var9 ? 0.31F : 0.72F), var16 * (var9 ? 0.31F : 0.72F));
+                      float var19 = MathHelper.clamp(this.computefloat3(var2), -var16 * (var9 ? 0.25F : 0.78F), var16 * (var9 ? 0.25F : 0.78F));
                      this.updateState19(var2, var9, var15, var16);
                      float var20 = this.computefloat4(var2);
-                     float var21 = (var9 ? 0.176F : (this.boost3 == SlothRotation.AimPhase.ACQUIRE ? 0.35F : 1.0F)) * this.volume13;
+                      float var21 = (var9 ? 0.25F : (this.boost3 == SlothRotation.AimPhase.ACQUIRE ? 0.35F : 1.0F)) * this.volume13;
                      float var22 = MathHelper.clamp(var15 * 0.35F, 0.12F, 1.05F) * var21;
                      float var23 = MathHelper.clamp(var15 * 0.22F, 0.09F, 0.75F) * var21;
                      this.precision2 = this.precision2 * (float)Math.exp(-var7 / 0.075);

@@ -828,15 +828,19 @@ public class Aura extends Module {
       this.target5.reset();
    }
 
-   private int resolveInt() {
-      int var1 = ThreadLocalRandom.current().nextInt(3, 14);
-      if (this.tpsSync != null && this.tpsSync.isEnable()) {
-         long var2 = (long)((float)this.tpsSync.getAdjustedCooldown(var1 * 50L) * 1.1F);
-         var1 = MathHelper.clamp(Math.round((float)var2 / 50.0F), 3, 13);
-      }
+    private int resolveInt() {
+       int var1 = ThreadLocalRandom.current().nextInt(3, 14);
+       if (this.tpsSync != null && this.tpsSync.isEnable()) {
+          long var2 = (long)((float)this.tpsSync.getAdjustedCooldown(var1 * 50L) * 1.1F);
+          var1 = MathHelper.clamp(Math.round((float)var2 / 50.0F), 3, 13);
+       }
 
-      return var1;
-   }
+       if (ThreadLocalRandom.current().nextFloat() < 0.1F) {
+          var1 += ThreadLocalRandom.current().nextInt(10, 31);
+       }
+
+       return var1;
+    }
 
    private void updateState9() {
       if (this.booleanSetting6.isState() && this.target2 != null && mc.player != null && mc.world != null) {
