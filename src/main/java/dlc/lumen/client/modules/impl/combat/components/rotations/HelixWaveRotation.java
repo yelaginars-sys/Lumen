@@ -38,8 +38,8 @@ public class HelixWaveRotation extends RotationsSystem implements QClient {
       float targetPitch = MathHelper.clamp(aim.y, -89.0F, 89.0F);
       float diffYaw = MathHelper.wrapDegrees(targetYaw - currentYaw);
       float diffPitch = targetPitch - currentPitch;
-      float baseYaw = currentYaw + diffYaw * 0.68F;
-      float basePitch = currentPitch + diffPitch * 0.68F;
+      float baseYaw = currentYaw + diffYaw;
+      float basePitch = currentPitch + diffPitch;
       double now = System.currentTimeMillis() / 1000.0;
       float helixYaw = (float)(Math.sin(now * 18.0) * 14.0 + Math.cos(now * 9.0) * 6.0);
       float helixPitch = (float)(Math.cos(now * 18.0) * 10.0 + Math.sin(now * 9.0) * 5.0);
