@@ -93,7 +93,7 @@ import net.minecraft.world.RaycastContext.ShapeType;
 
 public class Aura extends Module {
    public static Aura INSTANCE = new Aura();
-    public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "NoRotate", "Funtime", "NoRotate", "SpookyTime", "ReallyWorld", "HelixWave");
+    public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "Funtime", "SpookyTime", "ReallyWorld", "HelixWave");
    private final ListSetting value = new ListSetting(
       "Таргеты",
       new BooleanSetting("Игроки", true),
@@ -233,7 +233,7 @@ public class Aura extends Module {
    }
 
    private void updateState(EventMoveInput event) {
-      if (mc.player != null && this.target2 != null && !this.rotationType.is("NoRotate") && this.modeSetting.getIndex() != 0) {
+      if (mc.player != null && this.target2 != null && this.modeSetting.getIndex() != 0) {
          if (this.modeSetting.getIndex() == 1) {
             MovingUtil.fixMovementFree(event);
          }
@@ -242,7 +242,7 @@ public class Aura extends Module {
 
    @EventLink
    public void onKeyboardInput(EventKeyboardInput event) {
-      if (mc.player != null && mc.world != null && this.target2 != null && !this.rotationType.is("NoRotate")) {
+      if (mc.player != null && mc.world != null && this.target2 != null) {
          float var2 = this.computefloat();
          if (this.modeSetting.getIndex() == 2) {
             event.setYaw(var2, mc.player.getYaw());
@@ -499,22 +499,6 @@ public class Aura extends Module {
                }
 
                var1 = this.neuroRotation;
-            } else if (this.rotationType.is("NoRotate")) {
-               var1 = new RotationsSystem() {
-                  @Override
-                  public void updateRotations(LivingEntity target) {
-                     RotationStorage.update(
-                        new Rotation(FreeLookStorage.getFreeYaw(), FreeLookStorage.getFreePitch()),
-                        MathUtils.random(100.0F, 170.0F),
-                        MathUtils.random(100.0F, 170.0F),
-                        MathUtils.random(100.0F, 170.0F),
-                        MathUtils.random(100.0F, 170.0F),
-                        1,
-                        6,
-                        false
-                     );
-                  }
-               };
             } else if (this.rotationType.is("Data")) {
                var1 = new RotationsSystem() {
                   @Override
