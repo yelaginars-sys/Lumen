@@ -727,16 +727,44 @@ public class Aura extends Module {
       return new Vec3d(var2.getCenter().x, var2.minY + var2.getLengthY() * 0.72, var2.getCenter().z);
    }
 
-   private LivingEntity computeLivingEntity2() {
-      ArrayList<LivingEntity> var1 = new ArrayList<>();
+    private LivingEntity computeLivingEntity2() {
+       if (mc.player.age % 4 != 0) {
+          return this.target2 != null && this.checkCondition7(this.target2) ? this.target2 : null;
+       }
 
-      for (Entity var3 : mc.world.getEntities()) {
-         if (var3 instanceof LivingEntity var4 && this.checkCondition7(var4)) {
-            var1.add(var4);
-         }
-      }
+       float range = this.computefloat3();
+       double rangeSq = (double)range * (double)range;
+       ArrayList<LivingEntity> nearby = new ArrayList<>();
+       for (Entity var3 : mc.world.getEntities()) {
+          if (!(var3 instanceof LivingEntity var4) || var4 == mc.player) {
+             continue;
+          }
 
-      if (!var1.isEmpty() && this.isEnable()) {
+          if (!var4.isAlive() || var4.getHealth() <= 0.0F || var4 instanceof ArmorStandEntity) {
+             continue;
+          }
+
+          if (var4.squaredDistanceTo(mc.player) > rangeSq) {
+             continue;
+          }
+
+          nearby.add(var4);
+       }
+
+       nearby.sort(Comparator.comparingDouble(entity -> entity.squaredDistanceTo(mc.player)));
+       ArrayList<LivingEntity> var1 = new ArrayList<>();
+       int checked = 0;
+       for (LivingEntity var4 : nearby) {
+          if (checked++ >= 12) {
+             break;
+          }
+
+          if (this.checkCondition7(var4)) {
+             var1.add(var4);
+          }
+       }
+
+       if (!var1.isEmpty() && this.isEnable()) {
          switch (this.modeSetting2.getCurrent()) {
             case "Дистанция":
                var1.sort(Comparator.comparingDouble(entity -> entity.getBoundingBox().getCenter().squaredDistanceTo(mc.player.getEyePos())));
