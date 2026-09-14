@@ -231,21 +231,21 @@ public class DynamicIslandHUD extends InterfaceProcessing {
          case MUSIC -> this.flag ? 164.0F : helper41(titleFont, music.collapsedText());
           case DEFAULT -> {
              float var6 = helper30(titleFont, "LumenDLC", 96.0F);
-             yield helper29(26.0F + var6 + 4.0F, 52.0F, 104.0F);
+             yield helper29(30.0F + var6 + 4.0F, 52.0F, 108.0F);
           }
       };
    }
 
-   private float helper3(DynamicIslandHUD.StatusType status, DynamicIslandHUD.MusicState music) {
-      return status == DynamicIslandHUD.StatusType.MUSIC && this.flag ? 76.0F + (music.lyric().isBlank() ? 0.0F : 10.0F) : 15.0F;
+    private float helper3(DynamicIslandHUD.StatusType status, DynamicIslandHUD.MusicState music) {
+      return status == DynamicIslandHUD.StatusType.MUSIC && this.flag ? 76.0F + (music.lyric().isBlank() ? 0.0F : 10.0F) : 19.0F;
    }
 
-    private void helper4(MatrixStack matrices, float x, float y, float width, float height, Font font) {
-      float var7 = 14.0F;
+   private void helper4(MatrixStack matrices, float x, float y, float width, float height, Font font) {
+      float var7 = 18.0F;
       float var8 = x + 4.0F;
       float var9 = y + (height - var7) * 0.5F;
       helper5(matrices, var8, var9, var7);
-      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 26.0F, ColorUtils.clientText());
+      this.helper37(matrices, font, "LumenDLC", var8 + var7 + 4.0F, helper31(y, height, font), width - 30.0F, ColorUtils.clientText());
    }
 
    private static void helper5(MatrixStack matrices, float x, float y, float h) {
