@@ -18,6 +18,8 @@ public class SpookyRotation extends RotationsSystem {
    private LivingEntity lastTarget;
    private float lastYaw;
    private float lastPitch;
+   private float preciseYaw;
+   private float precisePitch;
    private boolean hasTarget;
    private int returnTicksLeft;
    private long invisibleSinceMs;
@@ -41,9 +43,11 @@ public class SpookyRotation extends RotationsSystem {
       long now = System.nanoTime() / 1000000L;
       if (target != this.lastTarget) {
          this.lastTarget = target;
+         this.preciseYaw = mc.player.getYaw();
+         this.precisePitch = mc.player.getPitch();
          this.invisibleSinceMs = 0L;
          this.nextPointMs = 0L;
-         this.nextLookawayMs = now + 200L + this.random.nextInt(600);
+         this.nextLookawayMs = now + 600L + this.random.nextInt(1200);
          this.lookawayUntilMs = 0L;
          this.rollPattern(now);
       }
@@ -70,10 +74,10 @@ public class SpookyRotation extends RotationsSystem {
       boolean lookaway = false;
       if (now >= this.nextLookawayMs) {
          this.lookawayPoint = aim.add(
-            (this.random.nextDouble() - 0.5) * 4.0, (this.random.nextDouble() - 0.5) * 2.0, (this.random.nextDouble() - 0.5) * 4.0
+            (this.random.nextDouble() - 0.5) * 2.4, (this.random.nextDouble() - 0.5) * 1.2, (this.random.nextDouble() - 0.5) * 2.4
          );
-         this.lookawayUntilMs = now + 10L + this.random.nextInt(190);
-         this.nextLookawayMs = now + 200L + this.random.nextInt(600);
+         this.lookawayUntilMs = now + 10L + this.random.nextInt(110);
+         this.nextLookawayMs = now + 600L + this.random.nextInt(1200);
       }
 
       Vec3d goal = aim;
@@ -114,6 +118,11 @@ public class SpookyRotation extends RotationsSystem {
 
       yawSpeed *= this.speedMul;
       pitchSpeed *= this.speedMul;
+      if (lookaway) {
+         yawSpeed = Math.min(yawSpeed, 12.0F);
+         pitchSpeed = Math.min(pitchSpeed, 8.0F);
+      }
+
       double dist = eye.distanceTo(aim);
       if (dist < 0.9 && target.getVelocity().horizontalLength() > 0.05) {
          yawSpeed = Math.min(yawSpeed, 12.0F + this.random.nextFloat() * 6.0F);
@@ -123,15 +132,17 @@ public class SpookyRotation extends RotationsSystem {
       double horizontal = Math.sqrt(toGoal.x * toGoal.x + toGoal.z * toGoal.z);
       float idealYaw = (float)(Math.toDegrees(Math.atan2(toGoal.z, toGoal.x)) - 90.0);
       float idealPitch = MathHelper.clamp((float)(-Math.toDegrees(Math.atan2(toGoal.y, horizontal))), -89.0F, 89.0F);
-      float dYaw = MathHelper.wrapDegrees(idealYaw - mc.player.getYaw());
-      float dPitch = idealPitch - mc.player.getPitch();
+      float dYaw = MathHelper.wrapDegrees(idealYaw - this.preciseYaw);
+      float dPitch = idealPitch - this.precisePitch;
       float stepYaw = MathHelper.clamp(dYaw, -yawSpeed, yawSpeed);
       float stepPitch = MathHelper.clamp(dPitch, -pitchSpeed, pitchSpeed);
       double time = now / 1000.0;
       float yawJitter = (float)(Math.sin(time * 6.0 + this.jitterPhase) * this.yawJitterAmp + (this.random.nextFloat() - 0.5F) * this.yawJitterRnd);
       float pitchJitter = (float)(Math.sin(time * 5.0 + this.jitterPhase * 1.7) * this.yawJitterAmp * 0.4 + (this.random.nextFloat() - 0.5F) * this.yawJitterRnd * 0.4);
-      float newYaw = MathHelper.wrapDegrees(mc.player.getYaw() + stepYaw + yawJitter);
-      float newPitch = MathHelper.clamp(mc.player.getPitch() + stepPitch + pitchJitter, -89.0F, 89.0F);
+      float newYaw = MathHelper.wrapDegrees(this.preciseYaw + stepYaw + yawJitter);
+      float newPitch = MathHelper.clamp(this.precisePitch + stepPitch + pitchJitter, -89.0F, 89.0F);
+      this.preciseYaw = newYaw;
+      this.precisePitch = newPitch;
       float roll = this.random.nextFloat();
       Vec2f out;
       if (roll < 0.05F) {
@@ -175,6 +186,8 @@ public class SpookyRotation extends RotationsSystem {
       float stepYaw = MathHelper.clamp(dYaw, -30.0F, 30.0F);
       float stepPitch = MathHelper.clamp(dPitch, -20.0F, 20.0F);
       Vec2f out = correctRotation(MathHelper.wrapDegrees(mc.player.getYaw() + stepYaw), MathHelper.clamp(mc.player.getPitch() + stepPitch, -89.0F, 89.0F));
+      this.preciseYaw = out.x;
+      this.precisePitch = out.y;
       RotationStorage.update(
          new Rotation(out.x, out.y), Math.abs(stepYaw) + 8.0F, Math.abs(stepPitch) + 6.0F, 30.0F, 20.0F, 10, 5, Aura.clientLook.isState()
       );
