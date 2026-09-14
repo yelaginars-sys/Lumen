@@ -333,8 +333,14 @@ public class ServerHelper extends Module {
             }
          }
 
-         if (var2 != null) {
-            boolean var5 = this.helper4(var2, var4);
+          if (var2 != null) {
+             ItemStack cooldownStack = this.findStack(var2, var4);
+             if (cooldownStack != null && this.isCoolingDown(cooldownStack)) {
+                ChatUtils.sendMessage("Предмет на задержке!");
+                return;
+             }
+
+             boolean var5 = this.helper4(var2, var4);
             this.flag3 = var3 || !var5;
             if (this.flag3) {
                this.helper11();
@@ -351,7 +357,24 @@ public class ServerHelper extends Module {
       }
    }
 
-   private boolean helper4(Item item, Predicate<ItemStack> pred) {
+    private ItemStack findStack(Item item, Predicate<ItemStack> pred) {
+       if (mc.player != null) {
+          for (int slot = 0; slot < 36; slot++) {
+             ItemStack stack = mc.player.getInventory().getStack(slot);
+             if (!stack.isEmpty() && (pred != null ? pred.test(stack) : stack.getItem() == item)) {
+                return stack;
+             }
+          }
+       }
+
+       return null;
+    }
+
+    private boolean isCoolingDown(ItemStack stack) {
+       return mc.player != null && stack != null && !stack.isEmpty() && mc.player.getItemCooldownManager().isCoolingDown(stack);
+    }
+
+    private boolean helper4(Item item, Predicate<ItemStack> pred) {
       for (int var3 = 0; var3 < 9; var3++) {
          ItemStack var4 = mc.player.getInventory().getStack(var3);
          if (!var4.isEmpty() && (pred != null ? pred.test(var4) : var4.getItem() == item)) {
@@ -435,9 +458,15 @@ public class ServerHelper extends Module {
             InventoryWalk.stopTick(5);
          }
 
-         this.index2 = var4;
-         this.helper9(var4);
-         return true;
+          this.index2 = var4;
+          ItemStack cooldownStack = mc.player.getInventory().getStack(var4);
+          if (this.isCoolingDown(cooldownStack)) {
+             ChatUtils.sendMessage("Предмет на задержке!");
+             return false;
+          }
+
+          this.helper9(var4);
+          return true;
       } else {
          return false;
       }
