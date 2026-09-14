@@ -30,9 +30,11 @@ public class LegitRotation extends RotationsSystem implements QClient {
    private float volume;
    private float volume2;
    private float volume3;
-   private float volume4;
-   private float volume5;
-   private float volume6;
+    private float volume4;
+    private float volume5;
+    private float volume6;
+    private float volume7 = 0.09F;
+    private float volume8 = 3.2F;
 
    public LegitRotation() {
       EventInvoker.register(this);
@@ -44,11 +46,13 @@ public class LegitRotation extends RotationsSystem implements QClient {
       this.timestamp = System.nanoTime();
    }
 
-   public void reset() {
-      this.livingEntity = null;
-      this.volume = 0.0F;
-      this.volume2 = 0.0F;
-   }
+    public void reset() {
+       this.livingEntity = null;
+       this.volume = 0.0F;
+       this.volume2 = 0.0F;
+       this.volume7 = 0.05F + this.random.nextFloat() * 0.07F;
+       this.volume8 = 2.5F + this.random.nextFloat() * 1.5F;
+    }
 
    @EventLink(priority = -100)
    public void onLook(EventLook event) {
@@ -71,12 +75,14 @@ public class LegitRotation extends RotationsSystem implements QClient {
                      double var36 = var32.z - var33.z;
                      float var37 = (float)(Math.toDegrees(Math.atan2(var36, var34)) - 90.0);
                      float var38 = MathHelper.wrapDegrees(var37 - mc.player.getYaw());
-                     if (Math.abs(var38) > 3.2) {
-                        this.volume2 = 0.0F;
-                     } else {
-                        this.volume2 = Math.min(this.volume2 + 0.005F, 0.09F);
-                        this.updateState(event, var38 * this.volume2);
-                     }
+                      if (Math.abs(var38) > this.volume8) {
+                         this.volume2 = 0.0F;
+                         this.volume7 = 0.05F + this.random.nextFloat() * 0.07F;
+                         this.volume8 = 2.5F + this.random.nextFloat() * 1.5F;
+                      } else {
+                         this.volume2 = Math.min(this.volume2 + 0.002F + this.random.nextFloat() * 0.008F, this.volume7);
+                         this.updateState(event, var38 * this.volume2);
+                      }
                   } else {
                      this.volume2 = 0.0F;
                      Vec3d var8 = this.computeVec3d(var2);
@@ -86,21 +92,21 @@ public class LegitRotation extends RotationsSystem implements QClient {
                      float var14 = (float)(Math.toDegrees(Math.atan2(var12, var10)) - 90.0);
                      float var15 = MathHelper.wrapDegrees(var14 - mc.player.getYaw());
                      float var16 = Math.abs(var15);
-                     if (var16 < 0.15) {
-                        this.volume = 0.0F;
-                     } else {
-                        boolean var17 = var3 * var15 > 0.0;
-                        if (!var17) {
-                           this.volume *= 0.9F;
+                      if (var16 < 0.1 + this.random.nextFloat() * 0.15) {
+                         this.volume = 0.0F;
+                      } else {
+                         boolean var17 = var3 * var15 > 0.0;
+                         if (!var17) {
+                            this.volume *= 0.85F + this.random.nextFloat() * 0.1F;
                            float var39 = 1.0F - Math.min(1.0F, (float)(var16 / 3.2));
                            float var40 = 0.75F - 0.3F * var39;
                            event.setYaw(var3 * var40);
                         } else {
-                           this.volume4 = this.volume4 + (0.05F + this.random.nextFloat() * 0.04F);
-                           float var18 = var16 < 5.0 ? 0.1F : 0.16F;
-                           float var19 = var16 < 5.0 ? 0.0035F : 0.0055F;
-                           this.volume = Math.min(this.volume + var19, var18);
-                           float var20 = (float)(Math.sin(this.volume4 * 0.5) * 0.0035);
+                            this.volume4 = this.volume4 + (0.03F + this.random.nextFloat() * 0.08F);
+                            float var18 = (var16 < 5.0 ? 0.1F : 0.16F) * (0.7F + this.random.nextFloat() * 0.7F);
+                            float var19 = (var16 < 5.0 ? 0.0035F : 0.0055F) * (0.5F + this.random.nextFloat());
+                            this.volume = Math.min(this.volume + var19, var18);
+                            float var20 = (float)(Math.sin(this.volume4 * 0.5) * (0.002F + this.random.nextFloat() * 0.004F));
                            float var21 = Math.max(0.0F, this.volume + var20);
                            double var22 = var15 * var21;
                            double var24 = mc.options.getMouseSensitivity().getValue() * 0.6 + 0.2;
@@ -129,11 +135,11 @@ public class LegitRotation extends RotationsSystem implements QClient {
       }
    }
 
-   private Vec3d computeVec3d(LivingEntity entity) {
-      this.volume3 = this.volume3 + (0.05F + this.random.nextFloat() * 0.04F);
-      Box var2 = this.getPredictedBox(entity);
-      float var3 = (float)(Math.sin(this.volume3 * 0.3) * 0.2 + 0.5);
-      this.volume5 = this.volume5 + (this.random.nextFloat() - 0.5F) * 0.35F;
+    private Vec3d computeVec3d(LivingEntity entity) {
+       this.volume3 = this.volume3 + (0.02F + this.random.nextFloat() * 0.09F);
+       Box var2 = this.getPredictedBox(entity);
+       float var3 = (float)(Math.sin(this.volume3 * 0.3) * 0.35 + 0.5 + (this.random.nextFloat() - 0.5F) * 0.3F);
+       this.volume5 = this.volume5 + (this.random.nextFloat() - 0.5F) * (0.15F + this.random.nextFloat() * 0.7F);
       if (this.volume5 > (float) (Math.PI * 2)) {
          this.volume5 -= (float) (Math.PI * 2);
       }
@@ -142,8 +148,8 @@ public class LegitRotation extends RotationsSystem implements QClient {
          this.volume5 += (float) (Math.PI * 2);
       }
 
-      float var4 = this.random.nextFloat() * (float)var2.getLengthX() * 0.5F;
-      this.volume6 = this.volume6 + (var4 - this.volume6) * 0.12F;
+       float var4 = this.random.nextFloat() * (float)var2.getLengthX() * (0.3F + this.random.nextFloat() * 1.4F);
+       this.volume6 = this.volume6 + (var4 - this.volume6) * (0.05F + this.random.nextFloat() * 0.2F);
       Vec3d var5 = var2.getCenter();
       double var6 = var5.x + Math.cos(this.volume5) * this.volume6;
       double var8 = var5.z + Math.sin(this.volume5) * this.volume6;
