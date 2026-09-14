@@ -849,7 +849,7 @@ public class Interface extends Module {
    }
 
    public boolean handleWaterMarkSegmentGrab(double mouseX, double mouseY, int button) {
-      return button == 0 && this.waterMarkShown.is("Ватермарка") ? this.waterMarkSegmentDragging.beginSegmentDrag(mouseX, mouseY) : false;
+      return button == 0 && this.waterMarkShown.is("Watermark") ? this.waterMarkSegmentDragging.beginSegmentDrag(mouseX, mouseY) : false;
    }
 
    public void updateWaterMarkSegmentDrag(double mouseX) {
@@ -865,7 +865,7 @@ public class Interface extends Module {
    }
 
    public boolean isWaterMarkShown() {
-      return this.waterMarkShown.is("Ватермарка");
+      return this.waterMarkShown.is("Watermark");
    }
 
    public float getWaterMarkBottomY() {
@@ -1018,17 +1018,17 @@ public class Interface extends Module {
 
    @EventLink(priority = -200)
    public void onEvent(EventRender.Default event) {
-      boolean var2 = this.waterMarkShown.is("Ватермарка");
-      boolean var3 = this.waterMarkShown.is("Горячие клавиши");
-      boolean var4 = this.waterMarkShown.is("Серверные бинды");
-      boolean var5 = this.waterMarkShown.is("Зелья");
-      boolean var6 = this.waterMarkShown.is("Таргет худ");
-      boolean var7 = this.waterMarkShown.is("Броня");
-      boolean var8 = this.waterMarkShown.is("Кулдауны");
-      boolean var9 = this.waterMarkShown.is("Inventory HUD");
-      boolean var10 = this.waterMarkShown.is("Hotbar HUD");
-      boolean var11 = this.waterMarkShown.is("ScoreBoard HUD");
-      boolean var12 = this.waterMarkShown.is("DinamicIsland");
+      boolean var2 = this.waterMarkShown.is("Watermark");
+      boolean var3 = this.waterMarkShown.is("Watermark+");
+      boolean var4 = this.waterMarkShown.is("Hot Keys");
+      boolean var5 = this.waterMarkShown.is("Server Binds");
+      boolean var6 = this.waterMarkShown.is("Potions");
+      boolean var7 = this.waterMarkShown.is("Target Hud");
+      boolean var8 = this.waterMarkShown.is("Armor Hud");
+      boolean var9 = this.waterMarkShown.is("Cooldowns");
+      boolean var10 = this.waterMarkShown.is("Inventory HUD");
+      boolean var11 = this.waterMarkShown.is("Hotbar HUD");
+      boolean var12 = this.waterMarkShown.is("ScoreBoard HUD");
       if (mc != null && mc.getWindow() != null && mc.currentScreen instanceof ChatScreen) {
          Font var13 = this.helper(18);
          float var14 = mc.getWindow().getScaledWidth() * 0.5F - var13.getWidth("ПКМ - по элементу для открытия настроек") * 0.5F;
