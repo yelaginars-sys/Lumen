@@ -960,7 +960,16 @@ public class SlothRotation extends RotationsSystem implements QClient {
             this.index10 = mc.player.age;
          }
 
-         RotationStorage.update(new Rotation(this.volume, this.volume2), 360.0F, 360.0F, 30.0F, 22.0F, 2, 1, this.precision8);
+          RotationStorage.update(
+             new Rotation(this.computeTremorYaw(this.volume, precision), this.computeTremorPitch(this.volume2, precision)),
+             360.0F,
+             360.0F,
+             30.0F,
+             22.0F,
+             2,
+             1,
+             this.precision8
+          );
          float var18 = Math.abs(MathHelper.wrapDegrees(this.volume - mc.player.getYaw()));
          float var19 = Math.abs(this.volume2 - mc.player.getPitch());
          if (var18 > 4.0F || var19 > 4.0F) {
@@ -1120,9 +1129,36 @@ public class SlothRotation extends RotationsSystem implements QClient {
       }
    }
 
-   private void updateState11() {
-      RotationStorage.update(new Rotation(mc.player.getYaw(), mc.player.getPitch()), 360.0F, 360.0F, 30.0F, 22.0F, 2, 1, this.precision8);
-   }
+    private void updateState11() {
+       RotationStorage.update(
+          new Rotation(this.computeTremorYaw(mc.player.getYaw(), this.precision6), this.computeTremorPitch(mc.player.getPitch(), this.precision6)),
+          360.0F,
+          360.0F,
+          30.0F,
+          22.0F,
+          2,
+          1,
+          this.precision8
+       );
+    }
+
+    private float computeTremorYaw(float value, boolean precision) {
+       if (!precision && this.random.nextFloat() < 0.4F) {
+          float step = GCDUtil.getGCDValue();
+          return value + (this.random.nextBoolean() ? 1.0F : -1.0F) * step * (this.random.nextFloat() < 0.85F ? 1.0F : 2.0F);
+       }
+
+       return value;
+    }
+
+    private float computeTremorPitch(float value, boolean precision) {
+       if (!precision && this.random.nextFloat() < 0.4F) {
+          float step = GCDUtil.getGCDValue();
+          return value + (this.random.nextBoolean() ? 1.0F : -1.0F) * step * (this.random.nextFloat() < 0.85F ? 1.0F : 2.0F);
+       }
+
+       return value;
+    }
 
    private void updateState12(long now, boolean clearVelocity) {
       if (mc.player != null) {
