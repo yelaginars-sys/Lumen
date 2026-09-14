@@ -32,8 +32,12 @@ import dlc.lumen.client.modules.impl.combat.components.rotations.FuntimeRotation
 import dlc.lumen.client.modules.impl.combat.components.rotations.Holy2Rotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.HolyWorldRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.ReallyWorldRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.ReallyWorldV2Rotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeV3Rotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.HelixWaveRotation;
-import dlc.lumen.client.modules.impl.combat.components.rotations.ArtygriefRotation;import dlc.lumen.client.modules.impl.combat.components.rotations.LegitRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.ArtygriefRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.FovRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.FunTimeV4Rotation;import dlc.lumen.client.modules.impl.combat.components.rotations.LegitRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SlothRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyRotation;
@@ -95,7 +99,7 @@ import net.minecraft.world.RaycastContext.ShapeType;
 
 public class Aura extends Module {
    public static Aura INSTANCE = new Aura();
-    public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "Funtime", "SpookyTime", "ReallyWorld", "HelixWave", "Artygrief", "Sloth", "Spooky");
+   public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "Funtime", "SpookyTime", "ReallyWorld", "HelixWave", "Artygrief", "Sloth", "Spooky", "FunTimeV4", "SpookyTimeV3", "FOV", "ReallyWorldV2");
    private final ListSetting value = new ListSetting(
       "Таргеты",
       new BooleanSetting("Игроки", true),
@@ -135,6 +139,10 @@ public class Aura extends Module {
     private final ReallyWorldRotation reallyWorldRotation = new ReallyWorldRotation();
     private final HelixWaveRotation helixWaveRotation = new HelixWaveRotation();
     private final ArtygriefRotation artygriefRotation = new ArtygriefRotation();
+    private final FunTimeV4Rotation funTimeV4Rotation = new FunTimeV4Rotation();
+    private final SpookyTimeV3Rotation spookyTimeV3Rotation = new SpookyTimeV3Rotation();
+    private final FovRotation fovRotation = new FovRotation();
+    private final ReallyWorldV2Rotation reallyWorldV2Rotation = new ReallyWorldV2Rotation();
    private final NeuroRotation neuroRotation = new NeuroRotation();
    private boolean flag;
    private boolean flag2 = false;
@@ -209,11 +217,15 @@ public class Aura extends Module {
        }
     }
 
-   @EventLink
-   public void onAttackEntity(EventAttackEntity event) {
-      if (mc.player != null && mc.world != null) {
-         if (event.getPlayer() == mc.player) {
-            if (event.getTarget() instanceof LivingEntity var2) {
+    @EventLink
+    public void onAttackEntity(EventAttackEntity event) {
+       if (mc.player != null && mc.world != null) {
+          if (event.getPlayer() == mc.player) {
+             if (this.rotationType.is("FunTimeV4")) {
+                this.funTimeV4Rotation.onAttack();
+             }
+
+             if (event.getTarget() instanceof LivingEntity var2) {
                if (this.checkCondition7(var2)) {
                   this.target2 = var2;
                }
@@ -542,6 +554,14 @@ public class Aura extends Module {
                var1 = this.helixWaveRotation;
             } else if (this.rotationType.is("Artygrief")) {
                var1 = this.artygriefRotation;
+            } else if (this.rotationType.is("FunTimeV4")) {
+               var1 = this.funTimeV4Rotation;
+            } else if (this.rotationType.is("SpookyTimeV3")) {
+               var1 = this.spookyTimeV3Rotation;
+            } else if (this.rotationType.is("FOV")) {
+               var1 = this.fovRotation;
+            } else if (this.rotationType.is("ReallyWorldV2")) {
+               var1 = this.reallyWorldV2Rotation;
             } else {
                final Vec2f var2 = RotationUtils.getRotations(this.computeVec3d(this.target2, this.target2.getLeashPos(1.0F)));
                var1 = new RotationsSystem() {
@@ -1005,6 +1025,10 @@ public class Aura extends Module {
 
    private boolean checkCondition7(LivingEntity entity) {
       if (entity != null && entity != mc.player) {
+         if (AntiBot.checkBot(entity)) {
+            return false;
+         }
+
          if (!entity.isAlive() || entity.getHealth() <= 0.0F) {
             return false;
          }
@@ -1508,6 +1532,9 @@ public class Aura extends Module {
       this.updateState15();
       this.flag4 = false;
       this.funtimeRotation.reset();
+      this.funTimeV4Rotation.reset();
+      this.spookyTimeV3Rotation.reset();
+      this.fovRotation.reset();
       this.flag2 = false;
       this.slothRotation.reset();
       this.spookyRotation.reset();
