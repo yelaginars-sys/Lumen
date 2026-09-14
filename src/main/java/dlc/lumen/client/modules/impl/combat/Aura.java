@@ -36,6 +36,7 @@ import dlc.lumen.client.modules.impl.combat.components.rotations.HelixWaveRotati
 import dlc.lumen.client.modules.impl.combat.components.rotations.ArtygriefRotation;import dlc.lumen.client.modules.impl.combat.components.rotations.LegitRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SlothRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyTimeRotation;
+import dlc.lumen.client.modules.impl.combat.components.rotations.SpookyRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.TestRotation;
 import dlc.lumen.client.modules.impl.combat.components.rotations.WhiteRiseRotation;
 import dlc.lumen.client.modules.impl.movement.Sprint;
@@ -94,7 +95,7 @@ import net.minecraft.world.RaycastContext.ShapeType;
 
 public class Aura extends Module {
    public static Aura INSTANCE = new Aura();
-    public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "Funtime", "SpookyTime", "ReallyWorld", "HelixWave", "Artygrief", "Sloth");
+    public final ModeSetting rotationType = new ModeSetting("Ротация", "HolyLegit", "Smooth", "HolyLegit", "Funtime", "SpookyTime", "ReallyWorld", "HelixWave", "Artygrief", "Sloth", "Spooky");
    private final ListSetting value = new ListSetting(
       "Таргеты",
       new BooleanSetting("Игроки", true),
@@ -129,7 +130,8 @@ public class Aura extends Module {
    private final Holy2Rotation holy2Rotation = new Holy2Rotation();
    private final WhiteRiseRotation whiteRiseRotation = new WhiteRiseRotation(this);
    private final LegitRotation legitRotation = new LegitRotation();
-   private final SpookyTimeRotation spookyTimeRotation = new SpookyTimeRotation();
+    private final SpookyTimeRotation spookyTimeRotation = new SpookyTimeRotation();
+    private final SpookyRotation spookyRotation = new SpookyRotation();
     private final ReallyWorldRotation reallyWorldRotation = new ReallyWorldRotation();
     private final HelixWaveRotation helixWaveRotation = new HelixWaveRotation();
     private final ArtygriefRotation artygriefRotation = new ArtygriefRotation();
@@ -196,13 +198,16 @@ public class Aura extends Module {
    }
 
    @EventLink
-   public void onPlayerTick(EventUpdate e) {
-      if (mc.player != null && mc.world != null) {
-         this.volume3++;
-         this.updateState7();
-         this.updateState19();
-      }
-   }
+    public void onPlayerTick(EventUpdate e) {
+       if (mc.player != null && mc.world != null) {
+          this.volume3++;
+          this.updateState7();
+          this.updateState19();
+          if (this.target2 == null && this.rotationType.is("Spooky")) {
+             this.spookyRotation.tickReturn();
+          }
+       }
+    }
 
    @EventLink
    public void onAttackEntity(EventAttackEntity event) {
@@ -527,8 +532,10 @@ public class Aura extends Module {
                      RotationStorage.update(var10, var11, var12, var13, var14, 1, 1, Aura.clientLook.isState());
                   }
                };
-            } else if (this.rotationType.is("SpookyTime")) {
-               var1 = this.spookyTimeRotation;
+             } else if (this.rotationType.is("SpookyTime")) {
+                var1 = this.spookyTimeRotation;
+             } else if (this.rotationType.is("Spooky")) {
+                var1 = this.spookyRotation;
             } else if (this.rotationType.is("ReallyWorld")) {
                var1 = this.reallyWorldRotation;
             } else if (this.rotationType.is("HelixWave")) {
@@ -1471,6 +1478,7 @@ public class Aura extends Module {
       this.funtimeRotation.reset();
       this.flag2 = false;
       this.slothRotation.reset();
+      this.spookyRotation.reset();
       this.flag3 = false;
       this.flag5 = false;
       this.livingEntity = null;
@@ -1494,6 +1502,7 @@ public class Aura extends Module {
       this.funtimeRotation.reset();
       this.flag2 = false;
       this.slothRotation.reset();
+      this.spookyRotation.reset();
       this.flag3 = false;
       this.flag5 = false;
       this.livingEntity = null;
