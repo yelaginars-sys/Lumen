@@ -107,7 +107,7 @@ public class Aura extends Module {
    private final FloatSetting floatSetting2 = new FloatSetting("Дистанция наводки", 3.0F, 0.0F, 6.0F, 0.05F);
    private final FloatSetting floatSetting3 = new FloatSetting("Дистанция на элитрах", 50.0F, 10.0F, 100.0F, 0.05F);
    public final BooleanSetting smartCrit = new BooleanSetting("Умные криты", false);
-   private final BooleanSetting booleanSetting = new BooleanSetting("Бить через стены", true);
+    private final BooleanSetting booleanSetting = new BooleanSetting("Бить через стены", false);
    private final BooleanSetting booleanSetting2 = new BooleanSetting("Отжимать щит", false);
    private final BooleanSetting booleanSetting3 = new BooleanSetting("Ломать щит", true);
    private final BooleanSetting booleanSetting4 = new BooleanSetting("Не бить когда ешь", true);
