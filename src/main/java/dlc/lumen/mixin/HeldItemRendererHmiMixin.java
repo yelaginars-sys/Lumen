@@ -210,9 +210,10 @@ public abstract class HeldItemRendererHmiMixin {
          matrices.push();
          matrices.push();
          ViewModel viewModel = ModuleClass.INSTANCE != null ? ModuleClass.viewModel : null;
-         if (viewModel != null && viewModel.isEnable()) {
-            viewModel.applyHandPosition(matrices, arm);
-         }
+          if (viewModel != null && viewModel.isEnable()) {
+             viewModel.applyHandPosition(matrices, arm);
+             viewModel.applyHandScale(matrices, arm);
+          }
 
          double tt = Lumen.deltaTime * 30.0;
          float smoothness = MathHelper.clamp(config.hmiSmoothness.get(), 0.35F, 2.5F);
