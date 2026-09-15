@@ -62,7 +62,7 @@ public class TargetESP extends Module {
       {1, -1, 1, 1, 1, 1},
       {-1, -1, 1, -1, 1, 1}
    };
-   private final ModeSetting modeSetting = new ModeSetting("Режим", "Души", "Кольцо 2", "Души", "Молнии", "МолнииV2", "Зако", "Орбиты", "Ромб");
+   private final ModeSetting modeSetting = new ModeSetting("Режим", "Души", "Кольцо 2", "Души", "ДушиV2", "Молнии", "МолнииV2", "Зако", "Орбиты", "Ромб");
    private final FloatSetting floatSetting = new FloatSetting("Размер", 1.15F, 0.6F, 2.5F, 0.05F);
    private final FloatSetting floatSetting2 = new FloatSetting("Радиус кольца", 0.5F, 0.3F, 1.5F, 0.05F);
    private final FloatSetting floatSetting3 = new FloatSetting("Скорость кольца", 1.0F, 0.3F, 3.0F, 0.1F);
@@ -74,6 +74,11 @@ public class TargetESP extends Module {
    private final FloatSetting floatSetting7 = new FloatSetting("Время жизни (мс)", 350.0F, 150.0F, 500.0F, 25.0F);
    private final FloatSetting xZSetting = new FloatSetting("Цикл XZ", 2000.0F, 1000.0F, 5000.0F, 100.0F);
    private final FloatSetting ySetting = new FloatSetting("Цикл Y", 1700.0F, 1000.0F, 5000.0F, 100.0F);
+   private final FloatSetting celestialSpeed = new FloatSetting("Скорость вращения (ДушиV2)", 1.0F, 0.2F, 3.0F, 0.1F);
+   private final FloatSetting celestialSize = new FloatSetting("Размер спиралей", 1.0F, 0.5F, 2.0F, 0.05F);
+   private final FloatSetting celestialArms = new FloatSetting("Количество рук", 4.0F, 2.0F, 8.0F, 1.0F);
+   private final FloatSetting celestialSegments = new FloatSetting("Сегменты на руку", 14.0F, 8.0F, 24.0F, 1.0F);
+   private final ModeSetting celestialColorMode = new ModeSetting("Цвет (ДушиV2)", "Celestial", "Celestial", "Клиент");
    private float volume = 0.0F;
    private float volume2 = 0.0F;
    private float volume3 = 0.0F;
@@ -98,6 +103,7 @@ public class TargetESP extends Module {
    private static final int INDEX3 = 18;
    private final ArrayList<TargetESP.LightningBolt> targetESPs2 = new ArrayList<>();
    private final TargetLightningV2 lightningV2 = new TargetLightningV2();
+   private final TargetSoulsV2 soulsV2 = new TargetSoulsV2();
    private static final int INDEX4 = 28;
    private static final int INDEX5 = 16;
    private static final int INDEX6 = 24;
@@ -157,6 +163,11 @@ public class TargetESP extends Module {
       this.ySetting.visible(() -> this.modeSetting.is("Райдер"));
       this.floatSetting2.visible(() -> this.modeSetting.is("Кольцо") || this.modeSetting.is("Кольцо 2"));
       this.floatSetting3.visible(() -> this.modeSetting.is("Кольцо") || this.modeSetting.is("Кольцо 2"));
+      this.celestialSpeed.visible(this::isSoulsV2);
+      this.celestialSize.visible(this::isSoulsV2);
+      this.celestialArms.visible(this::isSoulsV2);
+      this.celestialSegments.visible(this::isSoulsV2);
+      this.celestialColorMode.visible(this::isSoulsV2);
       this.addSettings(
          this.modeSetting,
          this.floatSetting,
@@ -169,7 +180,12 @@ public class TargetESP extends Module {
          this.floatSetting6,
          this.floatSetting7,
          this.xZSetting,
-         this.ySetting
+         this.ySetting,
+         this.celestialSpeed,
+         this.celestialSize,
+         this.celestialArms,
+         this.celestialSegments,
+         this.celestialColorMode
       );
    }
 
@@ -195,6 +211,7 @@ public class TargetESP extends Module {
       this.volume24 = 0.0F;
       this.targetESPs2.clear();
       this.lightningV2.clear();
+      this.soulsV2.clear();
       super.onDisable();
    }
 
@@ -369,6 +386,10 @@ public class TargetESP extends Module {
                      this.helperLightningV2(event, var8 ? var4 : null);
                   }
 
+                  if (this.isSoulsV2()) {
+                     this.helperSoulsV2(event, var8 ? var4 : null);
+                  }
+
                   if (this.modeSetting.is("Орбиты")) {
                      this.helper18(event);
                   }
@@ -390,6 +411,30 @@ public class TargetESP extends Module {
        if (this.modeSetting.is("МолнииV2") && event.getTarget() instanceof LivingEntity target) {
           this.lightningV2.onAttack(target);
        }
+    }
+
+    private boolean isSoulsV2() {
+       return this.modeSetting.is("ДушиV2") || this.modeSetting.is("Celestial");
+    }
+
+    private void helperSoulsV2(Event3DRender event, LivingEntity target) {
+       if (this.celestialColorMode.is("Клиент")) {
+          int themeCol = this.resolveInt();
+          this.soulsV2.setColors(themeCol, ColorUtils.setAlphaColor(themeCol, 255));
+       } else {
+          this.soulsV2.setColors(TargetSoulsV2.DEFAULT_COLOR_A, TargetSoulsV2.DEFAULT_COLOR_B);
+       }
+       this.soulsV2.setHurtColor(this.booleanSetting.isState());
+       this.soulsV2.renderCelestial(
+          event.getMatrices(),
+          event.getTickDelta(),
+          target,
+          this.volume,
+          this.celestialSpeed.get(),
+          this.celestialSize.get(),
+          Math.round(this.celestialArms.get()),
+          Math.round(this.celestialSegments.get())
+       );
     }
 
     private void helperLightningV2(Event3DRender event, LivingEntity target) {
