@@ -4,38 +4,35 @@ title Lumen - update and play
 cd /d "%~dp0"
 
 echo ============================================
-echo   Lumen: обновление и запуск
+echo   Lumen DLC: update and play
 echo ============================================
 
 where git >nul 2>nul
 if errorlevel 1 (
-    echo [ВНИМАНИЕ] Git не установлен! Скачай с https://git-scm.com/download/win
+    echo [ERROR] Git is not installed!
     pause
     exit /b 1
 )
 
-echo [1/3] Скачиваю обновления с GitHub...
+echo [1/3] Updating from GitHub...
 git pull --ff-only
 if errorlevel 1 (
-    echo.
-    echo [ОШИБКА] Не удалось обновиться автоматически.
-    echo Скорее всего есть несохранённые локальные изменения или конфликт.
-    echo Запусти: git stash ^&^& git pull
-    pause
-    exit /b 1
+    echo [WARNING] Could not fast-forward pull automatically.
 )
-echo Обновление завершено.
 
-echo [2/3] Проверяю Java...
+echo [2/3] Setting Java...
+if exist "C:\Users\7272~1\.jdks\corretto-21.0.12.1" (
+    set "JAVA_HOME=C:\Users\7272~1\.jdks\corretto-21.0.12.1"
+)
 if "%JAVA_HOME%"=="" (
-    for /d %%D in ("%USERPROFILE%\.jdks\ms-21*") do set "JAVA_HOME=%%D"
     for /d %%D in ("%USERPROFILE%\.jdks\*21*") do set "JAVA_HOME=%%D"
 )
-if "%JAVA_HOME%"=="" (
-    echo [ВНИМАНИЕ] Не найден JDK 21! Установи его через IntelliJ IDEA: File -^> Project Structure -^> SDK
-) else (
-    echo Использую JDK: %JAVA_HOME%
+echo Using JDK: %JAVA_HOME%
+
+echo [3/3] Launching Minecraft...
+call gradlew.bat runClient
+if errorlevel 1 (
+    echo [ERROR] Client closed or failed to launch.
+    pause
 )
 
-echo [3/3] Запускаю Minecraft...
-call gradlew.bat runClient
